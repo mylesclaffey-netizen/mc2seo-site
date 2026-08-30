@@ -81,6 +81,14 @@
 
   .foot{font-size:11.5px;color:var(--muted);margin-top:24px;line-height:1.6}
 
+  .share{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:24px;padding-top:20px;border-top:1.5px solid var(--line)}
+  .sharelabel{font-size:13px;color:var(--muted)}
+  .sharebtn{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--ink);
+      background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:8px 15px;cursor:pointer;
+      text-decoration:none;display:inline-block}
+  .sharebtn:hover{border-color:var(--you);color:var(--you)}
+  .sharebtn.copied{border-color:var(--ok);color:var(--ok)}
+
   .sidenav{margin-top:36px;padding-top:20px;border-top:1.5px solid var(--line);
        display:flex;flex-direction:column;gap:13px}
   .sidenav-link{font-size:13.5px;color:var(--muted);transition:color .15s ease}
@@ -226,7 +234,28 @@ function finishCheck(d, title, renderer){
     return;
   }
   $('rTitle').textContent = title;
-  $('out').innerHTML = renderer(d);
+  $('out').innerHTML = renderer(d) + renderShare();
+}
+
+function renderShare(){
+  const params = mode === 'domain'
+    ? 'mode=domain&domain=' + encodeURIComponent($('domain').value.trim())
+    : 'mode=url&url=' + encodeURIComponent($('url').value.trim());
+  const shareUrl = location.origin + location.pathname + '?' + params;
+  const text = encodeURIComponent(shareUrl);
+  return '<div class="share"><span class="sharelabel">Share this report:</span>' +
+    '<a class="sharebtn" href="https://wa.me/?text=' + text + '" target="_blank" rel="noopener">WhatsApp</a>' +
+    '<a class="sharebtn" href="mailto:?subject=' + encodeURIComponent('SEO report') + '&body=' + text + '">Email</a>' +
+    '<button class="sharebtn" id="copyShare" type="button" onclick="copyShareLink(\'' + shareUrl.replace(/'/g, "\\'") + '\')">Copy link</button></div>';
+}
+function copyShareLink(url){
+  navigator.clipboard?.writeText(url).then(() => {
+    const btn = $('copyShare');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
+  });
 }
 
 function flashGo(msg){
@@ -335,6 +364,18 @@ function renderVariantRow(v){
   return '<div class="vrow flag-' + flag + '"><div class="vlabel"><span class="proto">' + esc(LABELS[v.label] ?? v.label) + '</span></div>' +
     '<div class="vdetail"><div class="vurl">' + chainHtml + '</div></div>' +
     '<span class="vbadge ' + flag + '">' + esc(FLAG_TEXT[flag] ?? flag) + '</span></div>';
+}
+
+const SHARED_MODE = new URLSearchParams(location.search).get('mode') || '';
+const SHARED_DOMAIN = new URLSearchParams(location.search).get('domain') || '';
+const SHARED_URL = new URLSearchParams(location.search).get('url') || '';
+if (SHARED_MODE === 'domain' && SHARED_DOMAIN) {
+  setMode('domain');
+  $('domain').value = SHARED_DOMAIN;
+  run();
+} else if (SHARED_URL) {
+  $('url').value = SHARED_URL;
+  run();
 }
 </script>
 </body>
