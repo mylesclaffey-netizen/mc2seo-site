@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Tools for Brand Managers — MC2SEO</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23FFFF00'/%3E%3C/svg%3E" />
+<meta name="description" content="Free tools for brands selling into more than one country: international rank checking, local map-grid rank checking, SERP preview, schema analysis, share of search and brand bidding monitoring.">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0a0c11;--card:#12151d;--ink:#eceef4;--muted:#8b93a7;--line:#242c3d;
+        --you:#6e7bff;--ok:#35c48d;--warn:#e0a93a;--bad:#e8695f;--gold:#ffd65c}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Mono',monospace;
+       line-height:1.5;padding:22px 16px 60px}
+  .wrap{max-width:1000px;margin:0 auto}
+  .home{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+        text-decoration:none;display:inline-block;margin-bottom:26px}
+  .home:hover{color:var(--you)}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;letter-spacing:-.02em;
+     line-height:1.1;margin:8px 0 12px;color:var(--gold);text-align:center}
+  .lede{font-size:13.5px;color:var(--muted);line-height:1.6;margin:0 auto 40px;max-width:52ch;text-align:center}
+  h2{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;
+     text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+
+  /* The large category menu */
+  .category-menu{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:44px}
+  @media(max-width:660px){.category-menu{grid-template-columns:1fr}}
+  .category{background:var(--card);border:1.5px solid var(--line);border-radius:20px;
+      overflow:hidden;transition:border-color .15s ease}
+  .category:hover{border-color:#3a4358}
+  .category[open]{grid-column:1 / -1;border-color:var(--you)}
+  .category summary{list-style:none;cursor:pointer;padding:30px 32px;display:flex;
+      justify-content:space-between;align-items:flex-start;gap:18px}
+  .category summary::-webkit-details-marker{display:none}
+  .category .cattitle{font-family:'Space Grotesk',sans-serif;font-size:23px;font-weight:700;
+      letter-spacing:-.01em;margin-bottom:9px;line-height:1.2}
+  .category .catlede{font-size:13px;color:var(--muted);line-height:1.6;margin:0;max-width:48ch}
+  .category .catmeta{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex:none}
+  .category .catcount{font-size:10.5px;color:var(--muted);white-space:nowrap;letter-spacing:.06em;
+      text-transform:uppercase}
+  .category .chev{color:var(--you);font-size:22px;line-height:1;transition:transform .2s ease;flex:none}
+  .category[open] .chev{transform:rotate(90deg)}
+
+  .live-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0 32px 32px;
+      border-top:1px solid var(--line);padding-top:28px;margin-top:2px}
+  @media(max-width:760px){.live-grid{grid-template-columns:1fr}}
+  .live{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px;
+        display:flex;flex-direction:column}
+  .live > .btn{margin-top:auto}
+  .tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.1em;
+       text-transform:uppercase;color:var(--ok);margin-bottom:10px}
+  .tag i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block}
+  .usage-tag{display:inline-flex;align-items:center;font-size:10px;letter-spacing:.08em;
+       text-transform:uppercase;margin-left:9px;padding:3px 9px;border-radius:20px}
+  .usage-tag.free{color:var(--ok);background:rgba(53,196,141,.12)}
+  .usage-tag.light{color:var(--you);background:rgba(110,123,255,.14)}
+  .usage-tag.heavy{color:var(--warn);background:rgba(224,169,58,.14)}
+  .live h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:9px}
+  .live p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px}
+  .live ul{list-style:none;margin-bottom:20px}
+  .live ul li{font-size:12px;color:var(--muted);padding:3px 0 3px 16px;position:relative}
+  .live ul li::before{content:'→';position:absolute;left:0;color:var(--you)}
+  .btn{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;
+       background:var(--you);color:#fff;text-decoration:none;border-radius:8px;padding:13px 22px}
+  .btn:hover{background:var(--you)}
+  .note{font-size:11px;color:var(--muted);margin-top:12px}
+  .note a{color:var(--you)}
+
+  .soon{border-top:1px solid var(--line)}
+  .soon .row{border-bottom:1px solid var(--line);padding:17px 0}
+  .soon h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;margin-bottom:4px}
+  .soon p{font-size:12px;color:var(--muted);line-height:1.6;max-width:56ch}
+  .soon .when{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+              float:right;margin-left:14px}
+
+  .foot{margin-top:38px;font-size:12px;color:var(--muted);line-height:1.7}
+  .foot a{color:var(--you)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="home" href="/">← MC<sup>2</sup>SEO</a>
+
+  <p class="eyebrow" style="text-align:center">Free tools</p>
+  <h1>SEO Tools for Brand Managers</h1>
+  <p class="lede">Most SEO tools are built for SEOs, and for one market at a time. These are built for the person who owns the brand across several — and they run on the same data we use for client work, not a trimmed-down demo of it.</p>
+
+  <div class="category-menu">
+
+  <details class="category" name="category-group">
+  <summary>
+    <div>
+      <div class="cattitle">Where you rank</div>
+      <p class="catlede">Position tracking — one keyword across markets, a full keyword list, local map results, or a recurring weekly check.</p>
+    </div>
+    <div class="catmeta"><span class="catcount">5 tools</span><span class="chev">›</span></div>
+  </summary>
+  <div class="live-grid">
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>International rank check</h3>
+    <p>Where a site ranks for one keyword across up to five countries — checked with the term buyers actually search in each market, not a translation of your English one.</p>
+    <ul>
+      <li>Position in the top 30, per country, in each market's own language</li>
+      <li>Where the first organic result really sits once ads and Shopping are counted</li>
+      <li>Whether Google's AI Overview cites you, and which domains it cites instead</li>
+      <li>Who holds the featured snippet, and whether you're close enough to take it</li>
+      <li>Monthly search volume for each market's term, so you can tell a weak keyword from a weak ranking</li>
+    </ul>
+    <a class="btn" href="/tools/rank-check/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag heavy">Heavy Token Usage</span>
+    <h3>Rank snapshot</h3>
+    <p>Where you actually rank for the keywords you care about — up to 10 at once, in one market, checked live. The flip side of the international rank check: many keywords instead of many countries.</p>
+    <ul>
+      <li>Position for up to 10 keywords, one real search each, in a market of your choice</li>
+      <li>What's above you on each one — ads, local pack, AI Overview — and who holds the featured snippet</li>
+      <li>Real search volume, CPC and Google's own People Also Ask questions for every keyword</li>
+      <li>A shareable snapshot link, saved for 90 days</li>
+    </ul>
+    <a class="btn" href="/tools/rank-snapshot/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag heavy">Heavy Token Usage</span>
+    <h3>Rank scheduler</h3>
+    <p>Set it once — up to 20 keywords, one market — and get a report every week showing exactly what moved since the last one. The recurring version of rank snapshot, so you don't have to remember to re-check.</p>
+    <ul>
+      <li>Live baseline check the moment you set it up, then automatically every 7 days after</li>
+      <li>Every new report emailed straight to you, with position changes highlighted against last week</li>
+      <li>Real search volume and CPC alongside every keyword's position</li>
+      <li>Pause, resume or delete a watch any time — up to 3 running at once</li>
+    </ul>
+    <a class="btn" href="/tools/rank-scheduler/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag heavy">Heavy Token Usage</span>
+    <h3>Local rank grid check</h3>
+    <p>Where you rank in Google Maps results across a whole city, not just at your own address — checked at every point of a grid, so you can see rank fall off block by block instead of guessing from one lookup.</p>
+    <ul>
+      <li>Map-pack position at every point in a 5×5 or 7×7 grid</li>
+      <li>Average position and coverage across the whole area, not just one spot</li>
+      <li>Prague, Dublin or Hamburg — more cities as they're requested</li>
+    </ul>
+    <a class="btn" href="/tools/grid-check/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Map pin check</h3>
+    <p>The local map pack for several keywords at once, at any single point on Earth — drop a pin anywhere and check it, no fixed city list and no grid of points to set up.</p>
+    <ul>
+      <li>Drop or drag a pin anywhere in the world</li>
+      <li>Compare up to 5 keywords' local results at that exact spot</li>
+      <li>Sponsored and organic map results shown separately</li>
+    </ul>
+    <a class="btn" href="/tools/pin-check/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  </div>
+  </details>
+
+  <details class="category" name="category-group">
+  <summary>
+    <div>
+      <div class="cattitle">AI search visibility</div>
+      <p class="catlede">Whether AI assistants can reach your site, cite it, and get your facts right — a different question from whether Google ranks you.</p>
+    </div>
+    <div class="catmeta"><span class="catcount">5 tools</span><span class="chev">›</span></div>
+  </summary>
+  <div class="live-grid">
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>AI brand mentions</h3>
+    <p>Does an AI even mention your brand when someone asks it a category question — checked against real, live-grounded Gemini answers, not a guess about what a chatbot might say.</p>
+    <ul>
+      <li>Up to 5 of your own category or comparison questions, each run 3 times</li>
+      <li>Mention rate per question, plus the actual search queries and sources behind each answer</li>
+      <li>Grounded in real Google Search results, not just the model's training data</li>
+    </ul>
+    <a class="btn" href="/tools/ai-mentions/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>Brand questions</h3>
+    <p>What is Google actually finishing when someone starts typing your brand name? Real autocomplete data, grouped so the "is it a scam" questions are apart from the "where do I log in" ones.</p>
+    <ul>
+      <li>Sweeps ~24 brand-focused patterns — complaints, trust, comparisons, pricing, account/support</li>
+      <li>Pulled live from Google and YouTube's own autocomplete, deduped and ranked by how often each one comes up</li>
+      <li>An animated question wheel plus a full readable list — tap any question to copy it</li>
+      <li>Optional: add real search volume, CPC and genuine Google "People Also Ask" questions for a market of your choice</li>
+    </ul>
+    <a class="btn" href="/tools/brand-questions/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>llms.txt generator</h3>
+    <p>A curated map of your site for AI assistants to read — the same idea as robots.txt or a sitemap, but written for language models instead of crawlers. Fill in a form, copy the file.</p>
+    <ul>
+      <li>Site summary, extra context, and any number of linked sections — Docs, Products, Guides, whatever fits</li>
+      <li>Follows the real llms.txt convention, including the "Optional" section models can skip if short on room</li>
+      <li>No lookups, no API calls — genuinely free, every time</li>
+    </ul>
+    <a class="btn" href="/tools/llms-txt/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>AI crawler access checker</h3>
+    <p>Is your own robots.txt quietly blocking ChatGPT, Claude and Perplexity from reading your site? A blocked crawler is often the real reason a brand never gets mentioned by name.</p>
+    <ul>
+      <li>Checks GPTBot, ClaudeBot, PerplexityBot, Google-Extended and more, one by one</li>
+      <li>Flags whether you have an llms.txt file, and previews it if you do</li>
+      <li>Reads your robots.txt directly — nothing is crawled or changed</li>
+    </ul>
+    <a class="btn" href="/tools/crawler-check/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Brand sentiment</h3>
+    <p>Not "does an AI bring you up unprompted" — when someone asks an AI assistant about your brand by name, what does it actually say? A fixed panel of direct questions, scored so the silence rate is visible on its own.</p>
+    <ul>
+      <li>5 direct questions, each asked 3 times, currently against Gemini (grounded in real Google Search)</li>
+      <li>Every answer classified positive, neutral, negative, or not mentioned — with the real answer shown as evidence, never just a score</li>
+      <li>Built to add ChatGPT and Claude as they become available, without changing the report format</li>
+    </ul>
+    <a class="btn" href="/tools/brand-sentiment/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  </div>
+  </details>
+
+  <details class="category" name="category-group">
+  <summary>
+    <div>
+      <div class="cattitle">Brand</div>
+      <p class="catlede">Brand-name presence and defense — structured data that tells Google who you are, who's bidding on your name, what page one actually looks like, and what AI assistants say when asked.</p>
+    </div>
+    <div class="catmeta"><span class="catcount">4 tools</span><span class="chev">›</span></div>
+  </summary>
+  <div class="live-grid">
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>Brand schema builder</h3>
+    <p>Structured data (JSON-LD) for your brand — the same markup Google uses for rich results, and that AI answer engines lean on to get your facts right. Fill in a form, copy the code.</p>
+    <ul>
+      <li>Organization, Product, FAQ and breadcrumb schema, generated live as you type</li>
+      <li>Built around sameAs links and clear facts — the signals AI systems use to confirm who you are</li>
+      <li>No lookups, no API calls — genuinely free, every time</li>
+    </ul>
+    <a class="btn" href="/tools/schema-builder/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag heavy">Heavy Token Usage</span>
+    <h3>Brand bidding monitor</h3>
+    <p>Who's actually bidding on your own brand name — sampled in one market over a full 24 hours, on both mobile and desktop, so you catch dayparted campaigns a single check would miss. Includes an instant first look the moment you submit.</p>
+    <ul>
+      <li>10 samples spread across local business hours, not one snapshot</li>
+      <li>Each result sorted into competitor, marketplace, affiliate/coupon site or your own campaign</li>
+      <li>Full report emailed to you once the 24 hours are up</li>
+    </ul>
+    <a class="btn" href="/tools/brand-bidding/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag heavy">Heavy Token Usage</span>
+    <h3>Brand search footprint</h3>
+    <p>What actually appears on Google page one when someone searches your brand name — who owns it, who's occupying it, and whether Google itself knows who you are. Not a generic "brand score" — a real audit of your own name query.</p>
+    <ul>
+      <li>Checks your bare brand name and a fuller qualified name separately — the gap between them is often the real finding for short or generic brand names</li>
+      <li>Flags other domains named after your brand on page one, and whether the Knowledge Panel resolves to you or someone else</li>
+      <li>Every reputation flag shown with the real autocomplete or search string behind it — never just a score</li>
+    </ul>
+    <a class="btn" href="/tools/brand-footprint/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Brand sentiment</h3>
+    <p>Not "does an AI bring you up unprompted" — when someone asks an AI assistant about your brand by name, what does it actually say? A fixed panel of direct questions, scored so the silence rate is visible on its own.</p>
+    <ul>
+      <li>5 direct questions, each asked 3 times, currently against Gemini (grounded in real Google Search)</li>
+      <li>Every answer classified positive, neutral, negative, or not mentioned — with the real answer shown as evidence, never just a score</li>
+      <li>Built to add ChatGPT and Claude as they become available, without changing the report format</li>
+    </ul>
+    <a class="btn" href="/tools/brand-sentiment/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  </div>
+  </details>
+
+  <details class="category" name="category-group">
+  <summary>
+    <div>
+      <div class="cattitle">Technical &amp; migration</div>
+      <p class="catlede">Redirects, canonicalization, structured data and site speed — the things that break silently and cost rankings before anyone notices.</p>
+    </div>
+    <div class="catmeta"><span class="catcount">6 tools</span><span class="chev">›</span></div>
+  </summary>
+  <div class="live-grid">
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>Redirect map validator</h3>
+    <p>For a site migration: does each old URL actually redirect — and land on the right new page, not just anywhere that returns 200? Catches the single most common, costly migration mistake.</p>
+    <ul>
+      <li>Follows each redirect hop by hop — flags chains, loops, and temporary (302/307) redirects a browser would silently hide</li>
+      <li>Optionally checks each old URL landed on the exact new page you expected, not just somewhere that works</li>
+      <li>Up to 500 URLs per run, checked in batches of 50 — enough for a full site, combined into one set of results</li>
+      <li>No lookups, no API calls — genuinely free, every time</li>
+    </ul>
+    <a class="btn" href="/tools/redirect-check/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>Redirect tracer</h3>
+    <p>Two quick checks in one tool: paste any URL and see exactly where it redirects, hop by hop — or check a domain's homepage and see whether all four http/https × www/non-www variants converge on one canonical URL, in one hop.</p>
+    <ul>
+      <li>Single URL: follows the full redirect chain live, flags loops and dead ends</li>
+      <li>Homepage variants: checks all four address forms at once, flags extra hops and mismatches</li>
+      <li>No lookups, no API calls — genuinely free, every time</li>
+    </ul>
+    <a class="btn" href="/tools/redirect-tracer/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>Site migration checklist</h3>
+    <p>Every stage of a domain move, replatform, or redesign, in order — from the pre-migration audit to what to watch in the weeks after launch. Tick boxes save in your browser, and the relevant items link straight to the tool that checks them.</p>
+    <ul>
+      <li>41 items across 7 phases, from planning through post-launch monitoring</li>
+      <li>Ticks persist locally — close the tab and pick up where you left off</li>
+      <li>Linked straight to the redirect, canonical, schema and crawler-access tools here</li>
+    </ul>
+    <a class="btn" href="/tools/migration-checklist/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>Schema analysis</h3>
+    <p>What structured data a page actually carries, what's missing for the kind of page it is, and — more usefully — where the markup claims something the page doesn't actually say.</p>
+    <ul>
+      <li>Every JSON-LD schema type on the page, and what's missing from each for rich results</li>
+      <li>Checks FAQ questions and product prices actually appear on the page — not just that the markup exists</li>
+      <li>No lookups, no API calls — genuinely free, every time</li>
+    </ul>
+    <a class="btn" href="/tools/schema-audit/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>PageSpeed comparison</h3>
+    <p>Your PageSpeed Insights score next to up to two competitors' — the same Lighthouse performance score and Core Web Vitals Google itself uses to judge page experience, not a guess.</p>
+    <ul>
+      <li>Performance score and Core Web Vitals side by side, mobile and desktop</li>
+      <li>Best-of-the-group highlighted on every metric, not just the headline score</li>
+      <li>Shareable report link once it's done — no need to re-run it for a client</li>
+    </ul>
+    <a class="btn" href="/tools/pagespeed/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag free">Free Token Usage</span>
+    <h3>IndexNow pinger</h3>
+    <p>Tell Bing — and every other search engine on the shared IndexNow protocol — that specific URLs on your site just changed, instead of waiting for the next scheduled crawl.</p>
+    <ul>
+      <li>Generates your verification key and the exact file to host</li>
+      <li>Checks the key is actually live before submitting, with a clear fix if it's not</li>
+      <li>Submit up to 50 URLs at once, free, no signup</li>
+    </ul>
+    <a class="btn" href="/tools/indexnow/">Open the tool</a>
+    <p class="note">No access code needed — open to anyone.</p>
+  </div>
+
+  </div>
+  </details>
+
+  <details class="category" name="category-group">
+  <summary>
+    <div>
+      <div class="cattitle">Competitive intel</div>
+      <p class="catlede">Market share and traffic estimates, read against named competitors, not in isolation.</p>
+    </div>
+    <div class="catmeta"><span class="catcount">3 tools</span><span class="chev">›</span></div>
+  </summary>
+  <div class="live-grid">
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Share of search</h3>
+    <p>Your brand's share of combined search volume against the competitors you name, market by market, over the last twelve months. Reads as market share rather than as an SEO metric — and it moves before revenue does.</p>
+    <ul>
+      <li>Share of combined volume across brand name, reviews, pricing and category searches</li>
+      <li>Change in percentage points versus the same month a year ago, worst market first</li>
+      <li>Whether you actually rank first for your own brand name, per market</li>
+    </ul>
+    <a class="btn" href="/tools/share-of-search/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>SERP preview</h3>
+    <p>What a real Google search actually looks like for a keyword — previewed the way it renders on a phone or desktop, in any city or country you choose, not just wherever your own IP happens to be.</p>
+    <ul>
+      <li>Organic results, AI Overview and local pack, rendered as a phone or desktop mockup</li>
+      <li>Any city, region or country — not limited to a fixed market list</li>
+      <li>iOS, Android or desktop, matching how Google actually varies by device</li>
+    </ul>
+    <a class="btn" href="/tools/serp-preview/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Live</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Estimated organic traffic</h3>
+    <p>How much organic search traffic a site is actually pulling in, estimated from every keyword it ranks for — the same rank &times; volume &times; click-through-rate math Ahrefs and SEMrush use for their own traffic numbers, not a panel-data guess.</p>
+    <ul>
+      <li>Estimated monthly organic visits, ranking-position breakdown, and a domain authority score — for your site and up to 3 competitors</li>
+      <li>Optional 12-month trend, organic and paid traffic charted separately since they run at very different scales</li>
+      <li>Domain rank: a PageRank-style 0–100 score from each site's backlink profile</li>
+    </ul>
+    <a class="btn" href="/tools/traffic-estimate/">Open the tool</a>
+    <p class="note">Runs on a personal access code. <a href="/#contact">Ask us for one</a> if you don't have it.</p>
+  </div>
+
+  </div>
+  </details>
+
+  </div>
+
+  <p class="foot">Tools are free and access is by request while they're new — mostly so we can keep the data costs sane. <a href="/#contact">Get in touch</a> and we'll send you a code.</p>
+  <p class="foot">All tools built by our ex-employee Myles Claffey.</p>
+</div>
+</body>
+</html>
