@@ -538,6 +538,30 @@ $('city').addEventListener('change', () => {
   map.setView(CITY_CENTERS[$('city').value] || CITY_CENTERS.prague, DEFAULT_ZOOM);
 });
 
+// Defaults the city picker to whichever of the 3 supported cities the
+// visitor is actually closest to, using Cloudflare's free request.cf
+// country code (src/index.js's /geo-locate, already used by pin-check to
+// center its map) — no extra API cost. Ireland -> Dublin, Czechia ->
+// Prague, Germany -> Hamburg; any other country leaves the plain default
+// (Prague, the first <option>) alone rather than guessing. Fires the
+// existing 'change' listeners rather than duplicating their session-reset
+// and map-recenter logic.
+const GEO_CITY_BY_COUNTRY = { IE: 'dublin', CZ: 'prague', DE: 'hamburg' };
+async function applyGeoCityDefault(){
+  let d;
+  try {
+    const res = await fetch(API + '/geo-locate', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: CODE })
+    });
+    d = await res.json();
+  } catch (e) { return; }
+  const city = GEO_CITY_BY_COUNTRY[d.country];
+  if (!city || $('city').value === city) return;
+  $('city').value = city;
+  $('city').dispatchEvent(new Event('change'));
+}
+
 function updateCap(){
   const n = Number($('size').value);
   $('cap').textContent = n + ' × ' + n + ' = ' + (n * n) + ' points checked';
@@ -1138,6 +1162,8 @@ if (!CODE){
   $('manual').onkeydown = e => { if (e.key === 'Enter') go(); };
 } else if (REPORT_ID){
   loadSavedScan(REPORT_ID);
+} else {
+  applyGeoCityDefault();
 }
 </script>
 </body>
