@@ -31,6 +31,11 @@
       overflow:hidden;transition:border-color .15s ease}
   .category:hover{border-color:#3a4358}
   .category[open]{grid-column:1 / -1;border-color:var(--you)}
+  /* Visual order only — DOM order stays as-is so the sidebar's
+     tool-dedup logic (which credits each shared tool to whichever
+     category it meets first in source order) still lands them under
+     their more specific category instead of all piling into this one. */
+  .cat-last{order:99}
   .category summary{list-style:none;cursor:pointer;padding:30px 32px;display:flex;
       justify-content:space-between;align-items:flex-start;gap:18px}
   .category summary::-webkit-details-marker{display:none}
@@ -135,7 +140,7 @@
 
   <div class="category-menu">
 
-  <details class="category" name="category-group">
+  <details class="category cat-last" name="category-group">
   <summary>
     <div>
       <div class="cattitle">Free To Use Tools</div>
