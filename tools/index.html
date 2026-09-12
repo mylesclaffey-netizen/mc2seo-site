@@ -955,7 +955,16 @@
 
   // Build the sidebar from the category cards already in the page —
   // one source of truth, no duplicated tool data to keep in sync.
+  //
+  // Dedup still walks categories in DOM (source) order, same as always,
+  // so a shared tool (e.g. schema-builder) is still credited to its
+  // first-listed, more-specific category rather than all piling into
+  // Free To Use Tools. Rendering is buffered separately so a `.cat-last`
+  // category's section can be appended after every other one — matching
+  // where it visually sits in the card grid — without changing which
+  // category "wins" a given tool.
   var seen = {};
+  var lastFrag = document.createDocumentFragment();
   document.querySelectorAll('.category').forEach(function(cat){
     var cards = Array.prototype.filter.call(cat.querySelectorAll('.live'), function(card){
       var slug = slugFromHref(card.querySelector('a.btn').getAttribute('href'));
@@ -964,10 +973,11 @@
       return true;
     });
     if (!cards.length) return;
+    var target = cat.classList.contains('cat-last') ? lastFrag : sidebar;
     var heading = document.createElement('div');
     heading.className = 'scat';
     heading.textContent = cat.querySelector('.cattitle').textContent;
-    sidebar.appendChild(heading);
+    target.appendChild(heading);
     cards.forEach(function(card){
       var btn = card.querySelector('a.btn');
       var href = btn.getAttribute('href');
@@ -980,9 +990,10 @@
       a.dataset.slug = slug;
       a.innerHTML = '<span class="dot ' + tier + '"></span>' + card.querySelector('h3').textContent;
       a.addEventListener('click', function(e){ e.preventDefault(); openTool(slug); closeSidebarMobile(); });
-      sidebar.appendChild(a);
+      target.appendChild(a);
     });
   });
+  sidebar.appendChild(lastFrag);
 
   var historyEntry = document.createElement('a');
   historyEntry.className = 'sidetool';
