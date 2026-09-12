@@ -143,6 +143,7 @@
   .organic .snip{font-size:13px;color:#4d5156;line-height:1.45}
   .organic .rating{font-size:12px;color:#70757a;margin-top:2px}
   .empty{font-size:13px;color:#70757a;padding:20px 0;text-align:center}
+  body.embed .sidenav{display:none}
 </style>
 </head>
 <body>
@@ -215,6 +216,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
+if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');
 const API = 'https://mc2seo-tools-api.mylesclaffey.workers.dev/api';
 const CODE = new URLSearchParams(location.search).get('k') || '';
 const REPORT_ID = new URLSearchParams(location.search).get('id') || '';

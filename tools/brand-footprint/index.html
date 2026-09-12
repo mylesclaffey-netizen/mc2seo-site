@@ -91,6 +91,7 @@
   .sidenav-link:hover{color:var(--ink)}
   .sidenav-link.accent{color:var(--you);font-weight:500}
   .sidenav-link.accent:hover{color:#8b95ff}
+  body.embed .sidenav{display:none}
 </style>
 </head>
 <body>
@@ -150,6 +151,7 @@
 </div>
 
 <script>
+if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');
 const API = 'https://mc2seo-tools-api.mylesclaffey.workers.dev/api';
 const CODE = new URLSearchParams(location.search).get('k') || '';
 const REPORT_ID = new URLSearchParams(location.search).get('id') || '';

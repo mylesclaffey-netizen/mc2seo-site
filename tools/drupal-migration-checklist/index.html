@@ -78,6 +78,7 @@
   .sidenav-link:hover{color:var(--ink)}
   .sidenav-link.accent{color:var(--you);font-weight:500}
   .sidenav-link.accent:hover{color:#8b95ff}
+  body.embed .sidenav{display:none}
 </style>
 </head>
 <body>
@@ -109,6 +110,7 @@
 </div>
 
 <script>
+if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');
 const $ = id => document.getElementById(id);
 const STORAGE_KEY = 'mc2seo-drupal-migration-checklist-v1';
 

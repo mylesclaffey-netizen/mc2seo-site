@@ -66,6 +66,7 @@
   .taglist a{color:inherit;text-decoration:none}
   .taglist a:hover{color:var(--you)}
   .runrow{font-size:11px;color:var(--muted);margin-top:10px}
+  body.embed .sidenav{display:none}
 </style>
 </head>
 <body>
@@ -126,6 +127,7 @@ who are the top digital marketing agencies for SaaS companies"></textarea>
 </div>
 
 <script>
+if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');
 const API = 'https://mc2seo-tools-api.mylesclaffey.workers.dev/api';
 const CODE = new URLSearchParams(location.search).get('k') || '';
 const REPORT_ID = new URLSearchParams(location.search).get('id') || '';

@@ -91,6 +91,7 @@
   .notes b{color:var(--ink);font-weight:400}
   .foot{font-size:10px;color:var(--muted);margin-top:22px;line-height:1.6}
   @media (prefers-reduced-motion:reduce){.ghost{animation:none}}
+  body.embed .sidenav{display:none}
 </style>
 </head>
 <body>
@@ -176,6 +177,7 @@
 </div>
 
 <script>
+if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');
 const API = 'https://mc2seo-tools-api.mylesclaffey.workers.dev/api';
 
 const MARKETS = [

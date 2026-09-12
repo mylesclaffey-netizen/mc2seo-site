@@ -77,6 +77,7 @@
         padding:9px 16px;border-radius:20px;opacity:0;pointer-events:none;
         transition:opacity .18s ease,transform .18s ease;z-index:9}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  body.embed .sidenav{display:none}
 </style>
 </head>
 <body>
@@ -136,6 +137,7 @@
 <div class="toast" id="toast">Copied</div>
 
 <script>
+if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');
 const API = 'https://mc2seo-tools-api.mylesclaffey.workers.dev/api';
 const CODE = new URLSearchParams(location.search).get('k') || '';
 const REPORT_ID = new URLSearchParams(location.search).get('id') || '';
