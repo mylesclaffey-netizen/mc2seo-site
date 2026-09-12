@@ -925,6 +925,24 @@
   var homeView = document.getElementById('homeView');
   var toolFrame = document.getElementById('toolFrame');
   var navToggle = document.getElementById('navToggle');
+  var currentSlug = null;
+
+  // One access code unlocks every tool: read it from the URL or fall back
+  // to whatever was saved from a previous visit, then keep it in
+  // localStorage so it survives across sessions without needing ?k= every
+  // time. setCode() is also how a code typed into a tool's own gate (see
+  // the toolFrame 'load' listener below) propagates to every other tool.
+  var CODE_KEY = 'mc2seo_code';
+  var CODE = params.get('k') || (function(){ try { return localStorage.getItem(CODE_KEY) || ''; } catch(e){ return ''; } })();
+
+  function setCode(code){
+    if (!code || code === CODE) return;
+    CODE = code;
+    try { localStorage.setItem(CODE_KEY, CODE); } catch(e){}
+    var sp = forwardedParams(currentSlug ? { tool: currentSlug } : null);
+    var qs = sp.toString();
+    history.replaceState(history.state, '', '/tools/' + (qs ? '?' + qs : ''));
+  }
 
   function slugFromHref(href){
     return href.replace(/^\/tools\//,'').replace(/\/$/,'');
@@ -980,9 +998,30 @@
   function forwardedParams(extra){
     var p = new URLSearchParams(params);
     p.delete('tool');
+    if (CODE) p.set('k', CODE); else p.delete('k');
     if (extra) Object.keys(extra).forEach(function(k){ p.set(k, extra[k]); });
     return p;
   }
+
+  // A tool with no code yet shows its own gate; submitting it navigates
+  // that iframe (same-origin) to its own URL with ?k=<code> — replacing
+  // the whole query string, which also wipes out our own ?embed=1 and
+  // brings back that tool's redundant nav row. Catch both: pick up the
+  // code so it unlocks every other tool too, then restore embed=1.
+  toolFrame.addEventListener('load', function(){
+    try {
+      var frameLoc = toolFrame.contentWindow.location;
+      if (frameLoc.href === 'about:blank') return;
+      var fp = new URLSearchParams(frameLoc.search);
+      var k = fp.get('k');
+      if (k) setCode(k);
+      if (currentSlug && fp.get('embed') !== '1') {
+        var p2 = forwardedParams();
+        p2.set('embed', '1');
+        toolFrame.contentWindow.location.replace(frameLoc.pathname + '?' + p2.toString());
+      }
+    } catch (e) { /* cross-origin or not yet navigable — ignore */ }
+  });
 
   function navigateFrame(url){
     // A plain `src` assignment adds its own entry to the browser's joint
@@ -1000,6 +1039,7 @@
   }
 
   function openTool(slug, push){
+    currentSlug = slug;
     var p = forwardedParams();
     p.set('embed', '1');
     navigateFrame('/tools/' + slug + '/?' + p.toString());
@@ -1015,6 +1055,7 @@
   }
 
   function showHome(push){
+    currentSlug = null;
     toolFrame.hidden = true;
     if (toolFrame.dataset.loaded) navigateFrame('about:blank');
     homeView.hidden = false;
@@ -1038,6 +1079,14 @@
   navToggle.addEventListener('click', function(){ sidebar.classList.toggle('open'); });
 
   renderFromLocation();
+
+  // A code recovered from localStorage (not the URL) should still show up
+  // in the address bar, so refreshing or copying the link keeps working.
+  if (CODE && params.get('k') !== CODE) {
+    var sp0 = forwardedParams(currentSlug ? { tool: currentSlug } : null);
+    var qs0 = sp0.toString();
+    history.replaceState(history.state, '', '/tools/' + (qs0 ? '?' + qs0 : ''));
+  }
 })();
 </script>
 </body>
