@@ -102,6 +102,8 @@
   .placecard .rating{color:var(--gold)}
   .adtag{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--warn);
         border:1px solid var(--warn);border-radius:4px;padding:1px 4px;letter-spacing:.03em}
+  .ptbadge{display:inline-block;font-size:10.5px;color:var(--ink);background:var(--paper);
+        border:1px solid var(--line);border-radius:5px;padding:2px 6px;margin-right:4px}
 
   .mapspin{width:20px;height:20px;border-radius:50%;background:var(--ok);display:flex;
         align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;
@@ -427,14 +429,85 @@ async function run(){
       const d = await res.json();
       return { ...t, ...d };
     }));
-  } catch (e) { outcomes = [{ error: 'could not reach the API' }]; }
+  } catch (e) { outcomes = targets.map(t => ({ ...t, error: 'could not reach the API' })); }
 
   updateGoState();
-  renderOutcomes(outcomes, showLabels);
+  renderOutcomes(outcomes, showLabels, keywords);
 }
 
-function renderOutcomes(outcomes, showLabels){
-  $('results').innerHTML = outcomes.map(o => renderPointOutcome(o, showLabels)).join('') +
+// For each keyword, which businesses turned up in the ORGANIC local pack
+// at every single point checked — not just one location, but consistently
+// visible across the whole area. Sponsored ads are deliberately excluded:
+// those are targeted per-search, so "consistent everywhere" doesn't carry
+// the same competitive-visibility meaning it does for organic placement.
+// Matches business identity by exact-normalized title — Google Maps
+// returns the same listing's title identically across nearby searches, so
+// this doesn't need fuzzy matching.
+function normTitle(s){ return String(s ?? '').toLowerCase().trim().replace(/\s+/g, ' '); }
+
+function computeOverlaps(outcomes, keywords){
+  const validPoints = outcomes.filter(o => !o.error);
+  if (validPoints.length < 2) return [];
+
+  return keywords.map(keyword => {
+    const perPoint = validPoints.map(o => {
+      const kwResult = (o.results || []).find(r => r.keyword === keyword);
+      return { label: o.label, places: (kwResult && !kwResult.error) ? (kwResult.organic || []) : null };
+    });
+    if (perPoint.some(p => p.places === null)) return { keyword, incomplete: true, overlap: [] };
+
+    const [first, ...rest] = perPoint;
+    const overlap = [];
+    for (const place of first.places) {
+      const key = normTitle(place.title);
+      if (!key) continue;
+      if (!rest.every(p => p.places.some(pl => normTitle(pl.title) === key))) continue;
+      overlap.push({
+        title: place.title, rating: place.rating, rating_count: place.rating_count,
+        category: place.category, address: place.address,
+        perPointRank: perPoint.map(p => ({ label: p.label, rank: p.places.find(pl => normTitle(pl.title) === key)?.rank ?? null }))
+      });
+    }
+    return { keyword, incomplete: false, overlap };
+  });
+}
+
+function renderOverlapPlace(p){
+  const badges = p.perPointRank.map(r => '<span class="ptbadge">' + esc(r.label) + ' #' + (r.rank ?? '—') + '</span>').join(' ');
+  return '<div class="placecard">' +
+    '<div class="rank">✓</div>' +
+    '<div><div class="title">' + esc(p.title) + '</div>' +
+    '<div class="meta2">' +
+    (p.rating != null ? '<span class="rating">★ ' + p.rating.toFixed(1) + '</span>' + (p.rating_count ? ' (' + p.rating_count.toLocaleString() + ')' : '') + ' · ' : '') +
+    (p.category ? esc(p.category) + ' · ' : '') + esc(p.address || '') + '</div>' +
+    '<div class="meta2" style="margin-top:5px">' + badges + '</div>' +
+    '</div></div>';
+}
+
+function renderOverlapKeyword(o){
+  if (o.incomplete){
+    return '<div class="kwresult"><p class="kwtitle">“' + esc(o.keyword) + '”</p>' +
+      '<p class="empty" style="color:var(--muted)">Couldn\'t compare — this keyword didn\'t return a result at every point.</p></div>';
+  }
+  if (!o.overlap.length){
+    return '<div class="kwresult"><p class="kwtitle">“' + esc(o.keyword) + '”</p>' +
+      '<p class="empty" style="color:var(--muted)">No business appeared in the local pack at every point checked.</p></div>';
+  }
+  return '<div class="kwresult"><p class="kwtitle">“' + esc(o.keyword) + '” — ' + o.overlap.length +
+    (o.overlap.length === 1 ? ' business' : ' businesses') + ' at every point</p>' +
+    '<div class="placelist">' + o.overlap.map(renderOverlapPlace).join('') + '</div></div>';
+}
+
+function renderOverlapSection(overlaps){
+  if (!overlaps.length) return '';
+  return '<h2>Consistent across all points</h2>' +
+    '<p class="lede" style="margin-bottom:14px">Organic local-pack listings only — sponsored ads aren\'t compared here.</p>' +
+    overlaps.map(renderOverlapKeyword).join('');
+}
+
+function renderOutcomes(outcomes, showLabels, keywords){
+  const overlapHtml = showLabels ? renderOverlapSection(computeOverlaps(outcomes, keywords)) : '';
+  $('results').innerHTML = overlapHtml + outcomes.map(o => renderPointOutcome(o, showLabels)).join('') +
     '<div class="sharebar" id="sharebar"><input id="shareUrl" readonly><button id="copyShare" type="button">Copy</button></div>';
   const url = location.origin + location.pathname + '?k=' + encodeURIComponent(CODE) + '&id=' + reportId;
   $('shareUrl').value = url;
@@ -519,7 +592,7 @@ async function loadSavedReport(id){
   updateGoState();
 
   const outcomes = pts.map(pt => ({ label: pt.label, lat: pt.lat, lng: pt.lng, results: pt.results, error: pt.error }));
-  renderOutcomes(outcomes, pts.length > 1);
+  renderOutcomes(outcomes, pts.length > 1, data.keywords || []);
 }
 
 if (!CODE){
