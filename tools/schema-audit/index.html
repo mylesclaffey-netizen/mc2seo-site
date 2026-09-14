@@ -124,6 +124,7 @@
     <button class="backbtn" id="back">&larr; New page</button>
     <p class="eyebrow restag">Schema analysis</p>
     <h1 id="rTitle" style="font-size:20px">Checking…</h1>
+    <p id="rRedirect" class="lede" style="display:none;margin-bottom:16px"></p>
     <div id="out"></div>
 
     <div class="sidenav">
@@ -196,10 +197,17 @@ async function run(){
 
   if (d.error){
     $('rTitle').textContent = url;
+    $('rRedirect').style.display = 'none';
     $('out').innerHTML = '<p class="err">' + esc(d.error) + '</p>';
     return;
   }
   $('rTitle').textContent = d.page_title || d.url;
+  if (d.redirected_from){
+    $('rRedirect').textContent = 'Redirected from ' + d.redirected_from + ' to ' + d.url;
+    $('rRedirect').style.display = 'block';
+  } else {
+    $('rRedirect').style.display = 'none';
+  }
   $('out').innerHTML = renderResults(d) + renderShare(url);
 }
 
