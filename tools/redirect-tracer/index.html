@@ -156,6 +156,8 @@
 if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');
 const API = 'https://mc2seo-tools-api.mylesclaffey.workers.dev/api';
 const $ = id => document.getElementById(id);
+const PREFILL_U = new URLSearchParams(location.search).get('u');
+if (PREFILL_U) { const f = document.getElementById('url'); if (f) f.value = PREFILL_U; }
 function esc(s){ return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 let mode = 'url'; // 'url' | 'domain'

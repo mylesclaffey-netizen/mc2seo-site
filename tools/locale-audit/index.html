@@ -135,6 +135,8 @@ const CODE = new URLSearchParams(location.search).get('k') || '';
 document.querySelectorAll('.historyLink').forEach(a => a.href = '/tools/history/?k=' + encodeURIComponent(CODE));
 
 const $ = id => document.getElementById(id);
+const PREFILL_U = new URLSearchParams(location.search).get('u');
+if (PREFILL_U) { const f = document.getElementById('url'); if (f) f.value = PREFILL_U; }
 function esc(s){ return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 

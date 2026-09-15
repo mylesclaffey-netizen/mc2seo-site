@@ -184,6 +184,8 @@ const MAX_COMPETITORS = 2;
 const R = 50, CIRC = 2 * Math.PI * R;
 
 const $ = id => document.getElementById(id);
+const PREFILL_U = new URLSearchParams(location.search).get('u');
+if (PREFILL_U) { const f = document.getElementById('you-url'); if (f) f.value = PREFILL_U; }
 let device = 'mobile';
 let siteResults = []; // filled as each site's fetch resolves
 let cardEls = [];
