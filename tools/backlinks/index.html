@@ -97,32 +97,26 @@
 <body>
 <div class="wrap">
 
-  <div id="gate" style="display:none">
-    <p class="eyebrow">Light token usage</p>
-    <h1>You need an access code</h1>
-    <p class="lede">This tool runs on a personal link. Open the link you were sent — it carries your code — or type the code below.</p>
-    <div class="field" style="max-width:280px"><label for="manual">Access code</label>
-      <input id="manual" type="text" placeholder="acme-7f3d" autocapitalize="off" spellcheck="false"></div>
-    <button class="submit" id="enter" type="button" style="max-width:280px">Continue</button>
-    <p class="after" style="text-align:left;max-width:280px">Don't have one? <a href="/#contact" style="color:var(--you)">Ask us for access</a>.</p>
-  </div>
-
   <div id="form">
-    <p class="eyebrow">Light token usage</p>
+    <p class="eyebrow" id="eyebrow">Light token usage</p>
     <h1>Backlink profile check</h1>
-    <p class="lede">Real backlink data, not a guess: how many domains actually link to a site, how many total backlinks, the dofollow/nofollow split, DataForSEO's own domain rank score, and who the top referring domains actually are.</p>
+    <p class="lede">Real backlink data, not a guess: how many domains actually link to a site, how many total backlinks, the dofollow/nofollow split, and DataForSEO's own domain rank score — free, no code needed. An access code unlocks the top-20 referring-domains list and competitor comparison.</p>
 
     <div class="field"><label for="website">Website</label><input id="website" type="text" placeholder="yoursite.com"></div>
 
-    <label class="toggle"><input type="checkbox" id="compToggle"> Compare against up to 3 competitors</label>
-    <div id="compBox">
-      <div class="field"><input id="comp1" type="text" placeholder="competitor1.com"></div>
-      <div class="field"><input id="comp2" type="text" placeholder="competitor2.com"></div>
-      <div class="field"><input id="comp3" type="text" placeholder="competitor3.com"></div>
+    <div id="compUnlocked" style="display:none">
+      <label class="toggle"><input type="checkbox" id="compToggle"> Compare against up to 3 competitors</label>
+      <div id="compBox">
+        <div class="field"><input id="comp1" type="text" placeholder="competitor1.com"></div>
+        <div class="field"><input id="comp2" type="text" placeholder="competitor2.com"></div>
+        <div class="field"><input id="comp3" type="text" placeholder="competitor3.com"></div>
+      </div>
     </div>
+    <p class="after" id="compLocked" style="text-align:left;display:none">Competitor comparison needs a personal access code. <a href="/#contact" style="color:var(--you)">Ask us for one</a> — or check a single domain free below.</p>
 
     <button class="submit" id="go" type="button">Check backlinks</button>
-    <p class="after">Real cost per domain, cached 7 days — backlink profiles don't shift day to day.</p>
+    <p class="after" id="costNote">Real cost per domain, cached 7 days — backlink profiles don't shift day to day.</p>
+    <p class="after" id="freeNote" style="display:none">Free summary — referring domains, total backlinks, dofollow split and domain rank. <a href="/#contact" style="color:var(--you)">Get an access code</a> for the top-20 referring-domains list and competitor comparison.</p>
 
     <div class="sidenav">
       <a href="/tools/" class="sidenav-link">← Back to tools</a>
@@ -164,6 +158,18 @@ function fmtNum(n){
   return String(n);
 }
 
+// A code unlocks competitor comparison + the top-referring-domains list
+// (both real extra DataForSEO cost, see worker/src/backlinks.js); without
+// one, a single domain still gets a real, free summary check.
+if (CODE) {
+  $('compUnlocked').style.display = 'block';
+} else {
+  $('eyebrow').textContent = 'Free tool · no access code needed';
+  $('compLocked').style.display = 'block';
+  $('costNote').style.display = 'none';
+  $('freeNote').style.display = 'block';
+}
+
 $('compToggle').addEventListener('change', e => { $('compBox').style.display = e.target.checked ? 'block' : 'none'; });
 $('out').addEventListener('click', e => {
   const btn = e.target.closest('.togglebtn');
@@ -179,7 +185,7 @@ $('back').onclick = () => { $('results').style.display = 'none'; $('form').style
 
 async function run(){
   const website = $('website').value.trim();
-  const competitors = $('compToggle').checked
+  const competitors = (CODE && $('compToggle').checked)
     ? [$('comp1').value, $('comp2').value, $('comp3').value].map(s => s.trim()).filter(Boolean)
     : [];
 
@@ -198,9 +204,16 @@ async function run(){
 
   let d;
   try {
-    const res = await fetch(API + '/backlinks', {
+    // With a code: the full report (competitors + top referring domains).
+    // Without one: the free summary-only endpoint — same response shape
+    // (still { website, sites: [...] }), just missing top_referring_domains
+    // and never accepting competitors, so renderResults/renderSite need no
+    // branching between the two.
+    const endpoint = CODE ? '/backlinks' : '/backlinks/summary';
+    const payload = CODE ? { code: CODE, website, competitors } : { website };
+    const res = await fetch(API + endpoint, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: CODE, website, competitors })
+      body: JSON.stringify(payload)
     });
     d = await res.json();
   } catch (e) { d = { error: 'could not reach the API' }; }
@@ -255,17 +268,6 @@ function renderSite(s, i){
   }
 
   return html + '</div>';
-}
-
-if (!CODE){
-  $('form').style.display = 'none';
-  $('gate').style.display = 'block';
-  const goGate = () => {
-    const v = $('manual').value.trim().toLowerCase().replace(/\s+/g, '');
-    if (v) location.search = '?k=' + encodeURIComponent(v);
-  };
-  $('enter').onclick = goGate;
-  $('manual').onkeydown = e => { if (e.key === 'Enter') goGate(); };
 }
 </script>
 </body>
