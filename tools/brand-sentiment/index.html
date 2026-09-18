@@ -50,6 +50,19 @@
   .stat .val.ok{color:var(--ok)} .stat .val.warn{color:var(--warn)} .stat .val.bad{color:var(--bad)} .stat .val.muted{color:var(--muted)}
   .stat .lbl{font-size:11.5px;color:var(--muted);margin-top:4px}
 
+  select{width:100%;font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--ink);
+        background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:15px 17px}
+  select:focus{outline:2.5px solid var(--you);outline-offset:1px;border-color:transparent}
+  .card{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:20px;margin-bottom:14px}
+  .social{display:flex;justify-content:space-between;align-items:center;gap:12px;
+        padding:12px 0;border-top:1px solid var(--line)}
+  .social:first-child{border-top:0}
+  .social .splatform{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700}
+  .social .surl{font-size:12px;color:var(--muted);margin-top:3px;word-break:break-all}
+  .social .srank{flex:none}
+  .pill.ranked{color:var(--ok);background:rgba(62,207,149,.13)}
+  .pill.unranked{color:var(--muted);background:rgba(154,163,186,.13)}
+
   .qcard{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:20px;margin-bottom:14px}
   .qcard .qtext{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;margin-bottom:12px;line-height:1.35}
   .runs{display:flex;flex-direction:column;gap:12px}
@@ -104,6 +117,15 @@
       <input id="context" type="text" placeholder="e.g. payments software" maxlength="120">
       <p class="hint">Add this if your brand name is short or shared with something else — it's woven into every question to help the AI find the right entity.</p>
     </div>
+    <div class="field">
+      <label for="website">Website (optional)</label>
+      <input id="website" type="text" placeholder="e.g. stripe.com" maxlength="253">
+      <p class="hint">Add this to also check where your own social profiles (LinkedIn, X, etc. — read from your homepage's structured data) actually rank on Google for your brand name. Uses one real Google search, so it's not free.</p>
+    </div>
+    <div class="field" id="marketField" style="display:none">
+      <label for="market">Market (for the social ranking check)</label>
+      <select id="market"></select>
+    </div>
 
     <button class="submit" id="go" type="button">Check brand sentiment</button>
     <p class="after">Currently Gemini only — real, live-grounded answers. 15 live checks per run.</p>
@@ -139,8 +161,14 @@ const CODE = new URLSearchParams(location.search).get('k') || '';
 const REPORT_ID = new URLSearchParams(location.search).get('id') || '';
 document.querySelectorAll('.historyLink').forEach(a => a.href = '/tools/history/?k=' + encodeURIComponent(CODE));
 
+const MARKETS = ['United Kingdom','United States','Canada','Ireland','Australia','Germany','France',
+  'Netherlands','Switzerland','Austria','Spain','Italy','Poland','Czechia','Slovakia'];
+
 const $ = id => document.getElementById(id);
 function esc(s){ return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+$('market').innerHTML = MARKETS.map(m => '<option' + (m === 'United States' ? ' selected' : '') + '>' + esc(m) + '</option>').join('');
+$('website').oninput = () => { $('marketField').style.display = $('website').value.trim() ? 'block' : 'none'; };
 
 $('go').onclick = run;
 $('back').onclick = () => { $('results').style.display = 'none'; $('form').style.display = 'block'; };
@@ -148,6 +176,8 @@ $('back').onclick = () => { $('results').style.display = 'none'; $('form').style
 async function run(){
   const brand = $('brand').value.trim();
   const context = $('context').value.trim();
+  const website = $('website').value.trim();
+  const market = $('market').value;
 
   if (!brand){ flashGo('Add a brand name first'); return; }
 
@@ -155,14 +185,14 @@ async function run(){
   $('form').style.display = 'none';
   $('results').style.display = 'block';
   $('rTitle').textContent = brand;
-  $('out').innerHTML = '<p class="empty">Asking Gemini 5 questions, 3 times each — this takes a little while…</p>';
+  $('out').innerHTML = '<p class="empty">Asking Gemini 5 questions, 3 times each' + (website ? ', and checking your social rankings' : '') + ' — this takes a little while…</p>';
   window.scrollTo(0,0);
 
   let d;
   try {
     const res = await fetch(API + '/brand-sentiment', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: CODE, brand, context })
+      body: JSON.stringify({ code: CODE, brand, context, website, market: website ? market : '' })
     });
     d = await res.json();
   } catch (e) { d = { error: 'could not reach the API' }; }
@@ -211,8 +241,28 @@ async function loadReport(id){
 function renderReport(d){
   let html = '<p class="meta">' + d.providers.length + ' provider' + (d.providers.length === 1 ? '' : 's') +
     (d.context ? ' · context: "' + esc(d.context) + '"' : '') + '</p>';
+  html += renderSocialProfiles(d);
   html += d.providers.map(renderProvider).join('');
   html += '<p class="foot">Every sentiment read comes from the same live answer shown below it — nothing here is a hidden score. "Not mentioned" means the AI had nothing specific to say about this brand for that question, not that it said something bad.</p>';
+  return html;
+}
+
+function renderSocialProfiles(d){
+  if (!d.social) return '';
+  const profiles = d.social.profiles || [];
+  if (!profiles.length) return '<div class="section"><h2>Social profiles</h2><p class="sdesc">No <code>sameAs</code> social links found in ' + esc(d.website) + '\'s structured data.</p></div>';
+
+  const sorted = [...profiles].sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+  let html = '<div class="section"><h2>Social profiles</h2>' +
+    '<p class="sdesc">Your own declared profiles (from ' + esc(d.website) + '\'s <code>sameAs</code> structured data), checked against where they actually rank on Google for "' + esc(d.brand) + '" in ' + esc(d.market) + ' — not just whether the platform shows up, but whether it\'s specifically your page.</p>';
+  html += '<div class="card">';
+  html += sorted.map(p =>
+    '<div class="social"><div><div class="splatform">' + esc(p.platform) + '</div>' +
+    '<div class="surl">' + esc(p.url) + '</div></div>' +
+    '<div class="srank"><span class="pill ' + (p.rank !== null ? 'ranked' : 'unranked') + '">' +
+    (p.rank !== null ? 'Rank #' + p.rank : 'Not on page one') + '</span></div></div>'
+  ).join('');
+  html += '</div></div>';
   return html;
 }
 
