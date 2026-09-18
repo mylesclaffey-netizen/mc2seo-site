@@ -76,6 +76,15 @@
   .pill.none{color:var(--muted);background:rgba(154,163,186,.13)}
   .pill.unclear{color:var(--warn);background:rgba(240,184,79,.13)}
 
+  .social{display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:13px 0;border-top:1px solid var(--line)}
+  .social:first-child{border-top:0}
+  .social .splatform{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700}
+  .social .surl{font-size:12px;color:var(--muted);margin-top:3px;word-break:break-all}
+  .social .srank{flex:none}
+  .pill.ranked{color:var(--ok);background:rgba(62,207,149,.13)}
+  .pill.unranked{color:var(--muted);background:rgba(154,163,186,.13)}
+
   .idgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
   .idtile{border-radius:14px;padding:14px 15px;font-size:13px;font-weight:500;line-height:1.4;
       border:1.5px solid transparent}
@@ -242,6 +251,7 @@ function renderReport(d){
   html += renderScreenshots(d.bare, d.qualified, d.same_query);
   html += renderConfusion(d.bare, d.qualified, d.same_query);
   html += renderControl(d.bare, d.qualified, d.same_query);
+  html += renderSocialProfiles(d.bare);
   html += renderIdentity(d.bare);
   html += renderReputation(d.bare);
   html += renderDefence(d.bare);
@@ -312,6 +322,24 @@ function renderControl(bare, qualified, sameQuery){
   html += stat(c.owned_in_top10 + ' / 10', 'Owned results in top 10', c.owned_in_top10 >= 2 ? 'ok' : '');
   html += stat(c.sitelinks_count, 'Sitelinks shown', c.sitelinks_count > 0 ? 'ok' : '');
   html += stat(Math.round((c.third_party_share_top10 ?? 0) * 100) + '%', 'Third-party share of top 10', '');
+  html += '</div></div>';
+  return html;
+}
+
+function renderSocialProfiles(bare){
+  const profiles = bare.social_profiles || [];
+  if (!profiles.length) return '';
+
+  const sorted = [...profiles].sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+  let html = '<div class="section"><h2>Social profiles</h2>' +
+    '<p class="sdesc">Your own declared profiles (from your homepage\'s <code>sameAs</code> structured data), checked against where they actually rank for "' + esc(bare.query) + '" — not just whether the platform shows up, but whether it\'s specifically your page.</p>';
+  html += '<div class="card">';
+  html += sorted.map(p =>
+    '<div class="social"><div><div class="splatform">' + esc(p.platform) + '</div>' +
+    '<div class="surl">' + esc(p.url) + '</div></div>' +
+    '<div class="srank"><span class="pill ' + (p.rank !== null ? 'ranked' : 'unranked') + '">' +
+    (p.rank !== null ? 'Rank #' + p.rank : 'Not on page one') + '</span></div></div>'
+  ).join('');
   html += '</div></div>';
   return html;
 }
