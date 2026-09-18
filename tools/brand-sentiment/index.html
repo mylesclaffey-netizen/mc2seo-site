@@ -260,7 +260,7 @@ function renderSocialProfiles(d){
     '<div class="social"><div><div class="splatform">' + esc(p.platform) + '</div>' +
     '<div class="surl">' + esc(p.url) + '</div></div>' +
     '<div class="srank"><span class="pill ' + (p.rank !== null ? 'ranked' : 'unranked') + '">' +
-    (p.rank !== null ? 'Rank #' + p.rank : 'Not on page one') + '</span></div></div>'
+    (p.rank !== null ? 'Rank #' + p.rank : 'Not in top 30') + '</span></div></div>'
   ).join('');
   html += '</div></div>';
   return html;
