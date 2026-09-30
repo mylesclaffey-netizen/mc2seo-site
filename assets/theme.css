@@ -1,0 +1,70 @@
+/* Brand Checker theme — loaded after each tool page's own <style>, so it wins
+   ties. Colours come from the pages' own variables (remapped in each file);
+   this file adds the structural look: square, hard-bordered, oversized type. */
+:root{--paper:#0a0c11;--card:#12151d;--card2:#171b26;--ink:#eceef4;--muted:#8b93a7;--line:#242c3d;
+      --you:#6e7bff;--ok:#35c48d;--warn:#e0a93a;--bad:#e8695f;--gold:#ffd65c}
+::selection{background:#6e7bff;color:#eceef4}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:#0a0c11;color:#eceef4}
+input,select,textarea,button{font-family:'Space Grotesk',system-ui,sans-serif}
+
+h1{font-family:'Space Grotesk',sans-serif;font-weight:900;text-transform:uppercase;
+   letter-spacing:-.04em;line-height:.98;color:#eceef4}
+h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:800;letter-spacing:-.02em;color:#eceef4}
+.eyebrow{display:inline-block;font-family:'IBM Plex Mono',monospace;font-weight:500;color:#eceef4;
+   background:#6e7bff;border:2px solid #242c3d;padding:4px 10px;letter-spacing:.12em}
+.eyebrow.restag{font-size:12px}
+.lede{color:#eceef4;font-weight:500;border-left:6px solid #6e7bff;padding-left:16px;text-align:left}
+.after,.foot,.hint,.meta,.sdesc,.empty{color:#8b93a7}
+label{color:#eceef4;font-weight:700}
+a{text-decoration-thickness:2px;text-underline-offset:3px}
+
+input,select,textarea{border:2px solid #242c3d;border-radius:0;background:#12151d;color:#eceef4}
+input::placeholder,textarea::placeholder{color:#6b7385}
+input:focus,select:focus,textarea:focus{outline:3px solid #6e7bff;outline-offset:0;border-color:#242c3d}
+
+.submit,.btn{background:#232a3a;color:#fff;border:2px solid #242c3d;border-radius:0;
+   font-family:'Space Grotesk',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+   box-shadow:5px 5px 0 #6e7bff;transition:transform .1s ease,box-shadow .1s ease}
+.submit:hover,.btn:hover{background:#232a3a;color:#fff;transform:translate(-2px,-2px);box-shadow:7px 7px 0 #6e7bff}
+.submit[disabled]{opacity:.45;box-shadow:none;transform:none}
+
+.backbtn{color:#eceef4;font-family:'Space Grotesk',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.backbtn:hover{color:#6e7bff}
+
+.card,.summary,.findrow,.stat,.qcard,.placecard,.sitecard,.wcard,.sharebtn,.pill,.chip,.typechip,
+.err,.field .box,.gate,.item.card{border-radius:0}
+.card,.summary,.stat,.qcard,.placecard,.sitecard,.wcard{border-width:2px}
+.stat,.summary,.qcard{box-shadow:4px 4px 0 #000}
+.sharebtn{border:2px solid #242c3d;background:#12151d;color:#eceef4;font-weight:700}
+.sharebtn:hover{background:#6e7bff;color:#eceef4}
+.pill{border:2px solid #242c3d;font-weight:700;border-radius:0}
+.err{border:2px solid #e8695f;color:#e8695f;font-weight:600}
+
+.sidenav{border-top:3px solid #242c3d}
+.sidenav-link{color:#eceef4;font-weight:600}
+.sidenav-link:hover,.sidenav-link.accent:hover{color:#6e7bff}
+.sidenav-link.accent{color:#eceef4}
+
+/* size: the tool pages were tuned for small mono text; Archivo needs a bit more */
+h1{font-size:clamp(36px,6vw,58px)}
+.lede{font-size:18px;line-height:1.5;max-width:46ch}
+.after,.foot,.hint,.sdesc,.meta,.empty,.note{font-size:14px;line-height:1.55}
+label{font-size:14px}
+.sharebtn,.pill,.chip,.typechip{font-family:'Space Grotesk',sans-serif}
+.sharebtn{text-transform:uppercase;letter-spacing:.05em;font-size:12px}
+input,select,textarea{font-size:16px}
+
+/* Square everything, except: the Google phone/desktop mockups (must look like Google),
+   and the small round status dots/pins/markers that are round on purpose. */
+*:not(.phone):not(.phone *):not(.desktop):not(.desktop *),
+*:not(.phone):not(.phone *):not(.desktop):not(.desktop *)::before,
+*:not(.phone):not(.phone *):not(.desktop):not(.desktop *)::after{border-radius:0!important}
+.dot,.dot2,.catdot,.mapspin,.pin,.scrollhint,.legend i,.legend .sw,.tooltip .sw,.reading .dot,
+.notes .dot,.distlegend .dot,.hop::before,.tag i{border-radius:50%!important}
+
+/* pages with a fixed left panel (grid-check, pin-check): keep the panel compact */
+.sidebar .lede{font-size:14px;border-left-width:4px;padding-left:12px}
+.sidebar h1{font-size:22px}
+
+/* white-on-vermilion is too low-contrast for small text: black on accent instead */
+.chip[aria-pressed=true],.mode[aria-pressed=true],.ac-item:hover,.ac-item.active{color:#eceef4}

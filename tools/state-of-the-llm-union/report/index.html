@@ -2,171 +2,525 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>State Of The LLM Union Report</title>
+<title>State Of The LLM Union report</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ffd65c'/%3E%3C/svg%3E" />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MC2SEO">
 <meta property="og:url" content="https://mc2seo.com/tools/state-of-the-llm-union/report/">
-<meta property="og:title" content="State Of The LLM Union Report — MC2SEO">
-<meta property="og:description" content="Up to 10 prompts, checked across up to 5 locations, against 5 LLMs — one consolidated brand-visibility report.">
+<meta property="og:title" content="State Of The LLM Union report — MC2SEO">
+<meta property="og:description" content="How AI models answer your prompts, market by market, and how often they name your brand versus your competitors.">
 <meta property="og:image" content="https://mc2seo.com/assets/og-brand-builder-report.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:type" content="image/jpeg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="State Of The LLM Union Report — MC2SEO">
-<meta name="twitter:description" content="Up to 10 prompts, checked across up to 5 locations, against 5 LLMs — one consolidated brand-visibility report.">
-<meta name="twitter:image" content="https://mc2seo.com/assets/og-brand-builder-report.jpg">
 <style>
-  :root{--paper:#0a0c11;--card:#12151d;--card2:#171b26;--ink:#eceef4;--muted:#8b93a7;--line:#242c3d;
-        --you:#6e7bff;--ok:#35c48d;--warn:#e0a93a;--bad:#e8695f;--gold:#ffd65c}
+  :root{--paper:#0a0c11;--card:#12151d;--ink:#eceef4;--muted:#8b93a7;--line:#242c3d;--you:#6e7bff}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Mono',monospace;
-       line-height:1.5;padding:22px 16px 60px}
-  .wrap{max-width:720px;margin:0 auto}
-  .eyebrow{font-size:15px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-  h1{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-.02em;
-     line-height:1.14;margin:8px 0;color:var(--gold);overflow-wrap:break-word;word-break:break-word}
-  .lede{font-size:12.5px;color:var(--muted);margin-bottom:22px;line-height:1.6}
-  .empty{font-size:12.5px;color:var(--muted)}
-  .err{color:var(--bad);font-size:13px;padding:14px;border:1px solid var(--line);border-radius:8px}
-
-  .banner{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:24px}
-  .banner.running{border-color:var(--warn)}
-  .banner.complete{border-color:var(--ok)}
-  .banner .headline{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px}
-  .banner .sub{font-size:12px;color:var(--muted)}
-  .banner .refresh{font-size:11px;color:var(--you);background:none;border:1px solid var(--line);
-        border-radius:6px;padding:6px 12px;cursor:pointer;margin-top:10px;font-family:'IBM Plex Mono',monospace}
-
-  .provider{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
-  .provider .phead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:2px}
-  .provider .pname{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
-  .provider .pstatus{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-        padding:3px 8px;border-radius:20px;flex:none}
-  .provider .pstatus.connected{color:var(--ok);background:rgba(53,196,141,.12)}
-  .provider .pstatus.unavailable{color:var(--muted);background:rgba(139,147,167,.12)}
-  .provider .psub{font-size:11.5px;color:var(--muted);margin-bottom:12px}
-
-  .pcard{background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:13px 14px;margin-bottom:10px}
-  .pcard:last-child{margin-bottom:0}
-  .pcard .prompt{font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:700;margin-bottom:9px;line-height:1.35}
-  .locresult{border-top:1px solid var(--line);padding:9px 0}
-  .locresult:first-of-type{border-top:0;padding-top:0}
-  .locresult .lname{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-        color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between}
-  .locresult .lstatus{font-size:9px;padding:2px 7px;border-radius:20px}
-  .locresult .lstatus.done{color:var(--ok);background:rgba(53,196,141,.12)}
-  .locresult .lstatus.failed{color:var(--bad);background:rgba(232,105,95,.12)}
-  .locresult .lstatus.pending{color:var(--muted);background:rgba(139,147,167,.12)}
-  .locresult .answer{font-size:12.5px;line-height:1.55;color:var(--ink);white-space:pre-wrap}
-  .locresult .answer.muted{color:var(--muted)}
-
-  .section-title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;
-        text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:28px 0 12px}
-  .section-title:first-of-type{margin-top:0}
-
-  .sidenav{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);
-       display:flex;flex-direction:column;gap:11px}
-  .sidenav-link{font-size:12px;color:var(--muted);transition:color .15s ease}
-  .sidenav-link:hover{color:var(--ink)}
-  .sidenav-link.accent{color:var(--you);font-weight:500}
-  .sidenav-link.accent:hover{color:#8b95ff}
+  body{background:#0a0c11;color:#eceef4;font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.5;padding:22px 16px 60px;font-size:16px}
+  a{color:inherit}
+  .sidenav{margin-top:36px;padding-top:20px;border-top:3px solid #242c3d;display:flex;flex-direction:column;gap:13px}
+  .sidenav-link{font-size:14px;font-weight:600}
+  body.embed .sidenav{display:none}
 </style>
+<link rel="stylesheet" href="/assets/theme.css">
+<link rel="stylesheet" href="/assets/sotu.css">
 </head>
 <body>
-<div class="wrap">
+<div class="sotu-wrap">
   <p class="eyebrow">State Of The LLM Union</p>
   <h1 id="rTitle">Loading…</h1>
-  <div id="out"><p class="empty">Fetching your report…</p></div>
+  <p class="sotu-sub" id="rSub"></p>
+  <div id="banner"></div>
+  <div id="out"></div>
 
   <div class="sidenav">
     <a href="/tools/state-of-the-llm-union/" class="sidenav-link">← New State Of The LLM Union report</a>
-    <a href="/tools/" class="sidenav-link">← Back to tools</a>
-    <a href="/" class="sidenav-link">← Back to homepage</a>
+    <a href="/tools/state-of-the-llm-union/tracker/" class="sidenav-link" id="trackersLink">My trackers →</a>
+    <a href="/" class="sidenav-link">← Back to tools</a>
   </div>
 </div>
 
+<script src="/assets/sotu.js"></script>
+<script src="/assets/sotu-deck.js"></script>
 <script>
-const API = 'https://mc2seo-tools-api.mylesclaffey.workers.dev/api';
-const CODE = new URLSearchParams(location.search).get('k') || '';
+if (new URLSearchParams(location.search).get('embed') === '1') document.body.classList.add('embed');
+const S = window.SOTU, esc = S.esc;
 const ID = new URLSearchParams(location.search).get('id') || '';
 const $ = id => document.getElementById(id);
+document.querySelectorAll('.sidenav-link').forEach(a => {
+  const u = new URL(a.getAttribute('href'), location.origin);
+  if (S.CODE) u.searchParams.set('k', S.CODE);
+  a.setAttribute('href', S.withPreset(u.pathname + u.search));
+});
 
-function esc(s){ return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+let briefs = {};   // prompt -> { busy } | brief response (Worker: promptBrief.js)
+let gsc = null, gscPages = null, gscBusy = false;   // Search Console status and per-page metrics (Worker: gsc.js)
+let data = null, colours = {}, tab = 'compare', promptIdx = 0, marketSel = null, repSel = 1, personaSel = 0, pollTimer = null, pollCount = 0;
+// Demand behind each prompt (Worker: promptDemand.js), loaded when the Brand mentions tab first opens.
+let demand = null, demandState = 'idle', demandBasis = 'ai';
+// Crawler access to the cited pages (Worker: sotuCrawlerAccess.js), loaded with the Brand mentions tab.
+let crawl = null, crawlState = 'idle';
+// Persona variants the run asked, in order: null is the plain question.
+const variants = d => { const ps = d.personas || []; if (!ps.length) return [null]; const has = new Set(d.cells.map(c => c.persona || null)); return [null, ...ps].filter(v => has.has(v)); };
+const personaName = S.personaName;
 
-function renderLocResult(cell){
-  if (cell.status === 'pending') {
-    return '<div class="locresult"><div class="lname">' + esc(cell.location) +
-      '<span class="lstatus pending">Pending</span></div><p class="answer muted">Still running — refresh in a bit.</p></div>';
-  }
-  if (cell.status === 'failed') {
-    return '<div class="locresult"><div class="lname">' + esc(cell.location) +
-      '<span class="lstatus failed">Failed</span></div><p class="answer muted">' + esc(cell.error || 'Did not complete.') + '</p></div>';
-  }
-  const text = cell.result?.text;
-  return '<div class="locresult"><div class="lname">' + esc(cell.location) +
-    '<span class="lstatus done">Done</span></div>' +
-    (text ? '<p class="answer">' + esc(text) + '</p>' : '<p class="answer muted">No answer text came back.</p>') + '</div>';
+function shown(d) {                       // providers that were part of this run, in registry order
+  const used = new Set(d.cells.map(c => c.provider));
+  return d.providers.filter(p => used.has(p.id));
 }
 
-function renderProvider(provider, cellsForProvider, prompts){
-  if (!provider.available) {
-    return '<div class="provider"><div class="phead"><span class="pname">' + esc(provider.label) + '</span>' +
-      '<span class="pstatus unavailable">Not yet connected</span></div>' +
-      '<p class="psub">No API key configured for ' + esc(provider.label) + ' on this account yet.</p></div>';
-  }
+function statCards(d) {
+  const main = d.brands[0], answered = S.answered(d.cells);
+  const attempted = d.cells.filter(c => c.status !== 'unavailable');
+  const doneN = attempted.filter(c => c.status === 'done' || c.status === 'failed').length;
+  const rateTxt = main ? S.pct(S.rate(answered, main.name)) : '—';
+  const sm = d.summary || {}, ms = main && sm.by_brand ? sm.by_brand[main.name] : null;
+  const range = S.range(ms), con = sm.consistency, cit = sm.citations;
+  const cards = [
+    { cls: 'accent', lbl: 'Mention rate', val: rateTxt, sub: main ? 'answers naming ' + esc(main.name) + (range ? ' · likely range ' + range : '') : 'add a brand to track mentions' },
+    con && main ? { lbl: 'Named every time', val: con.always + '/' + con.groups, sub: 'model × prompt × market combos asked ' + d.repeats + '×; ' + con.sometimes + ' only sometimes' } : null,
+    sm.facts && main ? { lbl: 'Wrong facts', val: sm.facts.with_issues + '/' + sm.facts.checked, sub: 'answers naming ' + esc(main.name) + ' that contradict your fact sheet' } : null,
+    cit && main ? { lbl: 'Cited as a source', val: S.pct(cit.by_brand[main.name] ? cit.by_brand[main.name].rate : null), sub: cit.by_brand[main.name] && !cit.by_brand[main.name].has_domain ? 'add your website to count citations' : 'of ' + cit.answers_with_sources + ' answers that showed sources' } : null,
+    { lbl: 'Prompts', val: d.prompts.length, sub: 'asked in each market' + (d.repeats > 1 ? ', ' + d.repeats + '× each' : '') },
+    { lbl: 'Markets', val: d.locations.length, sub: d.locations.map(l => S.market(l).short).join(' · ') },
+    { lbl: 'Models', val: shown(d).filter(p => p.available).length, sub: 'compared per prompt' },
+    { lbl: 'Run cost', val: S.money(d.total_cost || 0), sub: d.web ? 'web search on' : 'web search off' }
+  ].filter(Boolean);
+  return '<div class="stats4">' + cards.map(c =>
+    '<div class="sc ' + (c.cls || '') + '"><div class="lbl">' + c.lbl + '</div><div class="val">' + c.val + '</div><div class="sub">' + c.sub + '</div></div>'
+  ).join('') + '</div>';
+}
 
-  const doneCount = cellsForProvider.filter(c => c.status === 'done').length;
-  const cardsHtml = prompts.map(prompt => {
-    const cells = cellsForProvider.filter(c => c.prompt === prompt);
-    return '<div class="pcard"><div class="prompt">"' + esc(prompt) + '"</div>' +
-      cells.map(renderLocResult).join('') + '</div>';
+function legend(d) {
+  return '<div class="legend">' + d.brands.map(b => {
+    const c = colours[b.name];
+    return '<span class="chip2" style="--bg:' + c.bg + ';--fg:' + c.fg + '">' + esc(b.name) + (b === d.brands[0] ? ' <small>your brand</small>' : '') + '</span>';
+  }).join('') + '</div>';
+}
+
+function modelCard(d, p, cell) {
+  const main = d.brands[0];
+  let badge = '', body = '', foot = '', meta = '';
+  if (!p.available) {
+    badge = '<span class="badge2 na">Not connected</span>';
+    body = '<div class="answer2 empty">' + esc(p.label) + ' is not connected on this account yet.</div>';
+  } else if (!cell || cell.status === 'pending' || cell.status === 'running') {
+    badge = '<span class="badge2 na">Waiting…</span>';
+    body = '<div class="answer2 empty">This answer is still being fetched.</div>';
+  } else if (cell.status === 'failed') {
+    badge = '<span class="badge2 na">Failed</span>';
+    body = '<div class="answer2 err">' + esc(cell.error || 'Did not complete.') + '</div>';
+  } else {
+    const r = cell.result || {}, ms = cell.mentions || [];
+    const mMain = main ? ms.filter(m => m.name === main.name)[0] : null;
+    if (r.text) {
+      const b = S.badgeFor(main ? mMain : null);
+      badge = '<span class="badge2 ' + b.cls + '">' + b.text + '</span>';
+      body = (r.says ? '<div class="says"><small>AI summary</small>' + esc(r.says) + '</div>' : '') + '<div class="answer2">' + S.highlight(r.text, ms, colours) + '</div>';
+    } else {
+      badge = '<span class="badge2 na">No answer</span>';
+      body = '<div class="answer2 empty">' + esc(r.note || 'No answer text came back.') + '</div>';
+    }
+    const named = ms.filter(m => m.mentioned);
+    foot += '<div class="chips2">' + (named.length ? named.map(m => {
+      const c = colours[m.name];
+      return '<span class="chip2" style="--bg:' + c.bg + ';--fg:' + c.fg + '">' + esc(m.name) + (m.position ? ' <small>#' + m.position + '</small>' : '') + (m.cited ? ' <small>· cited</small>' : '') + '</span>';
+    }).join('') : (d.brands.length ? '<span class="srcs">None of the tracked brands are named.</span>' : '')) + '</div>';
+    const srcs = (r.sources || []).filter(s => s.url).slice(0, 3);
+    if (srcs.length) foot += '<div class="srcs">Sources: ' + srcs.map(s => '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc((s.title || s.domain || s.url).slice(0, 38)) + '</a>').join(' · ') + '</div>';
+    const qs = (r.queries || []).filter(Boolean);
+    if (qs.length) foot += '<div class="srcs">Searched for: ' + qs.slice(0, 4).map(q => '“' + esc(q) + '”').join(' · ') + (qs.length > 4 ? ' +' + (qs.length - 4) + ' more' : '') + '</div>';
+    const webTxt = p.always_web ? ' · searches the web' : p.decides_web ? (d.web && !p.no_force ? ' · made to search the web' : (qs.length || srcs.length ? ' · chose to search the web' : ' · answered without searching')) : (d.web ? ' · web search on' : ' · own knowledge only');
+    meta = (r.model ? esc(r.model) : '') + (cell.cost ? ' · ' + S.money(cell.cost) : '') + webTxt;
+  }
+  return '<div class="mcard"><div class="mhead"><div><div class="mname">' + esc(p.label) + '</div><div class="mfam">' + esc(p.family || '') + '</div></div>' + badge + '</div>' +
+    body + foot + (meta ? '<div class="mmeta">' + meta + '</div>' : '') + '</div>';
+}
+
+function compareView(d) {
+  const vs = variants(d), persona = vs[Math.min(personaSel, vs.length - 1)];
+  const prompt = d.prompts[promptIdx] || d.prompts[0];
+  const mk = marketSel && d.locations.includes(marketSel) ? marketSel : d.locations[0];
+  const pillsHtml = '<div class="pills">' + d.prompts.map((p, i) =>
+    '<button class="pill2" data-p="' + i + '" aria-pressed="' + (i === promptIdx) + '">' + esc(p) + '</button>').join('') + '</div>';
+  const tabsHtml = '<div class="mtabs">' + d.locations.map(l => {
+    const m = S.market(l);
+    return '<button data-m="' + esc(l) + '" aria-pressed="' + (l === mk) + '">' + m.flag + ' ' + m.short + '</button>';
+  }).join('') + '</div>';
+  const mkt = S.market(mk);
+  const ctx = '<div class="ctx"><span>Asked in English (' + esc(mkt.short) + '), as if from ' + esc(mk) + ' · ' + (d.web ? 'web search on' : 'web search off') + ' · run ' + S.ago(d.created_at) + '</span></div>';
+  const ctxP = (d.personas || []).length ? '<div class="ctx"><span>' + (persona == null ? 'Asked as the plain question' : 'Asked as: “I’m ' + esc(persona.replace(/^(i’m|i\'m|as)\s+/i, '')) + '. …”') + '</span></div>' : '';
+  const reps = d.repeats || 1;
+  const repHtml = reps > 1 ? '<div class="mtabs">' + Array.from({ length: reps }, (_, i) => i + 1).map(n =>
+    '<button data-r="' + n + '" aria-pressed="' + (n === repSel) + '">Answer ' + n + ' of ' + reps + '</button>').join('') + '</div>' : '';
+  // AI Overviews and Gemini are asked once, so they show their single answer whichever repeat is picked.
+  const personaHtml = vs.length > 1 ? '<div class="mtabs">' + vs.map((v, i) =>
+    '<button data-v="' + i + '" aria-pressed="' + (v === persona) + '">' + esc(personaName(v)) + '</button>').join('') + '</div>' : '';
+  const cellFor = p => {
+    const same = d.cells.filter(c => c.provider === p.id && c.prompt === prompt && c.location === mk && (c.persona || null) === persona);
+    return same.filter(c => (c.rep || 1) === repSel)[0] || same[0];
+  };
+  const cards = shown(d).map(p => modelCard(d, p, cellFor(p))).join('');
+  return pillsHtml + personaHtml + tabsHtml + repHtml + ctx + ctxP + legend(d) + '<div class="mgrid">' + cards + '</div>';
+}
+
+function matrix(d, title, keys, keyOf, labelOf) {
+  const answered = S.answered(d.cells);
+  const head = '<tr><th>' + title + '</th>' + d.brands.map(b => '<th><span class="dot" style="--bg:' + colours[b.name].bg + '"></span>' + esc(b.name) + '</th>').join('') + '</tr>';
+  const rows = keys.map(k => {
+    const list = answered.filter(c => keyOf(c) === k);
+    return '<tr><td>' + labelOf(k) + '</td>' + d.brands.map(b => {
+      const v = S.rate(list, b.name);
+      const bg = v == null ? '#171b26' : 'rgba(110,123,255,' + (0.08 + 0.72 * v).toFixed(2) + ')';
+      return '<td class="heat" style="background:' + bg + '">' + S.pct(v) + '</td>';
+    }).join('') + '</tr>';
   }).join('');
-
-  return '<div class="provider"><div class="phead"><span class="pname">' + esc(provider.label) + '</span>' +
-    '<span class="pstatus connected">Connected</span></div>' +
-    '<p class="psub">' + doneCount + ' of ' + cellsForProvider.length + ' checks done</p>' +
-    cardsHtml + '</div>';
+  return '<div class="tblwrap"><table class="tbl">' + head + rows + '</table></div>';
 }
 
-function render(d){
-  $('rTitle').textContent = d.brand_name || d.prompts[0] || 'State Of The LLM Union';
-
-  const doneTotal = d.cells.filter(c => c.status === 'done').length;
-  const attemptedTotal = d.cells.filter(c => c.status !== 'unavailable').length;
-  const bannerCls = d.status === 'complete' ? 'complete' : 'running';
-  const bannerHtml = '<div class="banner ' + bannerCls + '">' +
-    '<div class="headline">' + (d.status === 'complete' ? 'Report complete' : 'Still generating — ' + doneTotal + ' of ' + attemptedTotal + ' checks done') + '</div>' +
-    '<p class="sub">' + d.prompts.length + ' prompt' + (d.prompts.length === 1 ? '' : 's') + ' × ' + d.locations.length + ' location' + (d.locations.length === 1 ? '' : 's') + '</p>' +
-    (d.status !== 'complete' ? '<button class="refresh" id="refreshBtn" type="button">Refresh</button>' : '') +
-    '</div>';
-
-  const providersHtml = d.providers.map(p => renderProvider(p, d.cells.filter(c => c.provider === p.id), d.prompts)).join('');
-
-  $('out').innerHTML = bannerHtml + providersHtml;
-  const btn = $('refreshBtn');
-  if (btn) btn.onclick = () => location.reload();
+function brandsView(d) {
+  if (!d.brands.length) return '<div class="empty2">No brand was set for this run, so there are no mentions to count. Start a new report and enter your brand and competitors.</div>';
+  const answered = S.answered(d.cells), sm = d.summary || {};
+  const rows = d.brands.map(b => {
+    const v = S.rate(answered, b.name), pos = S.avgPosition(answered, b.name);
+    const range = S.range((sm.by_brand || {})[b.name]);
+    const cited = answered.filter(c => (c.mentions || []).some(m => m.name === b.name && m.cited)).length;
+    const named = answered.filter(c => (c.mentions || []).some(m => m.name === b.name && m.mentioned)).length;
+    return '<tr><td><span class="dot" style="--bg:' + colours[b.name].bg + '"></span><b>' + esc(b.name) + '</b>' + (b === d.brands[0] ? ' <small>(you)</small>' : '') + '</td>' +
+      '<td><div class="bar" style="--bg:' + colours[b.name].bg + '"><i style="width:' + Math.round((v || 0) * 100) + '%"></i></div></td>' +
+      '<td class="num">' + S.pct(v) + '</td><td class="num">' + (range || '—') + '</td><td class="num">' + named + ' / ' + answered.length + '</td><td class="num">' + (pos == null ? '—' : '#' + pos.toFixed(1)) + '</td><td class="num">' + cited + '</td></tr>';
+  }).join('');
+  const overall = '<div class="tblwrap"><table class="tbl"><tr><th>Brand</th><th>Share of answers</th><th>Rate</th><th>Likely range</th><th>Answers naming it</th><th>Avg position</th><th>Cited as source</th></tr>' + rows + '</table></div>';
+  const provs = shown(d).filter(p => p.available).map(p => p.id);
+  const labelP = id => esc((d.providers.filter(p => p.id === id)[0] || {}).label || id);
+  const note = '<p class="hint" style="margin:-18px 0 30px">Likely range: where the true rate probably sits (95%), given how many answers this run collected. More prompts, markets or repeats narrow it.</p>';
+  return '<h2 class="h2b">Who gets named</h2>' + overall + note + demandHtml(d) + S.personasHtml(d, colours) + S.discoveredHtml(sm.discovered, !!d.watch_id) + (d.brands[0] ? S.describeHtml(sm.describe, d.brands[0].name) + S.factsHtml(sm.facts, d.brands[0].name) : '') + consistencyHtml(d) + citationsHtml(d) + pagesHtml(d) + crawlHtml(d) + briefsHtml(d) +
+    '<h2 class="h2b">By model</h2>' + matrix(d, 'Model', provs, c => c.provider, labelP) +
+    '<h2 class="h2b">By market</h2>' + matrix(d, 'Market', d.locations, c => c.location, l => S.market(l).flag + ' ' + esc(l)) +
+    '<h2 class="h2b">By prompt</h2>' + matrix(d, 'Prompt', d.prompts, c => c.prompt, esc);
 }
 
-async function load(){
-  if (!CODE || !ID) { $('out').innerHTML = '<p class="err">Missing access code or report id.</p>'; return; }
-  let d;
-  try {
-    const res = await fetch(API + '/state-of-union/get', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: CODE, id: ID })
-    });
-    d = await res.json();
-  } catch (e) { d = { error: 'could not reach the API' }; }
-
-  if (d.error) { $('rTitle').textContent = 'Report not found'; $('out').innerHTML = '<p class="err">' + esc(d.error) + '</p>'; return; }
-  render(d);
+function missedOf(d, p) { return S.demandMissed(d, demand, demandBasis, p); }
+function demandHtml(d) {
+  if (!d.brands[0] || d.status !== 'complete') return '';
+  const title = '<h2 class="h2b">Weighted by demand</h2>';
+  if (demandState === 'loading' || demandState === 'idle') return title + '<p class="hint">Looking up how often these questions are asked…</p>';
+  if (demandState === 'error' || !demand) return title + '<p class="err">' + esc((demand && demand.error) || 'Search demand could not be loaded.') + '</p>';
+  const basisBtns = '<div class="seg" style="margin:0 0 12px"><button data-basis="ai" aria-pressed="' + (demandBasis === 'ai') + '">AI searches</button><button data-basis="google" aria-pressed="' + (demandBasis === 'google') + '">Google searches</button></div>';
+  return title + basisBtns + S.demandHtml(d, demand, demandBasis, colours, { editable: true });
+}
+async function loadDemand(keywords) {
+  demandState = 'loading';
+  const r = await S.api('/state-of-union/demand', Object.assign({ id: data.id }, keywords ? { keywords } : {}));
+  demand = r; demandState = r && !r.error && r.prompts ? 'ready' : 'error';
+  render();
 }
 
-load();
+// Can AI crawlers reach the pages the answers cite, and the brand's own? One row per page, one column per AI service.
+function crawlHtml(d) {
+  if (!d.brands.length || d.status !== 'complete') return '';
+  const title = '<h2 class="h2b">Can AI crawlers reach these pages?</h2>';
+  if (crawlState === 'loading' || crawlState === 'idle') return title + '<p class="hint">Checking robots.txt, page tags and firewalls for the cited pages… (up to half a minute)</p>';
+  if (crawlState === 'error' || !crawl || !crawl.pages) return title + '<p class="err">' + esc((crawl && crawl.error) || 'The crawler check could not run.') + '</p>';
+  const groups = ['ChatGPT', 'Perplexity', 'Claude', 'Google', 'Microsoft'];
+  const byGroup = g => crawl.crawlers.filter(c => c.group === g);
+  const cell = (p, g) => {
+    if (p.robots_unknown) return '<td class="num" title="robots.txt could not be read">?</td>';
+    const no = byGroup(g).filter(c => p.robots[c.id] && p.robots[c.id].allowed === false);
+    return no.length ? '<td style="background:rgba(232,105,95,.22)"><b>✗</b> <small>' + no.map(c => esc(c.name) + ' — ' + esc(p.robots[c.id].rule)).join('<br>') + '</small></td>' : '<td class="num">✓</td>';
+  };
+  const notes = p => {
+    const n = [];
+    if (p.blocked_us) n.push('Turns away our checker (' + p.status + ') — tags and firewall not checked.');
+    else if (p.error) n.push('Could not load: ' + esc(p.error) + '.');
+    else if (p.status >= 400) n.push('<b>Returns ' + p.status + '</b> — AI answers are citing a page that ' + (p.status === 404 || p.status === 410 ? 'no longer exists' : 'doesn’t load') + '.');
+    (p.page_rules || []).forEach(r => n.push('<b>' + esc(r) + '</b> ' + ({ noindex: '— kept out of search results', nosnippet: '— no text may be quoted from it', 'max-snippet:0': '— no text may be quoted from it', noai: '— asks AI not to use it', noimageai: '— asks AI not to use its images', nofollow: '' }[r] || '')));
+    (p.ua_blocked || []).forEach(u => n.push('<b>Turned away a request as ' + esc(u.crawler) + '</b> (' + esc(String(u.status || u.error)) + ') while a browser got in — probably a firewall bot rule.'));
+    return n.join('<br>') || '—';
+  };
+  const kindLabel = p => p.kind === 'own' ? '<b>' + esc(d.brands[0].name) + '</b>' : p.kind === 'competitor' ? esc(p.owner || 'Competitor') : 'Third party';
+  const issues = p => p.blocked_us || p.status >= 400 || (p.page_rules || []).length || (p.ua_blocked || []).length || Object.values(p.robots || {}).some(v => v.allowed === false);
+  const own = crawl.pages.filter(p => p.kind === 'own'), otherBad = crawl.pages.filter(p => p.kind !== 'own' && issues(p)).length;
+  const shut = p => !p.robots_unknown && Object.values(p.robots).some(v => v.allowed === false) || (p.page_rules || []).length || (p.ua_blocked || []).length;
+  const ownShut = own.filter(shut).length, ownUnread = own.filter(p => p.blocked_us && !shut(p)).length, name = esc(d.brands[0].name);
+  const lead = '<p style="margin:0 0 10px">' +
+    (ownShut ? '<b>' + ownShut + ' of ' + own.length + ' ' + name + ' pages</b> shut out at least one AI crawler. ' : own.length ? name + '’s robots.txt lets the AI crawlers in on all ' + own.length + ' of its pages checked. ' : '') +
+    (ownUnread ? ownUnread + ' of them turn away our checker, so their page tags and firewall rules couldn’t be read — check those with a real crawler (Search Console’s URL inspection, or your CDN’s bot log). ' : '') +
+    (otherBad ? otherBad + ' competitor or third-party page' + (otherBad === 1 ? ' has' : 's have') + ' an issue.' : '') + '</p>';
+  return title + lead + '<div class="tblwrap"><table class="tbl"><tr><th>Page</th><th>Belongs to</th>' + groups.map(g => '<th>' + g + '</th>').join('') + '<th>Notes</th></tr>' +
+    crawl.pages.map(p => '<tr><td><a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.url.replace(/^https?:\/\/(www\.)?/, '').slice(0, 60)) + '</a>' + (p.answers ? '<br><small>cited in ' + p.answers + ' answer' + (p.answers === 1 ? '' : 's') + '</small>' : '') + '</td><td>' + kindLabel(p) + '</td>' +
+      groups.map(g => cell(p, g)).join('') + '<td><small>' + notes(p) + '</small></td></tr>').join('') + '</table></div>' +
+    '<p class="hint" style="margin:-18px 0 30px">✓ = robots.txt lets that service’s crawlers fetch the page (ChatGPT: OAI-SearchBot, ChatGPT-User, GPTBot · Perplexity: PerplexityBot, Perplexity-User · Claude: Claude-SearchBot, Claude-User, ClaudeBot · Google: Googlebot, which feeds AI Overviews and AI Mode, and Google-Extended, which controls Gemini · Microsoft: Bingbot). Each page is also loaded as a browser (for noindex/nosnippet tags) and as OAI-SearchBot and PerplexityBot (for firewall rules). Our requests don’t come from those companies’ addresses, so a firewall that checks crawler IPs may treat them as impostors: a firewall flag is a thing to check, not proof. Checked ' + S.ago(crawl.checked_at) +
+    ' · <a href="#" id="crawlRefresh">check again</a>.</p>';
+}
+async function loadCrawl(refresh) {
+  crawlState = 'loading'; if (refresh) render();
+  const r = await S.api('/state-of-union/crawler-access', Object.assign({ id: data.id }, refresh ? { refresh: true } : {}));
+  crawl = r; crawlState = r && r.pages ? 'ready' : 'error';
+  render();
+}
+
+function consistencyHtml(d) {
+  const con = (d.summary || {}).consistency, main = d.brands[0];
+  if (!con || !main) return '';
+  const seg = (n, bg, fg, label) => n ? '<i style="font-style:normal;flex:' + n + ' 0 auto;white-space:nowrap;padding:0 8px;background:' + bg + ';color:' + fg + '">' + n + ' ' + label + '</i>' : '';
+  return '<h2 class="h2b">How reliably ' + esc(main.name) + ' is named</h2>' +
+    '<div style="display:flex;border:3px solid #242c3d;margin:0 0 10px;font-style:normal;font-weight:800;font-size:14px;line-height:2.4;text-align:center;overflow:hidden">' +
+    seg(con.always, '#232a3a', '#fff', 'every time') + seg(con.sometimes, '#6e7bff', '#0a0a0a', 'sometimes') + seg(con.never, '#171b26', '#eceef4', 'never') + '</div>' +
+    '<p class="hint" style="margin:0 0 30px">Each of the ' + con.groups + ' model × prompt × market combinations was asked ' + d.repeats + ' times. “Sometimes” means the same model gave different answers to the same question: a mention you can’t count on.</p>';
+}
+
+function citationsHtml(d) {
+  const cit = (d.summary || {}).citations;
+  if (!cit) return d.web ? '' : '<h2 class="h2b">Who gets cited</h2><div class="empty2">No answer in this run showed its sources. Turn on web search (or include Perplexity, Gemini or AI Overviews) to see which websites AI answers draw on.</div>';
+  const main = d.brands[0];
+  const sh = cit.share;
+  const split = '<div style="display:flex;border:3px solid #242c3d;margin:0 0 10px;font-weight:800;font-size:14px;line-height:2.4;text-align:center;overflow:hidden">' +
+    (sh.own ? '<i style="font-style:normal;white-space:nowrap;padding:0 8px;flex:' + sh.own + ' 0 auto;background:' + (main ? colours[main.name].bg : '#0a0a0a') + ';color:#fff">You ' + S.pct(sh.own) + '</i>' : '') +
+    (sh.competitors ? '<i style="font-style:normal;white-space:nowrap;padding:0 8px;flex:' + sh.competitors + ' 0 auto;background:#C99A3E;color:#eceef4">Competitors ' + S.pct(sh.competitors) + '</i>' : '') +
+    (sh.other ? '<i style="font-style:normal;white-space:nowrap;padding:0 8px;flex:' + sh.other + ' 0 auto;background:#171b26;color:#eceef4">Other sites ' + S.pct(sh.other) + '</i>' : '') + '</div>';
+  const rows = cit.top_domains.map(x => {
+    const c = x.owner ? colours[x.owner] : null;
+    return '<tr><td><b>' + esc(x.domain) + '</b></td><td>' + (c ? '<span class="chip2" style="--bg:' + c.bg + ';--fg:' + c.fg + '">' + esc(x.owner) + '</span>' : 'Third party') + '</td>' +
+      '<td class="num">' + x.answers + '</td><td class="num">' + S.pct(x.share) + '</td></tr>';
+  }).join('');
+  return '<h2 class="h2b">Who gets cited</h2>' + split +
+    '<p class="hint" style="margin:0 0 16px">Share of all citations across the ' + cit.answers_with_sources + ' answers that showed sources. Domains are matched to brands by the websites you entered.</p>' +
+    '<div class="tblwrap"><table class="tbl"><tr><th>Most-cited domains</th><th>Belongs to</th><th>Answers citing it</th><th>Share of answers</th></tr>' + rows + '</table></div>';
+}
+
+function shortUrl(u) {
+  try { const x = new URL(u); return (x.hostname.replace(/^www\./, '') + x.pathname).replace(/\/$/, ''); } catch (e) { return u; }
+}
+function pageCell(p) {
+  return '<a href="' + esc(p.url) + '" target="_blank" rel="noopener"><b>' + esc(shortUrl(p.url)) + '</b></a>' + (p.title ? '<br><small>' + esc(p.title.slice(0, 90)) + '</small>' : '');
+}
+function modelsOf(d, ids) {
+  return ids.map(id => esc((d.providers.filter(p => p.id === id)[0] || {}).label || id)).join(', ');
+}
+function num(v) { return v == null ? '—' : Number(v).toLocaleString(); }
+
+// Which exact pages the answers cite: yours (with Search Console clicks when connected), competitors', third parties'.
+function pagesHtml(d) {
+  const cit = (d.summary || {}).citations, main = d.brands[0];
+  if (!cit || !cit.pages || !main) return '';
+  const pg = cit.pages, domain = (main.domains || [])[0];
+  const withGsc = gscPages && !gscPages.error;
+  let html = '<h2 class="h2b">Which of your pages get cited</h2>';
+
+  if (gsc && gsc.configured && !gsc.connected) {
+    html += '<div class="banner2"><b>Add Google data to this list.</b> Connect Search Console (read-only) to see each cited page’s Google clicks, impressions and position, and which of your best Google pages no AI answer cites. <button class="btn2 small solid" id="gscConnect" type="button">Connect Search Console</button></div>';
+  } else if (gsc && gsc.connected) {
+    html += '<p class="hint" style="margin:0 0 12px">' + (gscBusy ? 'Loading Search Console…' : withGsc
+      ? 'Search Console: <b>' + esc(gscPages.site) + '</b>, ' + esc(gscPages.start) + ' to ' + esc(gscPages.end) + '. '
+      : (gscPages && gscPages.error ? '<span class="err">' + esc(gscPages.error) + '</span> ' : '')) +
+      '<a href="#" id="gscDisconnect">Disconnect Search Console</a></p>';
+  }
+
+  if (!domain) html += '<div class="empty2">Add your website to the report to see which of your pages are cited.</div>';
+  else if (!pg.own.length) html += '<div class="empty2">No answer in this run cited a page on ' + esc(domain) + '.</div>';
+  else {
+    const g = u => withGsc ? gscPages.pages[u] : undefined;
+    html += '<div class="tblwrap"><table class="tbl"><tr><th>Your page</th><th>Answers citing it</th><th>Cited by</th>' +
+      (withGsc ? '<th>Google clicks</th><th>Impressions</th><th>Avg position</th>' : '') + '</tr>' +
+      pg.own.map(p => {
+        const m = g(p.url);
+        return '<tr><td>' + pageCell(p) + '</td><td class="num">' + p.answers + ' <small>(' + S.pct(p.share) + ')</small></td><td>' + modelsOf(d, p.providers) + '</td>' +
+          (withGsc ? (m ? '<td class="num">' + num(m.clicks) + '</td><td class="num">' + num(m.impressions) + '</td><td class="num">' + m.position + '</td>' : '<td colspan="3" class="num"><small>no Google clicks or impressions</small></td>') : '') + '</tr>';
+      }).join('') + '</table></div>';
+  }
+  if (withGsc && gscPages.top_uncited.length) {
+    html += '<h2 class="h2b">Your top Google pages that no answer cites</h2>' +
+      '<p class="hint" style="margin:0 0 12px">Pages that already win Google clicks but did not appear as a source in any answer in this run: candidates to make more quotable for AI answers.</p>' +
+      '<div class="tblwrap"><table class="tbl"><tr><th>Page</th><th>Google clicks</th><th>Impressions</th><th>Avg position</th></tr>' +
+      gscPages.top_uncited.map(m => '<tr><td>' + pageCell({ url: m.page }) + '</td><td class="num">' + num(m.clicks) + '</td><td class="num">' + num(m.impressions) + '</td><td class="num">' + m.position + '</td></tr>').join('') + '</table></div>';
+  }
+  const other = (title, list, withOwner) => list.length ? '<h2 class="h2b">' + title + '</h2><div class="tblwrap"><table class="tbl"><tr><th>Page</th>' + (withOwner ? '<th>Belongs to</th>' : '') + '<th>Answers citing it</th><th>Cited by</th></tr>' +
+    list.slice(0, 10).map(p => '<tr><td>' + pageCell(p) + '</td>' + (withOwner ? '<td><span class="chip2" style="--bg:' + colours[p.owner].bg + ';--fg:' + colours[p.owner].fg + '">' + esc(p.owner) + '</span></td>' : '') +
+      '<td class="num">' + p.answers + '</td><td>' + modelsOf(d, p.providers) + '</td></tr>').join('') + '</table></div>' : '';
+  return html + other('Competitor pages that get cited', pg.competitors, true) + other('Third-party pages cited most', pg.other, false);
+}
+
+// "Why you lose these prompts": prompts worst first, each with an on-demand brief.
+function briefsHtml(d) {
+  const main = d.brands[0];
+  if (!main || d.status !== 'complete') return '';
+  const answered = S.answered(d.cells);
+  const rows = d.prompts.map(p => {
+    const list = answered.filter(c => c.prompt === p);
+    const mine = S.rate(list, main.name);
+    const rivals = d.brands.slice(1).map(b => ({ b, v: S.rate(list, b.name) })).filter(x => x.v != null).sort((a, b) => b.v - a.v);
+    return { p, mine, top: rivals[0] && rivals[0].v > 0 ? rivals[0] : null };
+  });
+  const byDemand = demandState === 'ready' && d.prompts.some(p => missedOf(d, p) > 0);
+  rows.sort(byDemand ? (a, b) => missedOf(d, b.p) - missedOf(d, a.p) : (a, b) => (a.mine ?? 1) - (b.mine ?? 1));
+  const card = r => {
+    const st = briefs[r.p], idx = d.prompts.indexOf(r.p);
+    const head = '<div style="display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap">' +
+      '<div style="flex:1;min-width:240px"><b style="font-size:17px">' + esc(r.p) + '</b><br><small>' + esc(main.name) + ' named in ' + S.pct(r.mine) +
+      (r.top ? ' · ' + esc(r.top.b.name) + ' in ' + S.pct(r.top.v) : '') + (byDemand ? ' · ~' + Math.round(missedOf(d, r.p)).toLocaleString() + ' searches a month at stake' : '') + '</small></div>' +
+      (st && st.brief ? '' : '<button class="btn2 small' + (r.mine != null && r.mine < 1 ? ' solid' : '') + '" data-brief="' + idx + '" type="button"' + (st && st.busy ? ' disabled' : '') + '>' +
+        (st && st.busy ? 'Writing… (up to a minute)' : (r.mine != null && r.mine < 1 ? 'Why you lose this' : 'How to hold this')) + '</button>') + '</div>';
+    return '<div class="card2" style="border:3px solid #242c3d;padding:16px;margin:0 0 16px;background:#12151d">' + head +
+      (st && st.error ? '<p class="err" style="margin-top:10px">' + esc(st.error) + '</p>' : '') + (st && st.brief ? briefBody(st, idx) : '') + '</div>';
+  };
+  return '<h2 class="h2b">Why you lose these prompts</h2><p class="hint" style="margin:0 0 14px">' + (byDemand ? 'Most searches at stake first.' : 'Worst first.') + ' A brief reads this run’s answers, the pages they cite and the searches ChatGPT ran, and says who wins, why, and what to change. Each costs a few cents to write and is saved with the report.</p>' +
+    rows.map(card).join('');
+}
+
+function briefBody(st, idx) {
+  const b = st.brief;
+  const list = (title, items, fmt) => items && items.length ? '<h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 6px">' + title + '</h3>' + items.map(fmt).join('') : '';
+  const link = u => /^https?:\/\//.test(u) ? '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(shortUrl(u)) + '</a>' : esc(u);
+  const cb = b.content_brief;
+  return '<div style="margin-top:12px;border-top:2px solid #242c3d;padding-top:12px">' +
+    '<p class="says" style="font-size:17px">' + esc(b.verdict) + '</p>' +
+    list('Who wins, and why', b.who_wins, x => '<p style="margin:0 0 6px"><b>' + esc(x.brand) + '</b> — ' + esc(x.why) + '</p>') +
+    list('What they have that you don’t', b.gaps, x => '<p style="margin:0 0 6px">• ' + esc(x) + '</p>') +
+    (b.actions && b.actions.length ? '<h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 6px">What to do</h3><div class="tblwrap"><table class="tbl" style="margin:0 0 6px"><tr><th>Action</th><th>Where</th><th>Because</th></tr>' +
+      b.actions.map(a => '<tr><td><b>' + esc(a.action) + '</b></td><td>' + link(a.where) + '</td><td>' + esc(a.why) + '</td></tr>').join('') + '</table></div>' : '') +
+    list('Pages to update', b.pages_to_update, x => '<p style="margin:0 0 6px">' + link(x.url) + ' — ' + esc(x.change) + '</p>') +
+    list('Third-party pages to get onto', b.lists_to_get_on, x => '<p style="margin:0 0 6px">' + link(x.url) + ' — ' + esc(x.why) + '</p>') +
+    (cb && cb.title ? '<h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 6px">Content brief</h3><p style="margin:0 0 4px"><b>' + esc(cb.title) + '</b></p><p style="margin:0 0 6px">' + esc(cb.angle) + '</p>' +
+      (cb.sections.length ? '<ol style="margin:0 0 0 20px">' + cb.sections.map(x => '<li>' + esc(x) + '</li>').join('') + '</ol>' : '') : '') +
+    '<p class="hint" style="margin-top:14px">Based on ' + st.evidence.answers + ' answers (' + st.evidence.named + ' naming you), ' + st.evidence.cited_pages + ' cited pages' + (st.evidence.searches ? ', ' + st.evidence.searches + ' ChatGPT searches' : '') +
+    '. Written by ' + esc(st.model || 'Claude') + (st.cost ? ' · ' + S.money(st.cost) : '') + (st.cached ? ' · saved' : '') + ' · <a href="#" data-rebrief="' + idx + '">Rewrite</a></p></div>';
+}
+
+async function writeBrief(idx, refresh) {
+  const prompt = data.prompts[idx];
+  briefs[prompt] = { busy: true }; render();
+  const r = await S.api('/state-of-union/brief', { id: ID, prompt, refresh: !!refresh });
+  briefs[prompt] = r.error ? { error: r.error } : r;
+  render();
+}
+
+async function loadGsc() {
+  if (gsc !== null || !data || !data.summary || !data.summary.citations) return;
+  gsc = await S.api('/gsc/status');
+  const main = data.brands[0], domain = main && (main.domains || [])[0];
+  if (gsc.connected && domain) {
+    gscBusy = true; render();
+    gscPages = await S.api('/gsc/pages', { domain, urls: data.summary.citations.pages.own.map(p => p.url) });
+    gscBusy = false;
+  }
+  render();
+}
+async function gscConnect() {
+  const u = new URL(location.href); u.searchParams.delete('gsc'); u.hash = 'brands';
+  const r = await S.api('/gsc/start', { return_url: u.toString() });
+  if (r.error || !r.url) return alert(r.error || 'Could not start the Search Console connection.');
+  location.href = r.url;
+}
+async function gscDisconnect(e) {
+  e.preventDefault();
+  if (!confirm('Disconnect Search Console? This report will stop showing Google data until you connect again.')) return;
+  await S.api('/gsc/disconnect');
+  gsc = null; gscPages = null; loadGsc();
+}
+
+function bannerHtml(d) {
+  const attempted = d.cells.filter(c => c.status !== 'unavailable');
+  const settled = attempted.filter(c => c.status === 'done' || c.status === 'failed').length;
+  let html;
+  if (d.status === 'complete') {
+    html = '<div class="banner2 done"><b>Report complete</b> · ' + settled + ' answers · ' + S.ago(d.completed_at || d.created_at) +
+      ' <span><button class="btn2 small solid" id="pdfSumBtn" type="button">Summary PDF</button> <button class="btn2 small" id="pdfBtn" type="button">Full PDF</button> <button class="btn2 small" id="slidesBtn" type="button">Slides (.pptx)</button> <a class="btn2 small" href="' + S.printUrl({ id: d.id }) + '" target="_blank" rel="noopener">Print view</a> ' + (d.watch_id
+        ? '<a class="btn2 small" href="' + S.withPreset('/tools/state-of-the-llm-union/tracker/?k=' + encodeURIComponent(S.CODE) + '&w=' + encodeURIComponent(d.watch_id)) + '">Tracked weekly — see trend →</a>'
+        : (d.brands.length ? '<button class="btn2 small solid" id="trackBtn" type="button">Track this weekly</button>' : '')) + '</span></div>';
+  } else {
+    html = '<div class="banner2"><b>Still running</b> — ' + settled + ' of ' + attempted.length + ' answers in. This page updates by itself.</div>';
+  }
+  return html;
+}
+
+function render() {
+  const d = data;
+  colours = S.colourMap(d.brands);
+  $('rTitle').textContent = d.brand_name || d.prompts[0];
+  $('rSub').textContent = d.brands.length > 1
+    ? 'How often AI models name ' + d.brands[0].name + ' compared with ' + d.brands.slice(1).map(b => b.name).join(', ') + '.'
+    : 'How AI models answer these prompts, market by market.';
+  $('banner').innerHTML = bannerHtml(d);
+  $('out').innerHTML = statCards(d) +
+    '<div class="seg"><button data-t="compare" aria-pressed="' + (tab === 'compare') + '">Compare answers</button><button data-t="brands" aria-pressed="' + (tab === 'brands') + '">Brand mentions</button></div>' +
+    (tab === 'compare' ? compareView(d) : brandsView(d));
+
+  $('out').querySelectorAll('[data-t]').forEach(b => b.onclick = () => { tab = b.dataset.t; render(); });
+  $('out').querySelectorAll('[data-p]').forEach(b => b.onclick = () => { promptIdx = +b.dataset.p; render(); });
+  $('out').querySelectorAll('[data-m]').forEach(b => b.onclick = () => { marketSel = b.dataset.m; render(); });
+  $('out').querySelectorAll('[data-r]').forEach(b => b.onclick = () => { repSel = +b.dataset.r; render(); });
+  $('out').querySelectorAll('[data-v]').forEach(b => b.onclick = () => { personaSel = +b.dataset.v; render(); });
+  $('out').querySelectorAll('[data-basis]').forEach(b => b.onclick = () => { demandBasis = b.dataset.basis; render(); });
+  $('out').querySelectorAll('[data-kwsave]').forEach(b => b.onclick = () => {
+    const i = b.dataset.kwsave, v = $('out').querySelector('[data-kw="' + i + '"]').value.trim();
+    b.disabled = true; b.textContent = 'Looking up…';
+    loadDemand({ [data.prompts[+i]]: v });
+  });
+  if (tab === 'brands' && d.status === 'complete' && d.brands.length && demandState === 'idle') loadDemand();
+  if (tab === 'brands' && d.status === 'complete' && d.brands.length && crawlState === 'idle') loadCrawl();
+  const cr = $('crawlRefresh'); if (cr) cr.onclick = e => { e.preventDefault(); loadCrawl(true); };
+  const tb = $('trackBtn'); if (tb) tb.onclick = startTracking;
+  const gc = $('gscConnect'); if (gc) gc.onclick = gscConnect;
+  const pdfName = sfx => 'state-of-the-llm-union-' + (data.brand_name || 'report').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + String(data.created_at).slice(0, 10) + sfx + '.pdf';
+  const pb = $('pdfBtn'); if (pb) pb.onclick = () => S.downloadPdf({ id: data.id }, pb, pdfName(''));
+  const ps = $('pdfSumBtn'); if (ps) ps.onclick = () => S.downloadPdf({ id: data.id, summary: true }, ps, pdfName('-summary'));
+  const sb = $('slidesBtn'); if (sb) sb.onclick = () => window.SOTU_DECK.report(data, { demand: demandState === 'ready' ? demand : null, crawl: crawlState === 'ready' ? crawl : null }, sb);
+  $('out').querySelectorAll('[data-addcomp]').forEach(b => b.onclick = async () => {
+    b.disabled = true;
+    const r = await S.api('/state-of-union/watch/add-competitor', { id: data.watch_id, name: b.dataset.addcomp });
+    b.textContent = r.error ? r.error : 'Added — from the next run';
+  });
+  $('out').querySelectorAll('[data-brief]').forEach(b => b.onclick = () => writeBrief(+b.dataset.brief));
+  $('out').querySelectorAll('[data-rebrief]').forEach(a => a.onclick = e => { e.preventDefault(); writeBrief(+a.dataset.rebrief, true); });
+  const gd = $('gscDisconnect'); if (gd) gd.onclick = gscDisconnect;
+}
+
+async function startTracking() {
+  const d = data, used = [...new Set(d.cells.filter(c => c.status !== 'unavailable').map(c => c.provider))];
+  const body = {
+    brand_name: d.brands[0].name, aliases: d.brands[0].aliases, domain: (d.brands[0].domains || [])[0],
+    competitors: d.brands.slice(1), prompts: d.prompts, locations: d.locations, providers: used, web: d.web, repeats: d.repeats || 1, facts: d.facts || '', frequency: 'weekly'
+  };
+  const ok = confirm('Track this weekly? A fresh run starts now and then every 7 days. Roughly ' + S.money(d.total_cost * 4.3) + ' a month at this size (you can pause or delete it any time).');
+  if (!ok) return;
+  $('trackBtn').disabled = true;
+  const r = await S.api('/state-of-union/watch/create', body);
+  if (r.error) { alert(r.error); $('trackBtn').disabled = false; return; }
+  location.href = S.withPreset('/tools/state-of-the-llm-union/tracker/?k=' + encodeURIComponent(S.CODE) + '&w=' + encodeURIComponent(r.watch_id));
+}
+
+async function load() {
+  const r = await S.api('/state-of-union/get', { id: ID });
+  if (r.error) {
+    // A muted "empty" box read as "nothing here" rather than "something went wrong" — this is the
+    // same fix already made on every other report-backed tool page.
+    $('rTitle').textContent = 'Not found';
+    $('out').innerHTML = '<p class="err">' + esc(r.error) + ' — start a new report from State Of The LLM Union.</p>';
+    window.scrollTo(0, 0);
+    return;
+  }
+  data = r;
+  if (marketSel === null) marketSel = r.locations[0];
+  // Back from Google's consent screen: open the brand tab, where the Search Console data shows.
+  const back = new URLSearchParams(location.search).get('gsc');
+  if (back || location.hash === '#brands') tab = 'brands';
+  if (back) {
+    const u = new URL(location.href); u.searchParams.delete('gsc'); history.replaceState(null, '', u.pathname + u.search);
+    if (back !== 'connected') alert(back === 'noscope' ? 'Search Console was not connected: the read-only permission was not granted.' : 'Search Console was not connected.');
+  }
+  render();
+  if (r.status === 'complete') loadGsc();
+  if (r.status !== 'complete' && pollCount < 200) { pollTimer = setTimeout(load, 6000); pollCount++; }
+}
+
+if (!S.CODE || !ID) {
+  $('rTitle').textContent = 'No report';
+  $('out').innerHTML = '<p class="err">This page needs a report link. Start a report from the State Of The LLM Union tool.</p>';
+} else {
+  load();
+}
 </script>
 </body>
 </html>
