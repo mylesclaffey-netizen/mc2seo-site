@@ -135,7 +135,7 @@ write('assets/theme-print.css', brand(accent(css('theme.css'))))
 js = lambda name: open(os.path.join(SRC, 'assets', name), encoding='utf-8').read()
 write('assets/sotu.js', dark(brand(js('sotu.js'))))            # its inline styles too (the brand-chip palette is untouched)
 write('assets/sotu-print.js', accent(brand(js('sotu.js'))))     # the light print page's copy
-write('assets/sotu-deck.js', brand(js('sotu-deck.js')).replace("ORANGE = 'FF3D00'", "ORANGE = '6E7BFF'").replace('ch(255) + ch(61) + ch(0)', 'ch(110) + ch(123) + ch(255)'))
+write('assets/sotu-deck.js', brand(js('sotu-deck.js')).replace("ACCENT_DEFAULT = 'FF3D00'", "ACCENT_DEFAULT = '6E7BFF'").replace('ch(255) + ch(61) + ch(0)', 'ch(110) + ch(123) + ch(255)'))
 os.makedirs(os.path.join(HERE, 'assets', 'vendor'), exist_ok=True)
 shutil.copyfile(os.path.join(SRC, 'assets', 'vendor', 'pptxgen.bundle.js'), os.path.join(HERE, 'assets', 'vendor', 'pptxgen.bundle.js'))
 print('wrote assets/vendor/pptxgen.bundle.js')
