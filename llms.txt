@@ -1,0 +1,65 @@
+# MC2SEO
+
+> MC2SEO helps brands rank in Google and get cited by AI answer engines like ChatGPT, Perplexity and Google AI Overviews, with one integrated SEO + GEO (generative engine optimization) strategy. It also publishes a set of SEO tools built for brand managers who sell into more than one country.
+
+Services cover technical SEO, content strategy, generative engine optimization, authority and digital PR, analytics and reporting, local and entity SEO, international SEO, and conversion strategy, run as one monthly process. The tools run on the same data used for client work. Tools marked "free" need no sign-up or access code; the others run on a personal access code.
+
+## Main pages
+
+- [Home](https://mc2seo.com/): What MC2SEO does, how the monthly process works, and how to book a free visibility audit
+- [SEO tools for brand managers](https://mc2seo.com/tools/): The full tool directory, grouped by category
+
+## Free tools
+
+- [llms.txt generator](https://mc2seo.com/tools/llms-txt/): Build an llms.txt file for your site from a form
+- [AI crawler access checker](https://mc2seo.com/tools/crawler-check/): Check whether robots.txt blocks GPTBot, ClaudeBot, PerplexityBot, Google-Extended and others, and whether the site has an llms.txt
+- [Brand schema builder](https://mc2seo.com/tools/schema-builder/): Generate Organization, Product, FAQ and breadcrumb JSON-LD
+- [Schema analysis](https://mc2seo.com/tools/schema-audit/): See what structured data a page carries, what is missing, and where markup claims something the page doesn't say
+- [Redirect map validator](https://mc2seo.com/tools/redirect-check/): Check up to 500 old URLs redirect to the right new page during a site migration
+- [Redirect tracer](https://mc2seo.com/tools/redirect-tracer/): Follow a URL's redirects hop by hop, or check that all four http/https and www/non-www homepage variants converge
+- [Site migration checklist](https://mc2seo.com/tools/migration-checklist/): 41 items across 7 phases for a domain move, replatform or redesign
+- [Drupal migration checklist](https://mc2seo.com/tools/drupal-migration-checklist/): The migration checklist rewritten for a move to Drupal
+- [Optimizely to Webflow migration checklist](https://mc2seo.com/tools/optimizely-to-webflow-migration-checklist/): The migration checklist rewritten for a move from Optimizely CMS to Webflow
+- [Sitemap analysis](https://mc2seo.com/tools/sitemap-audit/): Check a sitemap's structure and spot-check its URLs for dead links
+- [Sitemap generator](https://mc2seo.com/tools/sitemap-generator/): Crawl a site and build a sitemap.xml
+- [Image optimization audit](https://mc2seo.com/tools/image-audit/): Find missing alt text, layout-shift risks, lazy-loading gaps, and broken or oversized images
+- [E-E-A-T signals](https://mc2seo.com/tools/eeat-audit/): Check a page for author, freshness, substance, citation, HTTPS and About/Contact signals
+- [Hreflang audit](https://mc2seo.com/tools/hreflang-audit/): Find hreflang mistakes such as missing self-references, invalid codes and missing return links
+- [User-agent comparison](https://mc2seo.com/tools/ua-compare/): Fetch a page with two user agents and diff the results, for cloaking and mobile/desktop parity checks
+- [Locale-adaptive content check](https://mc2seo.com/tools/locale-audit/): Detect language-based redirects and content swaps hidden from crawlers
+- [PageSpeed comparison](https://mc2seo.com/tools/pagespeed/): Compare PageSpeed Insights scores and Core Web Vitals against up to two competitors
+- [IndexNow pinger](https://mc2seo.com/tools/indexnow/): Notify Bing and other IndexNow search engines that URLs have changed
+- [Google review link generator](https://mc2seo.com/tools/review-link/): Make a direct "leave a review" link for a Google Business Profile
+
+## Where you rank
+
+- [International rank check](https://mc2seo.com/tools/rank-check/): One keyword's ranking across up to five countries, using each market's own search term
+- [Rank snapshot](https://mc2seo.com/tools/rank-snapshot/): Rankings for up to 10 keywords in one market, with what sits above each result
+- [Rank scheduler](https://mc2seo.com/tools/rank-scheduler/): Weekly emailed rank reports for up to 20 keywords, with changes highlighted
+- [Local rank grid check](https://mc2seo.com/tools/grid-check/): Local map rankings across a grid of locations
+- [Map pin check](https://mc2seo.com/tools/pin-check/): Drop a pin anywhere on a map and check up to 5 keywords' local map pack at that exact point
+
+## AI search visibility
+
+- [AI brand mentions](https://mc2seo.com/tools/ai-mentions/): How often AI assistants mention a brand
+- [State Of The LLM Union](https://mc2seo.com/tools/state-of-the-llm-union/): Track how AI models name, rank and cite brands for buyer questions
+- [LLM Time Machine](https://mc2seo.com/tools/model-compare/): Compare how different AI model versions answer the same question
+
+## Brand building
+
+- [Brand Builder](https://mc2seo.com/tools/brand-builder/): One form that runs a brand through the full set of brand tools at once
+- [Brand sentiment](https://mc2seo.com/tools/brand-sentiment/): What AI assistants say about a brand, and the tone
+- [Brand questions](https://mc2seo.com/tools/brand-questions/): The questions people ask about a brand
+- [Brand search footprint](https://mc2seo.com/tools/brand-footprint/): What page one of Google shows for a brand name
+- [Brand bidding monitor](https://mc2seo.com/tools/brand-bidding/): Who is bidding on a brand name in Google Ads
+- [SERP preview](https://mc2seo.com/tools/serp-preview/): The live Google results page for a keyword and location
+
+## Competitive intel
+
+- [Share of search](https://mc2seo.com/tools/share-of-search/): A brand's share of search demand against named competitors
+- [Estimated organic traffic](https://mc2seo.com/tools/traffic-estimate/): Organic traffic estimates for a site and its competitors
+- [Backlink profile check](https://mc2seo.com/tools/backlinks/): A site's backlink profile
+
+## Optional
+
+- [Northern Ireland search simulator](https://mc2seo.com/tools/ni-search-simulator/): A real Google search previewed on phone or desktop, from Belfast or 15 other Northern Ireland towns

@@ -1,0 +1,7 @@
+# mc2seo.com
+# All crawlers welcome, including AI crawlers (GPTBot, OAI-SearchBot,
+# ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended).
+# A curated guide for language models lives at /llms.txt
+
+User-agent: *
+Allow: /
