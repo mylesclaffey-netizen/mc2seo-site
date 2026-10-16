@@ -46,6 +46,7 @@ FIXED = {
     '#ff3d00': YOU, '#d92f00': '#5c68f2', '#1e3cff': YOU,
     '#d40000': BAD, '#c0321f': BAD, '#9a4a2e': BAD, '#b3261e': BAD,
     '#00844a': OK, '#1b7040': OK, '#2f6b2a': OK, '#5b8c3e': '#5b8c3e',
+    '#34517a': YOU,   # "your brand" in the shared chip palette (path indigo): too dim on the dark pages, so it takes mc2seo's own accent
     '#b45f00': WARN, '#ffd9cc': 'rgba(232,105,95,.22)', '#e2e2dc': LINE, '#c9c9c9': LINE, '#767676': '#6b7385',
 }
 RGBA = [('rgba(255,61,0,', 'rgba(110,123,255,'), ('rgba(27,112,64,', 'rgba(53,196,141,'), ('rgba(192,50,31,', 'rgba(232,105,95,')]

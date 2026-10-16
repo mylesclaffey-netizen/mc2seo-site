@@ -144,6 +144,26 @@ function timeline(d) {
     '<p class="hint">One answer per model per run (the first that names ' + esc(main.name) + '). The summary is written by a small AI model; the quoted sentence is the model’s own words.</p>';
 }
 
+// The Change card's second line: is the move since the previous run real or the ordinary wobble of asking models again?
+// (Worker: sotuChange.js — compares the two runs prompt by prompt.) Falls back to the plain wording when it can't tell.
+function changeSub(last, prev) {
+  if (!prev) return 'needs a second run';
+  const c = last.change;
+  if (!c) return 'since the previous run';
+  const pts = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(Math.round(v * 100));
+  return '<b>' + (c.verdict === 'noise' ? 'Within noise' : 'Likely real') + '</b> · likely ' + pts(c.low) + ' to ' + pts(c.high) + ' pts since the previous run';
+}
+
+// Share of voice for the latest run, and how it moved since the one before.
+function sovTrackerCard(last, prev, name) {
+  const sov = last.share_of_voice;
+  if (!sov || sov.by_brand[name] == null) return null;
+  const v = sov.by_brand[name], before = prev && prev.share_of_voice ? prev.share_of_voice.by_brand[name] : null;
+  const delta = before != null ? Math.round((v - before) * 100) : null;
+  const rank = Object.values(sov.by_brand).filter(x => x > v).length + 1;
+  return { lbl: 'Share of voice', val: S.pct(v), sub: '#' + rank + ' of ' + Object.keys(sov.by_brand).length + ' tracked brands' + (delta == null ? '' : ' · ' + (delta > 0 ? '+' : '') + delta + ' pts since last run') };
+}
+
 function renderTrend(d) {
   const colours = S.colourMap(d.brands), main = d.brands[0], runs = d.runs;
   if (!runs.length) { $('detail').innerHTML = '<div class="empty2">No runs yet.</div>'; return; }
@@ -156,13 +176,14 @@ function renderTrend(d) {
   const wNow = trendDemand ? (weightedRuns(Object.assign({}, d, { runs: [last] }), trendDemand)[0].by_brand[main.name] || {}).rate : null;
   const cards = [
     { cls: 'accent', lbl: 'Mention rate now', val: S.pct(now), sub: esc(main.name) + ' · latest run' + (S.range(lastMain) ? ' · likely ' + S.range(lastMain) : '') },
+    sovTrackerCard(last, prev, main.name),
     last.visibility && last.visibility.by_brand[main.name] ? { lbl: 'Visibility score', val: last.visibility.by_brand[main.name].score + '/100', sub: prev && prev.visibility && prev.visibility.by_brand[main.name] && prev.visibility.parts_used.join() === last.visibility.parts_used.join() ? (last.visibility.by_brand[main.name].score - prev.visibility.by_brand[main.name].score >= 0 ? '+' : '') + (last.visibility.by_brand[main.name].score - prev.visibility.by_brand[main.name].score) + ' since the previous run' : 'latest run' } : null,
     last.recommend && last.recommend.by_brand[main.name] ? { lbl: 'Top pick', val: S.pct(last.recommend.by_brand[main.name].top_rate), sub: 'answers where ' + esc(main.name) + ' is the single top recommendation' } : null,
     wNow != null ? { lbl: 'Weighted by demand', val: S.pct(wNow), sub: 'the same, with each prompt counted by its searches' } : null,
     last.consistency ? { lbl: 'Named every time', val: last.consistency.always + '/' + last.consistency.groups, sub: 'combos asked ' + (d.repeats || 1) + '× · ' + last.consistency.sometimes + ' only sometimes' } : null,
     last.facts ? { lbl: 'Wrong facts', val: last.facts.with_issues + '/' + last.facts.checked, sub: 'answers naming ' + esc(main.name) + ' · latest run' } : null,
     cit && cit.by_brand[main.name] && cit.by_brand[main.name].has_domain ? { lbl: 'Cited as a source', val: S.pct(cit.by_brand[main.name].rate), sub: 'of ' + cit.answers_with_sources + ' answers with sources' } : null,
-    { lbl: 'Change', val: delta == null ? '—' : (delta > 0 ? '+' : '') + delta + ' pts', sub: prev ? 'since the previous run' : 'needs a second run' },
+    { lbl: 'Change', val: delta == null ? '—' : (delta > 0 ? '+' : '') + delta + ' pts', sub: changeSub(last, prev) },
     { lbl: 'Runs kept', val: runs.length, sub: d.watch.frequency },
     { lbl: 'Total spend', val: S.money(spend), sub: 'all runs so far' }
   ].filter(c => c && !(window.SNAPSHOT && c.lbl === 'Total spend'));
@@ -175,7 +196,7 @@ function renderTrend(d) {
   const hist = runs.slice().reverse().map(r => {
     const s = r.by_brand[main.name];
     return '<tr><td>' + new Date(r.created_at).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) + '</td>' +
-      '<td class="num">' + S.pct(s ? s.rate : null) + '</td><td class="num">' + (S.range(s) || '—') + '</td><td class="num">' + (s && s.avg_position ? '#' + s.avg_position : '—') + '</td>' +
+      '<td class="num">' + S.pct(s ? s.rate : null) + '</td><td class="num">' + (S.range(s) || '—') + '</td><td class="num">' + (r.share_of_voice && r.share_of_voice.by_brand[main.name] != null ? S.pct(r.share_of_voice.by_brand[main.name]) : '—') + '</td><td class="num">' + (s && s.avg_position ? '#' + s.avg_position : '—') + '</td>' +
       '<td class="num">' + r.answers + '</td>' + (window.SNAPSHOT ? '' : '<td class="num">' + S.money(r.cost) + '</td>') + '<td>' + r.status + '</td>' +
       (window.SNAPSHOT ? '' : '<td><a href="' + link('/tools/state-of-the-llm-union/report/', { id: r.id }) + '">Open report →</a></td>') + '</tr>';
   }).join('');
@@ -183,17 +204,17 @@ function renderTrend(d) {
   $('detail').innerHTML =
     '<h2 class="h2b">' + esc(d.watch.name) + '</h2>' +
     (window.SNAPSHOT ? '' : '<div class="sotu-actions" style="margin:-6px 0 18px"><button class="btn2 small solid" id="pdfSumBtn" type="button">Summary PDF</button> <button class="btn2 small" id="pdfBtn" type="button">Full PDF</button> <button class="btn2 small" id="slidesBtn" type="button">Slides (.pptx)</button> <a class="btn2 small" href="' + S.printUrl({ watch: d.watch.id }) + '" target="_blank" rel="noopener">Print view</a></div>') +
-    changesHtml(last) + (window.SNAPSHOT ? '' : alertsHtml(d.watch)) +
+    changesHtml(last) + (window.SNAPSHOT ? '' : alertsHtml(d.watch) + factsEditorHtml(d, last)) +
     '<div class="stats4">' + cards.map(c => '<div class="sc ' + (c.cls || '') + '"><div class="lbl">' + c.lbl + '</div><div class="val">' + c.val + '</div><div class="sub">' + c.sub + '</div></div>').join('') + '</div>' +
     '<h2 class="h2b">Mention rate over time</h2>' + trendModeHtml(d) + legend + (trendMode === 'weighted' && trendDemand ? chart(Object.assign({}, d, { runs: weightedRuns(d, trendDemand) })) : trendMode === 'score' ? chart(Object.assign({}, d, { runs: scoreRuns(d) })) : trendMode === 'toppick' ? chart(Object.assign({}, d, { runs: topPickRuns(d) })) : chart(d)) +
     (trendMode === 'weighted' && trendDemand ? '<p class="hint" style="margin:-8px 0 20px">Each prompt counts in proportion to how often it’s searched (' + (S.demandBasisFor(d, trendDemand) === 'ai' ? 'AI searches — DataForSEO’s estimate of monthly use in AI tools' : 'Google searches') + ', looked up ' + when(trendDemand.checked_at) + '). The same weights apply to every run, so the lines move only when the answers do. Search keywords can be corrected in a run’s report.</p>' : '') +
     (runs.length < 2 ? '<div class="banner2">The trend line appears after the next run' + (d.watch.next_run_at ? ' (due ' + when(d.watch.next_run_at) + ')' : '') + '. Each point is one full run.</div>' : '') +
     (trendMode === 'score' ? '<p class="hint" style="margin:-8px 0 20px">Visibility score out of 100, run by run (the chart’s 50% line is a score of 50). Scores from runs with different parts — e.g. with and without reading recommendations — aren’t strictly comparable.</p>' : '') +
     (trendMode === 'toppick' ? '<p class="hint" style="margin:-8px 0 20px">Share of answers where each brand is the single top recommendation, run by run (runs made without reading recommendations show as gaps).</p>' : '') +
-    S.visibilityHtml(last.visibility, { brands: d.brands }, colours) + S.recommendHtml(last.recommend, { brands: d.brands, cells: [], locations: [] }, colours, { named: Object.fromEntries(d.brands.map(b => [b.name, (last.by_brand[b.name] || {}).rate])) }) + S.describeTrendHtml(runs, main.name, when) + S.describeHtml(last.describe, main.name) + timeline(d) + S.factsHtml(last.facts, main.name) + S.discoveredHtml(last.discovered, !window.SNAPSHOT) +
+    S.visibilityHtml(last.visibility, { brands: d.brands }, colours) + S.recommendHtml(last.recommend, { brands: d.brands, cells: [], locations: [] }, colours, { named: Object.fromEntries(d.brands.map(b => [b.name, (last.by_brand[b.name] || {}).rate])) }) + S.describeTrendHtml(runs, main.name, when) + S.perceptionHtml(last.perception, d, colours) + S.describeHtml(last.describe, main.name) + timeline(d) + (S.claimsHtml(last.facts, main.name) || S.factsHtml(last.facts, main.name)) + S.discoveredHtml(last.discovered, !window.SNAPSHOT) +
     '<h2 class="h2b">Latest run — ' + esc(main.name) + ' by model</h2><div class="tblwrap"><table class="tbl"><tr><th>Model</th><th>Mention rate</th><th>Answers</th></tr>' + provRows + '</table></div>' +
-    citedHtml(d, last, colours) +
-    '<h2 class="h2b">All runs</h2><div class="tblwrap"><table class="tbl"><tr><th>When</th><th>' + esc(main.name) + ' rate</th><th>Likely range</th><th>Avg position</th><th>Answers</th>' + (window.SNAPSHOT ? '' : '<th>Cost</th>') + '<th>Status</th>' + (window.SNAPSHOT ? '' : '<th></th>') + '</tr>' + hist + '</table></div>';
+    S.googleVsAiHtml(last.google, d, colours) + citedHtml(d, last, colours) +
+    '<h2 class="h2b">All runs</h2><div class="tblwrap"><table class="tbl"><tr><th>When</th><th>' + esc(main.name) + ' rate</th><th>Likely range</th><th>Share of voice</th><th>Avg position</th><th>Answers</th>' + (window.SNAPSHOT ? '' : '<th>Cost</th>') + '<th>Status</th>' + (window.SNAPSHOT ? '' : '<th></th>') + '</tr>' + hist + '</table></div>';
 }
 
 // Chart modes: share of answers, weighted by demand (when demand is known), top pick (when runs read recommendations).
@@ -218,7 +239,7 @@ function citedHtml(d, last, colours) {
     const c = x.owner ? colours[x.owner] : null;
     return '<tr><td><b>' + esc(x.domain) + '</b></td><td>' + (c ? '<span class="chip2" style="--bg:' + c.bg + ';--fg:' + c.fg + '">' + esc(x.owner) + '</span>' : 'Third party') + '</td><td class="num">' + x.answers + '</td><td class="num">' + S.pct(x.share) + '</td></tr>';
   }).join('');
-  return '<h2 class="h2b">Latest run — most-cited websites</h2>' +
+  return S.sourceTypesHtml(cit, d, colours) + S.sourceMixTrendHtml(d.runs, when) + '<h2 class="h2b">Latest run — most-cited websites</h2>' +
     '<p class="hint" style="margin:0 0 12px">You ' + S.pct(cit.share.own) + ' · competitors ' + S.pct(cit.share.competitors) + ' · other sites ' + S.pct(cit.share.other) + ' of all citations, across ' + cit.answers_with_sources + ' answers that showed sources.</p>' +
     '<div class="tblwrap"><table class="tbl"><tr><th>Domain</th><th>Belongs to</th><th>Answers citing it</th><th>Share of answers</th></tr>' + rows + '</table></div>';
 }
@@ -242,6 +263,17 @@ function alertsHtml(w) {
     '<button class="btn2 small solid" id="alSave" type="button">Save</button><span id="alMsg" class="hint" style="margin:0"></span></div>';
 }
 
+// The fact sheet a tracker checks answers against: one true statement per line. Saving applies it from the next run;
+// "Check the latest run now" judges the answers already collected (about a cent for every few answers).
+function factsEditorHtml(d, last) {
+  const lines = (d.facts || '').split('\n').filter(Boolean).length;
+  return '<details class="banner2" id="factsBox"' + (lines ? '' : ' open') + '><summary style="cursor:pointer"><b>Fact sheet</b> — what AI should get right about ' + esc(d.brands[0].name) + ' (' + (lines ? lines + ' line' + (lines === 1 ? '' : 's') : 'not set') + ')</summary>' +
+    '<p class="hint" style="margin:8px 0">One true statement per line: pricing, plan limits, founding year, where you’re based, key features. Every answer that names ' + esc(d.brands[0].name) + ' is checked against it: claims it supports are TRUE, ones it contradicts are FALSE, and anything it doesn’t cover is UNVERIFIED.</p>' +
+    '<textarea id="factsText" maxlength="1500" rows="6" style="width:100%;font-size:15px" placeholder="Free plan: 1,000 operations a month&#10;Founded 2012 in Prague&#10;SOC 2 Type II certified">' + esc(d.facts || '') + '</textarea>' +
+    '<div class="sotu-actions" style="margin:8px 0 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="btn2 small solid" id="factsSave" type="button">Save fact sheet</button>' +
+    (last ? '<button class="btn2 small" id="factsCheck" type="button">Check the latest run now</button>' : '') + '<span id="factsMsg" class="hint" style="margin:0"></span></div></details>';
+}
+
 function wireDetail() {
   const sb = $('slidesBtn');
   if (sb) sb.onclick = () => window.SOTU_DECK.tracker(trendData, { weightedRuns: trendDemand ? weightedRuns(trendData, trendDemand) : null }, sb);
@@ -257,6 +289,28 @@ function wireDetail() {
     save.disabled = false;
     $('alMsg').textContent = r.error ? r.error : 'Saved.';
     if (!r.error) loadList();
+  };
+  const fs = $('factsSave'), fc = $('factsCheck');
+  const saveFacts = async () => S.api('/state-of-union/watch/facts', { id: selected, facts: $('factsText').value });
+  if (fs) fs.onclick = async () => {
+    fs.disabled = true;
+    const r = await saveFacts();
+    fs.disabled = false;
+    $('factsMsg').textContent = r.error ? r.error : 'Saved' + (r.lines ? ' (' + r.lines + ' line' + (r.lines === 1 ? '' : 's') + ')' : ' (cleared)') + ' — used from the next run.';
+    if (!r.error && trendData) trendData.facts = r.facts;
+  };
+  if (fc) fc.onclick = async () => {
+    fc.disabled = true; fs.disabled = true;
+    $('factsMsg').textContent = 'Saving…';
+    const saved = await saveFacts();
+    if (saved.error || !saved.facts) { $('factsMsg').textContent = saved.error || 'Write at least one fact first.'; fc.disabled = false; fs.disabled = false; return; }
+    $('factsMsg').textContent = 'Checking the latest run’s answers… (about a minute)';
+    const lastRun = trendData.runs.filter(r => r.status === 'complete').pop();
+    const r = await S.api('/state-of-union/facts-check', { ids: [lastRun.id], facts: saved.facts });
+    if (r.error) { $('factsMsg').textContent = r.error; fc.disabled = false; fs.disabled = false; return; }
+    const done = 'Checked ' + r.read + ' answers for ' + S.money(r.cost) + (r.remaining ? ' — ' + r.remaining + ' more to go, press again.' : '.');
+    await loadTrend();
+    $('factsBox').open = true; $('factsMsg').textContent = done;
   };
   $('detail').querySelectorAll('[data-addcomp]').forEach(b => b.onclick = async () => {
     b.disabled = true;
