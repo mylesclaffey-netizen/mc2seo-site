@@ -152,3 +152,7 @@ write('assets/sotu-deck.js', brand(js('sotu-deck.js')).replace("ACCENT_DEFAULT =
 os.makedirs(os.path.join(HERE, 'assets', 'vendor'), exist_ok=True)
 shutil.copyfile(os.path.join(SRC, 'assets', 'vendor', 'pptxgen.bundle.js'), os.path.join(HERE, 'assets', 'vendor', 'pptxgen.bundle.js'))
 print('wrote assets/vendor/pptxgen.bundle.js')
+
+# The comparison-keyword panel for the rank pages (styled by each page's own CSS variables, so the same file serves both sites).
+shutil.copyfile(os.path.join(SRC, 'assets', 'saas-keywords.js'), os.path.join(HERE, 'assets', 'saas-keywords.js'))
+print('wrote assets/saas-keywords.js')
