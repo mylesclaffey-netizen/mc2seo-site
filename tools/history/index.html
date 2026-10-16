@@ -119,7 +119,8 @@ const TOOLS = [
   { id: 'review-link',  label: 'Google review link generator' },
   { id: 'brand-builder', label: 'Brand Builder' },
   { id: 'pricing-check', label: 'Does AI know your pricing?' },
-  { id: 'vs-gap', label: 'Vs & alternatives gap finder' }
+  { id: 'vs-gap', label: 'Vs & alternatives gap finder' },
+  { id: 'review-presence', label: 'Review-site presence' }
 ];
 const TOOL_LABEL = Object.fromEntries(TOOLS.map(t => [t.id, t.label]));
 
@@ -139,7 +140,8 @@ const REPORT_LINK = {
   'brand-sentiment': (code, id) => `/tools/brand-sentiment/?k=${encodeURIComponent(code)}&id=${encodeURIComponent(id)}`,
   'brand-builder': (code, id) => `/tools/brand-builder/report/?k=${encodeURIComponent(code)}&id=${encodeURIComponent(id)}`,
   'pricing-check': (code, id) => `/tools/pricing-check/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`,
-  'vs-gap': (code, id) => `/tools/vs-gap/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`
+  'vs-gap': (code, id) => `/tools/vs-gap/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`,
+  'review-presence': (code, id) => `/tools/review-presence/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`
 };
 
 function esc(s){ return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }

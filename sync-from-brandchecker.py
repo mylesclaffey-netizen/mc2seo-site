@@ -8,7 +8,7 @@ mc2seo — so a change is made once, on brandchecker.eu, and this script brings 
 What it copies:
     tools/state-of-the-llm-union/  form, report, tracker, print
     tools/model-compare/
-    tools/pricing-check/, tools/vs-gap/   (open on brandchecker.eu; on mc2seo they run on the access code like the rest)
+    tools/pricing-check/, tools/vs-gap/, tools/review-presence/   (open on brandchecker.eu; on mc2seo they run on the access code like the rest)
     assets/sotu.js, sotu-deck.js, vendor/pptxgen.bundle.js   (logic, as is apart from the site name and colours)
     assets/sotu-print.js            → the print page's light copy of sotu.js
     assets/sotu.css, theme.css      → re-skinned dark for the tool pages
@@ -36,6 +36,7 @@ PAGES = [
     'tools/model-compare/index.html',
     'tools/pricing-check/index.html',
     'tools/vs-gap/index.html',
+    'tools/review-presence/index.html',
 ]
 PRINT = 'tools/state-of-the-llm-union/print/index.html'
 
@@ -107,7 +108,7 @@ def brand(s):
 def page(rel):
     s = open(os.path.join(SRC, rel), encoding='utf-8').read()
     s = brand(s)
-    if rel in ('tools/pricing-check/index.html', 'tools/vs-gap/index.html'):
+    if rel in ('tools/pricing-check/index.html', 'tools/vs-gap/index.html', 'tools/review-presence/index.html'):
         # No open-access visitor id here: the code comes from the link (?k=) or the one saved by the other tools.
         s = s.replace("window.MC_VISITOR || ''", "(function () { try { return localStorage.getItem('mc2seo_code') || ''; } catch (e) { return ''; } })()")
     if rel == PRINT:
