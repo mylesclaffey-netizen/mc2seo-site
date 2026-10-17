@@ -9,7 +9,7 @@ What it copies:
     tools/state-of-the-llm-union/  form, report, tracker, print
     tools/model-compare/
     tools/pricing-check/, tools/vs-gap/, tools/review-presence/, tools/integration-check/, tools/b2b-diagnostic/, tools/conquest-check/   (open on brandchecker.eu; on mc2seo they run on the access code like the rest)
-    tools/price-visibility/, tools/price-localisation/, tools/trust-check/   (free tools on both sites)
+    tools/price-visibility/, tools/price-localisation/, tools/trust-check/, tools/key-pages/   (free tools on both sites)
     assets/sotu.js, sotu-deck.js, vendor/pptxgen.bundle.js   (logic, as is apart from the site name and colours)
     assets/sotu-print.js            → the print page's light copy of sotu.js
     assets/sotu.css, theme.css      → re-skinned dark for the tool pages
@@ -43,7 +43,8 @@ PAGES = [
     'tools/conquest-check/index.html',
     'tools/price-visibility/index.html',
     'tools/price-localisation/index.html',
-    'tools/trust-check/index.html',   # free: no access code on either site
+    'tools/trust-check/index.html',
+    'tools/key-pages/index.html',   # free: no access code on either site
 ]
 PRINT = 'tools/state-of-the-llm-union/print/index.html'
 
