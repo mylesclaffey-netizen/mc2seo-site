@@ -123,7 +123,8 @@ const TOOLS = [
   { id: 'review-presence', label: 'Review-site presence' },
   { id: 'integration-check', label: 'Does AI know your integrations?' },
   { id: 'b2b-diagnostic', label: 'B2B SaaS diagnostic' },
-  { id: 'conquest-check', label: 'Conquesting check' }
+  { id: 'conquest-check', label: 'Conquesting check' },
+  { id: 'review-echo', label: 'Negative-review echo' }
 ];
 const TOOL_LABEL = Object.fromEntries(TOOLS.map(t => [t.id, t.label]));
 
@@ -147,7 +148,8 @@ const REPORT_LINK = {
   'review-presence': (code, id) => `/tools/review-presence/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`,
   'integration-check': (code, id) => `/tools/integration-check/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`,
   'b2b-diagnostic': (code, id) => `/tools/b2b-diagnostic/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`,
-  'conquest-check': (code, id) => `/tools/conquest-check/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`
+  'conquest-check': (code, id) => `/tools/conquest-check/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`,
+  'review-echo': (code, id) => `/tools/review-echo/?k=${encodeURIComponent(code)}&r=${encodeURIComponent(id)}`
 };
 
 function esc(s){ return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
