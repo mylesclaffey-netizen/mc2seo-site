@@ -4,129 +4,180 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SEO Tools for Brand Managers — MC2SEO</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23FFFF00'/%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%234f5bd5'/%3E%3C/svg%3E" />
 <meta name="description" content="Free tools for brands selling into more than one country: international rank checking, local map-grid rank checking, SERP preview, schema analysis, share of search and brand bidding monitoring.">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--paper:#0a0c11;--card:#12151d;--ink:#eceef4;--muted:#8b93a7;--line:#242c3d;
-        --you:#6e7bff;--ok:#35c48d;--warn:#e0a93a;--bad:#e8695f;--gold:#ffd65c}
+  :root{--paper:#ffffff;--soft:#f8fafc;--card:#ffffff;--ink:#0f172a;--ink2:#334155;--muted:#64748b;
+        --line:#e5e7eb;--line2:#d7dbe2;--you:#4f5bd5;--you-soft:#eef0ff;--warm:#ff8a4c;--warm-soft:#fff7f2;
+        --ok:#15803d;--ok-soft:#e8f6ec;--warn:#a15c07;--warn-soft:#fdf3e1;--bad:#b42318;
+        --display:'Plus Jakarta Sans',Inter,system-ui,sans-serif;--body:Inter,system-ui,-apple-system,sans-serif;
+        --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;--headh:68px}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Mono',monospace;
-       line-height:1.5;padding:22px 16px 60px}
-  .wrap{max-width:1000px;margin:0 auto}
-  .home{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
-        text-decoration:none;display:inline-block;margin-bottom:26px}
-  .home:hover{color:var(--you)}
-  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  h1{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;letter-spacing:-.02em;
-     line-height:1.1;margin:8px 0 12px;color:var(--gold);text-align:center}
-  .lede{font-size:13.5px;color:var(--muted);line-height:1.6;margin:0 auto 40px;max-width:52ch;text-align:center}
-  h2{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;
-     text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--you);color:#fff}
+  :focus-visible{outline:2px solid var(--you);outline-offset:3px;border-radius:6px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .home{font-family:var(--display);font-weight:800;font-size:21px;letter-spacing:-.03em;color:var(--ink);text-decoration:none}
+  .home sup{font-size:.55em;color:var(--you);margin-left:1px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#fff}
+  .eyebrow::before{content:'[ ';opacity:.7}
+  .eyebrow::after{content:' ]';opacity:.7}
+
+  /* hero */
+  .tools-hero{position:relative;overflow:hidden;border-radius:18px;color:#fff;text-align:center;
+      padding:64px 24px 48px;margin-bottom:48px;
+      background:
+        radial-gradient(60% 80% at 15% 20%, #2b2f7a 0%, transparent 60%),
+        radial-gradient(55% 70% at 85% 25%, #ff9a5c 0%, transparent 60%),
+        radial-gradient(70% 90% at 60% 100%, #ff6a3d 0%, transparent 60%),
+        linear-gradient(120deg, #3b44c4 0%, #8a5cf0 40%, #ff7a45 75%, #ffc38a 100%)}
+  .tools-hero::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .tools-hero > *{position:relative;z-index:1}
+  h1{font-family:var(--display);font-size:clamp(32px,4.6vw,52px);font-weight:700;letter-spacing:-.035em;
+     line-height:1.08;margin:16px auto 16px;color:#fff;max-width:18ch}
+  .lede{font-size:17px;color:rgba(255,255,255,.92);line-height:1.6;margin:0 auto;max-width:60ch}
+  .hero-stats{margin-top:28px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+  .hero-stats span{background:#fff;color:var(--ink);font-size:13px;font-weight:500;padding:7px 13px;border-radius:999px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08)}
+  .hero-stats b{font-family:var(--display);font-weight:700;margin-right:4px}
+  h2{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
 
   /* The large category menu */
   .category-menu{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:44px}
   @media(max-width:660px){.category-menu{grid-template-columns:1fr}}
-  .category{background:var(--card);border:1.5px solid var(--line);border-radius:20px;
-      overflow:hidden;transition:border-color .15s ease}
-  .category:hover{border-color:#3a4358}
-  .category[open]{grid-column:1 / -1;border-color:var(--you)}
+  .category{background:var(--card);border:1px solid var(--line);border-radius:14px;
+      overflow:hidden;transition:border-color .2s ease, box-shadow .2s ease, background .2s ease}
+  .category:hover{border-color:var(--line2);background:var(--soft)}
+  .category[open]{grid-column:1 / -1;border-color:var(--ink);background:var(--card);box-shadow:0 30px 60px -40px rgba(15,23,42,.35)}
   /* Visual order only — DOM order stays as-is so the sidebar's
      tool-dedup logic (which credits each shared tool to whichever
      category it meets first in source order) still lands them under
      their more specific category instead of all piling into this one. */
   .cat-last{order:99}
-  .category summary{list-style:none;cursor:pointer;padding:30px 32px;display:flex;
+  .category summary{list-style:none;cursor:pointer;padding:28px 30px;display:flex;
       justify-content:space-between;align-items:flex-start;gap:18px}
   .category summary::-webkit-details-marker{display:none}
-  .category .cattitle{font-family:'Space Grotesk',sans-serif;font-size:23px;font-weight:700;
-      letter-spacing:-.01em;margin-bottom:9px;line-height:1.2}
-  .category .catlede{font-size:13px;color:var(--muted);line-height:1.6;margin:0;max-width:48ch}
+  .category .cattitle{font-family:var(--display);font-size:22px;font-weight:600;
+      letter-spacing:-.02em;margin-bottom:8px;line-height:1.2;color:var(--ink)}
+  .category .catlede{font-size:15px;color:var(--ink2);line-height:1.6;margin:0;max-width:52ch}
   .category .catmeta{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex:none}
-  .category .catcount{font-size:10.5px;color:var(--muted);white-space:nowrap;letter-spacing:.06em;
-      text-transform:uppercase}
-  .category .chev{color:var(--you);font-size:22px;line-height:1;transition:transform .2s ease;flex:none}
+  .category .catcount{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap;letter-spacing:.08em;
+      text-transform:uppercase;border:1px solid var(--line2);border-radius:4px;padding:3px 8px;background:#fff}
+  .category .chev{color:var(--warm);font-family:var(--mono);font-size:22px;line-height:1;transition:transform .2s ease;flex:none}
   .category[open] .chev{transform:rotate(90deg)}
+  .category[open] .catcount{background:var(--warm-soft);border-color:#ffd4bd;color:#c2410c}
 
-  .live-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:0 32px 32px;
-      border-top:1px solid var(--line);padding-top:28px;margin-top:2px}
+  .live-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 30px 30px;
+      border-top:1px solid var(--line);border-left:1px solid var(--line)}
   @media(max-width:760px){.live-grid{grid-template-columns:1fr}}
-  .live{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px;
-        display:flex;flex-direction:column}
-  .live > .btn{margin-top:auto}
-  .tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.1em;
-       text-transform:uppercase;color:var(--ok);margin-bottom:10px}
-  .tag i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block}
-  .usage-tag{display:inline-flex;align-items:center;font-size:10px;letter-spacing:.08em;
-       text-transform:uppercase;margin-left:9px;padding:3px 9px;border-radius:20px}
-  .usage-tag.free{color:var(--ok);background:rgba(53,196,141,.12)}
-  .usage-tag.light{color:var(--you);background:rgba(110,123,255,.14)}
-  .usage-tag.heavy{color:var(--warn);background:rgba(224,169,58,.14)}
-  .live h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:9px}
-  .live p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px}
-  .live ul{list-style:none;margin-bottom:20px}
-  .live ul li{font-size:12px;color:var(--muted);padding:3px 0 3px 16px;position:relative}
-  .live ul li::before{content:'→';position:absolute;left:0;color:var(--you)}
-  .btn{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;
-       background:var(--you);color:#fff;text-decoration:none;border-radius:8px;padding:13px 22px}
-  .btn:hover{background:var(--you)}
-  .note{font-size:11px;color:var(--muted);margin-top:12px}
+  .live{background:var(--paper);border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px;
+        display:flex;flex-direction:column;transition:background .2s}
+  .live:hover{background:var(--soft)}
+  .live > .btn{margin-top:auto;align-self:flex-start}
+  .tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+       text-transform:uppercase;color:var(--ok);margin-bottom:10px;align-self:flex-start}
+  .tag i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block;box-shadow:0 0 0 3px var(--ok-soft)}
+  .usage-tag{display:inline-flex;align-items:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+       text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid;align-self:flex-start;margin-bottom:14px}
+  .usage-tag.free{color:var(--ok);background:var(--ok-soft);border-color:#bfe3c9}
+  .usage-tag.light{color:var(--you);background:var(--you-soft);border-color:#d5d9fb}
+  .usage-tag.heavy{color:var(--warn);background:var(--warn-soft);border-color:#f3dcae}
+  .live h3{font-family:var(--display);font-size:20px;font-weight:600;letter-spacing:-.015em;margin-bottom:8px;line-height:1.25}
+  .live p{font-size:15px;color:var(--ink2);line-height:1.6;margin-bottom:14px}
+  .live ul{list-style:none;margin-bottom:22px;display:grid;gap:6px}
+  .live ul li{font-size:14px;color:var(--ink2);padding:0 0 0 20px;position:relative;line-height:1.55}
+  .live ul li::before{content:'✓';position:absolute;left:0;color:var(--warm);font-weight:700}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+       background:var(--ink);color:#fff;text-decoration:none;border-radius:6px;padding:13px 20px;transition:background .2s, transform .2s}
+  .btn::after{content:'→'}
+  .btn:hover{background:#1e293b;transform:translateY(-1px)}
+  .btn[target="_blank"]::after{content:'↗'}
+  .sidebar a.sidetool.external::after{content:'↗';margin-left:auto;color:var(--muted);font-size:13px}
+  .btn[href="/#contact"]{background:#fff;color:var(--ink);border:1px solid var(--line2)}
+  .btn[href="/#contact"]:hover{border-color:var(--ink);background:#fff}
+  .note{font-size:13px;color:var(--muted);margin-top:12px}
   .note a{color:var(--you)}
 
   .soon{border-top:1px solid var(--line)}
   .soon .row{border-bottom:1px solid var(--line);padding:17px 0}
-  .soon h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;margin-bottom:4px}
-  .soon p{font-size:12px;color:var(--muted);line-height:1.6;max-width:56ch}
-  .soon .when{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  .soon h3{font-family:var(--display);font-size:16px;font-weight:600;margin-bottom:4px}
+  .soon p{font-size:14px;color:var(--muted);line-height:1.6;max-width:56ch}
+  .soon .when{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
               float:right;margin-left:14px}
 
-  .foot{margin-top:38px;font-size:12px;color:var(--muted);line-height:1.7}
+  .foot{margin-top:24px;font-size:14px;color:var(--muted);line-height:1.7;text-align:center}
   .foot a{color:var(--you)}
 
   /* --- App shell --- */
   html,body{height:100%}
   body{padding:0}
   .shell{display:flex;flex-direction:column;height:100vh}
-  .shellhead{display:flex;align-items:center;gap:16px;padding:14px 20px;
-      border-bottom:1px solid var(--line);flex:none}
+  .shellhead{display:flex;align-items:center;gap:22px;padding:0 20px;height:var(--headh);
+      border-bottom:1px solid var(--line);flex:none;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
   .shellhead .home{margin:0;flex:none}
   .shellhead .spacer{flex:1}
-  .shellhead .headHistory{font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-      color:var(--muted);text-decoration:none;white-space:nowrap}
-  .shellhead .headHistory:hover{color:var(--you)}
-  .navtoggle{display:none;background:none;border:1px solid var(--line);color:var(--ink);
-      border-radius:6px;width:34px;height:34px;font-size:16px;cursor:pointer;flex:none}
+  .shellhead .headlink,.shellhead .headHistory{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--ink2);text-decoration:none;white-space:nowrap}
+  .shellhead .headlink:hover,.shellhead .headHistory:hover{color:var(--ink)}
+  .shellhead .headcta{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
+      background:var(--ink);color:#fff;text-decoration:none;border-radius:6px;padding:11px 16px}
+  .shellhead .headcta:hover{background:#1e293b}
+  .navtoggle{display:none;background:#fff;border:1px solid var(--line);color:var(--ink);
+      border-radius:8px;width:40px;height:40px;font-size:16px;cursor:pointer;flex:none}
   .shellbody{display:flex;flex:1;min-height:0}
-  .sidebar{width:340px;flex:none;border-right:1px solid var(--line);overflow-y:auto;padding:18px 0}
-  .sidebar .scat{padding:18px 24px 8px;font-size:11.5px;letter-spacing:.1em;
-      text-transform:uppercase;color:var(--muted)}
+  .sidebar{width:320px;flex:none;border-right:1px solid var(--line);overflow-y:auto;padding:18px 0;background:var(--soft)}
+  .sidebar .scat{padding:20px 22px 8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--warm)}
+  .sidebar .scat::before{content:'[ ';color:var(--muted)}
+  .sidebar .scat::after{content:' ]';color:var(--muted)}
   .sidebar .scat:first-child{padding-top:4px}
-  .sidebar a.sidetool{display:flex;align-items:center;gap:12px;padding:12px 24px;
-      font-size:17px;color:var(--ink);text-decoration:none;border-left:3px solid transparent}
-  .sidebar a.sidetool:hover{background:var(--card)}
-  .sidebar a.sidetool.active{border-left-color:var(--you);background:var(--card);color:var(--you)}
+  .sidebar a.sidetool{display:flex;align-items:center;gap:12px;padding:9px 22px;
+      font-size:15px;color:var(--ink2);text-decoration:none;border-left:3px solid transparent;line-height:1.35}
+  .sidebar a.sidetool:hover{background:#fff;color:var(--ink)}
+  .sidebar a.sidetool.active{border-left-color:var(--warm);background:#fff;color:var(--ink);font-weight:500}
   .sidebar a.sidetool .dot{width:7px;height:7px;border-radius:50%;flex:none}
   .sidebar a.sidetool .dot.free{background:var(--ok)}
   .sidebar a.sidetool .dot.light{background:var(--you)}
   .sidebar a.sidetool .dot.heavy{background:var(--warn)}
   .content{flex:1;min-width:0;overflow-y:auto;position:relative}
-  .content > .wrap{padding:22px 16px 60px}
+  .content > .wrap{padding:24px 24px 64px}
   .toolframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--paper)}
+  @media(max-width:1000px){ .shellhead .headlink{display:none} }
   @media(max-width:860px){
-    .sidebar{position:fixed;left:0;top:57px;bottom:0;transform:translateX(-100%);
-        transition:transform .2s ease;background:var(--paper);z-index:20;
-        box-shadow:2px 0 24px rgba(0,0,0,.5)}
+    .sidebar{position:fixed;left:0;top:var(--headh);bottom:0;transform:translateX(-100%);
+        transition:transform .2s ease;background:var(--soft);z-index:20;
+        box-shadow:2px 0 24px rgba(15,23,42,.15)}
     .sidebar.open{transform:translateX(0)}
     .navtoggle{display:block}
   }
+  @media(max-width:640px){
+    .shellhead{gap:12px;padding:0 12px}
+    .shellhead .headHistory{display:none}
+    .shellhead .headcta{padding:10px 12px;font-size:11px}
+    .content > .wrap{padding:12px 12px 48px}
+    .tools-hero{padding:44px 16px 36px;border-radius:14px;margin-bottom:32px}
+    .lede{font-size:16px}
+    .category summary{padding:22px 18px}
+    .live-grid{margin:0 12px 12px}
+    .live{padding:20px}
+  }
+  @media (prefers-reduced-motion: reduce){ .btn:hover{transform:none} .category .chev{transition:none} }
 </style>
 </head>
 <body>
 <div class="shell">
   <header class="shellhead">
-    <a class="home" href="/">← MC<sup>2</sup>SEO</a>
+    <a class="home" href="/" aria-label="MC2SEO home">MC<sup>2</sup>SEO</a>
     <span class="spacer"></span>
-    <a class="headHistory" href="/tools/history/">My history →</a>
+    <a class="headlink" href="/#how">How we work</a>
+    <a class="headlink" href="/#seo-geo">SEO + GEO</a>
+    <a class="headlink" href="/#faq">FAQ</a>
+    <a class="headHistory" href="/tools/history/">My history</a>
+    <a class="headcta" href="/#contact">Free audit</a>
     <button class="navtoggle" id="navToggle" aria-label="Toggle tool menu">☰</button>
   </header>
   <div class="shellbody">
@@ -134,9 +185,12 @@
     <main class="content" id="content">
     <div class="wrap" id="homeView">
 
-  <p class="eyebrow" style="text-align:center">Free tools</p>
-  <h1>SEO Tools for Brand Managers</h1>
-  <p class="lede">Most SEO tools are built for SEOs, and for one market at a time. These are built for the person who owns the brand across several — and they run on the same data we use for client work, not a trimmed-down demo of it.</p>
+  <section class="tools-hero">
+    <p class="eyebrow">Built in-house</p>
+    <h1>Tools for AI search and SEO</h1>
+    <p class="lede">See what ChatGPT, Claude, Gemini and Perplexity say about your brand, check whether AI crawlers can read your site, and track where you rank on Google, in any market. The same tools we use for client work, not a trimmed-down demo.</p>
+    <div class="hero-stats"><span><b>50+</b>tools</span><span><b>25</b>free, no sign-up</span><span><b>5</b>AI engines</span></div>
+  </section>
 
   <div class="category-menu">
 
@@ -144,7 +198,7 @@
   <summary>
     <div>
       <div class="cattitle">Free To Use Tools</div>
-      <p class="catlede">No access code, no waiting — sixteen tools you can open and use right now, free every time. Everything else here also works, it just needs a personal link first.</p>
+      <p class="catlede">No access code, no waiting — twenty-five tools you can open and use right now, free every time. Everything else here also works, it just needs a personal link first.</p>
     </div>
     <div class="catmeta"><span class="catcount">25 tools</span><span class="chev">›</span></div>
   </summary>
@@ -1252,6 +1306,124 @@
   </div>
   </details>
 
+  <details class="category" name="category-group">
+  <summary>
+    <div>
+      <div class="cattitle">GSC Suite</div>
+      <p class="catlede">Everything Search Console doesn’t keep or show. Connect a property and the suite saves the data Google is about to delete, tells a normal dip from a real drop, and finds what to fix and where the traffic went.</p>
+    </div>
+    <div class="catmeta"><span class="catcount">8 tools</span><span class="chev">›</span></div>
+  </summary>
+  <div class="live-grid">
+
+  <div class="live">
+    <span class="tag"><i></i>Beta</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Trend &amp; expected range</h3>
+    <p>Everything Search Console still has, with a normal range for every week, so you can tell a normal dip from a real drop.</p>
+    <ul>
+      <li>Clicks, impressions, CTR and position, daily, weekly or monthly</li>
+      <li>Expected vs actual for every week, with sustained drops flagged</li>
+      <li>Brand vs non-brand traffic split out, and the same period a year earlier</li>
+    </ul>
+    <a class="btn" href="https://brandchecker.eu/tools/gsc-suite/#overview" target="_blank" rel="noopener">Open on Brand Checker</a>
+    <p class="note">Runs on brandchecker.eu: needs a free Brand Checker account and read-only access to your Search Console. Free while in beta.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Beta</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Audience</h3>
+    <p>Where your search traffic comes from, and where it was lost: by country, device, search appearance and section of the site.</p>
+    <ul>
+      <li>The last 90 days split four ways, with the biggest losses first</li>
+      <li>Hidden queries: the share of clicks Google reports without a query</li>
+      <li>Shows which country or device a drop actually came from</li>
+    </ul>
+    <a class="btn" href="https://brandchecker.eu/tools/gsc-suite/#audience" target="_blank" rel="noopener">Open on Brand Checker</a>
+    <p class="note">Runs on brandchecker.eu: needs a free Brand Checker account and read-only access to your Search Console. Free while in beta.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Beta</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Segments &amp; core terms</h3>
+    <p>Your own groups of queries and pages tracked side by side: core product terms, a city, a product line or a section of the site.</p>
+    <ul>
+      <li>Brand vs non-brand, plus any segments you define</li>
+      <li>A focus report per segment, with its own trend</li>
+      <li>Edit segments at any time; history is recalculated</li>
+    </ul>
+    <a class="btn" href="https://brandchecker.eu/tools/gsc-suite/#segments" target="_blank" rel="noopener">Open on Brand Checker</a>
+    <p class="note">Runs on brandchecker.eu: needs a free Brand Checker account and read-only access to your Search Console. Free while in beta.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Beta</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Opportunities</h3>
+    <p>What to fix first, from your own data rather than a keyword tool.</p>
+    <ul>
+      <li>Queries sitting just off page one</li>
+      <li>Top rankings that hardly anyone clicks</li>
+      <li>Pages competing with each other for the same query, plus rank history</li>
+    </ul>
+    <a class="btn" href="https://brandchecker.eu/tools/gsc-suite/#opportunities" target="_blank" rel="noopener">Open on Brand Checker</a>
+    <p class="note">Runs on brandchecker.eu: needs a free Brand Checker account and read-only access to your Search Console. Free while in beta.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Beta</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Lost winners &amp; change tracker</h3>
+    <p>Pages that used to earn clicks and don’t anymore, and whether the changes you made actually worked.</p>
+    <ul>
+      <li>Lost winners, with redirect suggestions for removed pages</li>
+      <li>Log a change (a new page, an update, a redirect, a Google update)</li>
+      <li>Before-and-after clicks measured for every logged change</li>
+    </ul>
+    <a class="btn" href="https://brandchecker.eu/tools/gsc-suite/#recovery" target="_blank" rel="noopener">Open on Brand Checker</a>
+    <p class="note">Runs on brandchecker.eu: needs a free Brand Checker account and read-only access to your Search Console. Free while in beta.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Beta</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Indexing &amp; Core Web Vitals</h3>
+    <p>Is Google indexing the pages that matter, and how do real visitors experience them?</p>
+    <ul>
+      <li>Index status for your top pages, your biggest losers or pages you pick</li>
+      <li>Core Web Vitals from Google’s own field data</li>
+      <li>Problems listed with the page they affect</li>
+    </ul>
+    <a class="btn" href="https://brandchecker.eu/tools/gsc-suite/#technical" target="_blank" rel="noopener">Open on Brand Checker</a>
+    <p class="note">Runs on brandchecker.eu: needs a free Brand Checker account and read-only access to your Search Console. Free while in beta.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Beta</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>History past 16 months</h3>
+    <p>Search Console deletes everything older than 16 months. The suite stores it, so you keep every year.</p>
+    <ul>
+      <li>A 16-month backfill when you connect, then a daily sync</li>
+      <li>Month by month, and top queries and pages for any range</li>
+      <li>Raw rows for any day, with CSV export</li>
+    </ul>
+    <a class="btn" href="https://brandchecker.eu/tools/gsc-suite/#archive" target="_blank" rel="noopener">Open on Brand Checker</a>
+    <p class="note">Runs on brandchecker.eu: needs a free Brand Checker account and read-only access to your Search Console. Free while in beta.</p>
+  </div>
+
+  <div class="live">
+    <span class="tag"><i></i>Beta</span><span class="usage-tag light">Light Token Usage</span>
+    <h3>Alerts, digest &amp; reports</h3>
+    <p>Know about a drop before a client does, without logging in.</p>
+    <ul>
+      <li>A daily page-health check of the pages you track</li>
+      <li>A Monday email digest and drop alerts</li>
+      <li>Full report as a PDF or a shareable link</li>
+    </ul>
+    <a class="btn" href="https://brandchecker.eu/tools/gsc-suite/#alerts" target="_blank" rel="noopener">Open on Brand Checker</a>
+    <p class="note">Runs on brandchecker.eu: needs a free Brand Checker account and read-only access to your Search Console. Free while in beta.</p>
+  </div>
+
+  </div>
+  </details>
+
+
   </div>
 
   <p class="foot">Tools are free and access is by request while they're new — mostly so we can keep the data costs sane. <a href="/#contact">Get in touch</a> and we'll send you a code.</p>
@@ -1327,7 +1499,8 @@
       a.href = href;
       a.dataset.slug = slug;
       a.innerHTML = '<span class="dot ' + tier + '"></span>' + card.querySelector('h3').textContent;
-      a.addEventListener('click', function(e){ e.preventDefault(); openTool(slug); closeSidebarMobile(); });
+      if (/^https?:/.test(href)) { a.target = '_blank'; a.rel = 'noopener'; a.classList.add('external'); }
+      else a.addEventListener('click', function(e){ e.preventDefault(); openTool(slug); closeSidebarMobile(); });
       target.appendChild(a);
     });
   });
@@ -1345,6 +1518,7 @@
 
   // Every "Open the tool" card button opens in-app instead of navigating away
   homeView.querySelectorAll('a.btn').forEach(function(btn){
+    if (/^https?:/.test(btn.getAttribute('href'))) return;
     var slug = slugFromHref(btn.getAttribute('href'));
     btn.addEventListener('click', function(e){ e.preventDefault(); openTool(slug); });
   });
