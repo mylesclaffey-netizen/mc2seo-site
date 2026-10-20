@@ -1,6 +1,6 @@
 # MC2SEO
 
-> MC2SEO helps brands rank in Google and get cited by AI answer engines like ChatGPT, Perplexity and Google AI Overviews, with one integrated SEO + GEO (generative engine optimization) strategy. It also publishes a set of SEO tools built for brand managers who sell into more than one country.
+> MC2SEO is a GEO + SEO service: it gets brands named and described correctly by AI assistants (ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews) and keeps them ranking on Google in every market they sell to. It also publishes 50+ SEO and AI-visibility tools, 25 of them free, built on the same data used for client work.
 
 Services cover technical SEO, content strategy, generative engine optimization, authority and digital PR, analytics and reporting, local and entity SEO, international SEO, and conversion strategy, run as one monthly process. The tools run on the same data used for client work. Tools in the "Free tools" section need no sign-up or access code; most of the others run on a personal access code.
 
@@ -8,6 +8,7 @@ Services cover technical SEO, content strategy, generative engine optimization, 
 
 - [Home](https://mc2seo.com/): What MC2SEO does, how the monthly process works, and how to book a free visibility audit
 - [SEO tools for brand managers](https://mc2seo.com/tools/): The full tool directory, grouped by category
+- [The QUOTED framework](https://mc2seo.com/quoted-framework/): MC2SEO's six-part checklist for pages AI assistants can find, trust and quote — Question-first, Unmistakable entity, Other people's proof, Truth you can check, Extractable, Dated & consistent
 
 ## Free tools
 
