@@ -1,0 +1,78 @@
+/* MC2SEO tool pages — the light look that matches the homepage.
+   Loaded last on every tool page, after the page's own <style> (and sotu.css on the
+   synced LLM/B2B tools), so it sets the shared structure: type, inputs, buttons, cards.
+   Colours come from each page's own variables, remapped to this palette. */
+:root{--paper:#ffffff;--card:#f8fafc;--card2:#f1f5f9;--ink:#0f172a;--muted:#64748b;--line:#e5e7eb;
+      --you:#4f5bd5;--ok:#15803d;--warn:#a15c07;--bad:#b42318;--gold:#0f172a;
+      --mc-line2:#d7dbe2;--mc-ink2:#334155;--mc-warm:#ff8a4c;--mc-soft:#eef0ff;
+      --mc-display:'Plus Jakarta Sans',Inter,system-ui,sans-serif;
+      --mc-body:Inter,system-ui,-apple-system,sans-serif;
+      --mc-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+::selection{background:#4f5bd5;color:#fff}
+body{font-family:var(--mc-body);background:#fff;color:#0f172a;-webkit-font-smoothing:antialiased}
+input,select,textarea,button{font-family:var(--mc-body)}
+pre,code,kbd,samp{font-family:var(--mc-mono)}
+
+h1{font-family:var(--mc-display);font-weight:700;letter-spacing:-.03em;line-height:1.1;color:#0f172a;text-transform:none}
+h2,h3{font-family:var(--mc-display);font-weight:600;letter-spacing:-.015em;color:#0f172a}
+.eyebrow{display:block;font-family:var(--mc-mono);font-weight:400;font-size:11.5px;letter-spacing:.12em;
+   text-transform:uppercase;color:var(--mc-warm);background:none;border:0;padding:0}
+.eyebrow:not(.restag)::before{content:'[ ';color:#94a3b8}
+.eyebrow:not(.restag)::after{content:' ]';color:#94a3b8}
+.eyebrow.restag{font-size:12px;color:var(--muted)}
+.lede{color:var(--mc-ink2);font-weight:400;border:0;padding-left:0}
+.after,.foot,.hint,.meta,.sdesc,.empty{color:var(--muted)}
+label{color:var(--mc-ink2);font-weight:500}
+a{text-underline-offset:3px}
+
+input,select,textarea{border:1px solid var(--mc-line2);border-radius:8px;background:#fff;color:#0f172a}
+input[type=checkbox],input[type=radio]{accent-color:#4f5bd5}
+input::placeholder,textarea::placeholder{color:#94a3b8}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#4f5bd5;box-shadow:0 0 0 3px var(--mc-soft)}
+
+.submit,.btn{background:#0f172a;color:#fff;border:0;border-radius:6px;box-shadow:none;
+   font-family:var(--mc-mono);font-weight:500;font-size:13px;text-transform:uppercase;letter-spacing:.08em;
+   transition:background .2s ease,transform .2s ease}
+.submit:hover,.btn:hover{background:#1e293b;color:#fff;transform:translateY(-1px)}
+.submit[disabled]{opacity:.45;transform:none}
+.backbtn{color:#4f5bd5;font-family:var(--mc-mono);font-size:12px;font-weight:400;text-transform:uppercase;letter-spacing:.06em}
+.backbtn:hover{color:#3a45b8}
+
+.card,.summary,.stat,.qcard,.placecard,.sitecard,.wcard,.gate,.item.card{border-radius:12px;box-shadow:none}
+.findrow{border-radius:10px}
+.err{border-radius:8px;border-color:#f3c2bd;background:#fdecea;color:var(--bad)}
+.sharebtn{font-family:var(--mc-mono);font-size:11.5px;font-weight:400;border:1px solid var(--mc-line2);
+   background:#fff;color:#0f172a;border-radius:999px;text-transform:none;letter-spacing:0}
+.sharebtn:hover{border-color:#4f5bd5;color:#4f5bd5;background:#fff}
+.sharebtn.copied{border-color:var(--ok);color:var(--ok)}
+.pill,.chip,.typechip{font-family:var(--mc-body)}
+
+.sidenav{border-top:1px solid var(--line)}
+.sidenav-link{color:var(--muted);font-weight:400}
+.sidenav-link:hover{color:#0f172a}
+.sidenav-link.accent{color:#4f5bd5;font-weight:500}
+.sidenav-link.accent:hover{color:#3a45b8}
+
+/* sizes: the pages were tuned for small mono text; Inter reads better a touch larger */
+.lede{font-size:16px;line-height:1.65}
+.after,.foot,.hint,.sdesc,.meta,.empty,.note{font-size:13px;line-height:1.55}
+label{font-size:13px}
+input,select,textarea{font-size:15px}
+
+/* the synced LLM/B2B tools (sotu.css): same buttons, headings and labels as everywhere else */
+label{text-transform:none;letter-spacing:0}
+.h2b{text-transform:none;font-weight:600;letter-spacing:-.015em}
+.banner2 b{text-transform:none}
+.btn2{font-family:var(--mc-mono);font-weight:500;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;
+   border:1px solid var(--mc-line2);border-radius:6px;background:#fff;color:#0f172a;box-shadow:none}
+.btn2:hover{border-color:#0f172a;transform:none}
+.btn2.solid{background:#0f172a;color:#fff;border-color:#0f172a}
+.btn2.solid:hover{background:#1e293b;transform:none}
+.btn2.navb:hover,.btn2.blue{background:#4f5bd5;border-color:#4f5bd5;color:#fff}
+.seg button,.mtabs button,.pill2{font-family:var(--mc-body);font-weight:500;text-transform:none;letter-spacing:0}
+.tbl th{font-family:var(--mc-mono);font-weight:400;font-size:11px;letter-spacing:.08em}
+.sc,.mcard{border-radius:12px}
+h2,h3,h4,h3.h{text-transform:none}
+h3.h{font-weight:600;letter-spacing:-.015em}
+.field label,label.fl,.fl{text-transform:none;letter-spacing:0;font-family:var(--mc-body);font-weight:500}
+th,.tbl th{font-family:var(--mc-mono);font-weight:400;font-size:11px;letter-spacing:.08em}

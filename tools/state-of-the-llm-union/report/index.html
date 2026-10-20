@@ -5,8 +5,8 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>State Of The LLM Union report</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ffd65c'/%3E%3C/svg%3E" />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%234f5bd5'/%3E%3C/svg%3E" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MC2SEO">
 <meta property="og:url" content="https://mc2seo.com/tools/state-of-the-llm-union/report/">
@@ -15,16 +15,16 @@
 <meta property="og:image" content="https://mc2seo.com/assets/og-brand-builder-report.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-  :root{--paper:#0a0c11;--card:#12151d;--ink:#eceef4;--muted:#8b93a7;--line:#242c3d;--you:#6e7bff}
+  :root{--paper:#ffffff;--card:#f8fafc;--ink:#0f172a;--muted:#64748b;--line:#e5e7eb;--you:#4f5bd5}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#0a0c11;color:#eceef4;font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.5;padding:22px 16px 60px;font-size:16px}
+  body{background:#fff;color:#0f172a;font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.5;padding:22px 16px 60px;font-size:16px}
   a{color:inherit}
-  .sidenav{margin-top:36px;padding-top:20px;border-top:3px solid #242c3d;display:flex;flex-direction:column;gap:13px}
+  .sidenav{margin-top:36px;padding-top:20px;border-top:1px solid #e5e7eb;display:flex;flex-direction:column;gap:13px}
   .sidenav-link{font-size:14px;font-weight:600}
   body.embed .sidenav{display:none}
 </style>
-<link rel="stylesheet" href="/assets/theme.css">
 <link rel="stylesheet" href="/assets/sotu.css">
+<link rel="stylesheet" href="/assets/mc2-tool.css">
 </head>
 <body>
 <div class="sotu-wrap">
@@ -191,7 +191,7 @@ function matrix(d, title, keys, keyOf, labelOf) {
     const list = answered.filter(c => keyOf(c) === k);
     return '<tr><td>' + labelOf(k) + '</td>' + d.brands.map(b => {
       const v = S.rate(list, b.name);
-      const bg = v == null ? '#171b26' : 'rgba(110,123,255,' + (0.08 + 0.72 * v).toFixed(2) + ')';
+      const bg = v == null ? '#f1f5f9' : 'rgba(79,91,213,' + (0.08 + 0.72 * v).toFixed(2) + ')';
       return '<td class="heat" style="background:' + bg + '">' + S.pct(v) + '</td>';
     }).join('') + '</tr>';
   }).join('');
@@ -249,7 +249,7 @@ function crawlHtml(d) {
   const cell = (p, g) => {
     if (p.robots_unknown) return '<td class="num" title="robots.txt could not be read">?</td>';
     const no = byGroup(g).filter(c => p.robots[c.id] && p.robots[c.id].allowed === false);
-    return no.length ? '<td style="background:rgba(232,105,95,.22)"><b>✗</b> <small>' + no.map(c => esc(c.name) + ' — ' + esc(p.robots[c.id].rule)).join('<br>') + '</small></td>' : '<td class="num">✓</td>';
+    return no.length ? '<td style="background:#fdecea"><b>✗</b> <small>' + no.map(c => esc(c.name) + ' — ' + esc(p.robots[c.id].rule)).join('<br>') + '</small></td>' : '<td class="num">✓</td>';
   };
   const notes = p => {
     const n = [];
@@ -330,8 +330,8 @@ function consistencyHtml(d) {
   if (!con || !main) return '';
   const seg = (n, bg, fg, label) => n ? '<i style="font-style:normal;flex:' + n + ' 0 auto;white-space:nowrap;padding:0 8px;background:' + bg + ';color:' + fg + '">' + n + ' ' + label + '</i>' : '';
   return '<h2 class="h2b">How reliably ' + esc(main.name) + ' is named</h2>' +
-    '<div style="display:flex;border:3px solid #242c3d;margin:0 0 10px;font-style:normal;font-weight:800;font-size:14px;line-height:2.4;text-align:center;overflow:hidden">' +
-    seg(con.always, '#232a3a', '#fff', 'every time') + seg(con.sometimes, '#6e7bff', '#0a0a0a', 'sometimes') + seg(con.never, '#171b26', '#eceef4', 'never') + '</div>' +
+    '<div style="display:flex;border:1px solid #e5e7eb;margin:0 0 10px;font-style:normal;font-weight:800;font-size:14px;line-height:2.4;text-align:center;overflow:hidden">' +
+    seg(con.always, '#0f172a', '#fff', 'every time') + seg(con.sometimes, '#4f5bd5', '#0a0a0a', 'sometimes') + seg(con.never, '#f1f5f9', '#0f172a', 'never') + '</div>' +
     '<p class="hint" style="margin:0 0 30px">Each of the ' + con.groups + ' model × prompt × market combinations was asked ' + d.repeats + ' times. “Sometimes” means the same model gave different answers to the same question: a mention you can’t count on.</p>';
 }
 
@@ -340,10 +340,10 @@ function citationsHtml(d) {
   if (!cit) return d.web ? '' : '<h2 class="h2b">Who gets cited</h2><div class="empty2">No answer in this run showed its sources. Turn on web search (or include Perplexity, Gemini or AI Overviews) to see which websites AI answers draw on.</div>';
   const main = d.brands[0];
   const sh = cit.share;
-  const split = '<div style="display:flex;border:3px solid #242c3d;margin:0 0 10px;font-weight:800;font-size:14px;line-height:2.4;text-align:center;overflow:hidden">' +
+  const split = '<div style="display:flex;border:1px solid #e5e7eb;margin:0 0 10px;font-weight:800;font-size:14px;line-height:2.4;text-align:center;overflow:hidden">' +
     (sh.own ? '<i style="font-style:normal;white-space:nowrap;padding:0 8px;flex:' + sh.own + ' 0 auto;background:' + (main ? colours[main.name].bg : '#0a0a0a') + ';color:#fff">You ' + S.pct(sh.own) + '</i>' : '') +
-    (sh.competitors ? '<i style="font-style:normal;white-space:nowrap;padding:0 8px;flex:' + sh.competitors + ' 0 auto;background:#C99A3E;color:#eceef4">Competitors ' + S.pct(sh.competitors) + '</i>' : '') +
-    (sh.other ? '<i style="font-style:normal;white-space:nowrap;padding:0 8px;flex:' + sh.other + ' 0 auto;background:#171b26;color:#eceef4">Other sites ' + S.pct(sh.other) + '</i>' : '') + '</div>';
+    (sh.competitors ? '<i style="font-style:normal;white-space:nowrap;padding:0 8px;flex:' + sh.competitors + ' 0 auto;background:#C99A3E;color:#0f172a">Competitors ' + S.pct(sh.competitors) + '</i>' : '') +
+    (sh.other ? '<i style="font-style:normal;white-space:nowrap;padding:0 8px;flex:' + sh.other + ' 0 auto;background:#f1f5f9;color:#0f172a">Other sites ' + S.pct(sh.other) + '</i>' : '') + '</div>';
   const rows = cit.top_domains.map(x => {
     const c = x.owner ? colours[x.owner] : null;
     return '<tr><td><b>' + esc(x.domain) + '</b></td><td>' + (c ? '<span class="chip2" style="--bg:' + c.bg + ';--fg:' + c.fg + '">' + esc(x.owner) + '</span>' : 'Third party') + '</td>' +
@@ -429,7 +429,7 @@ function briefsHtml(d) {
       (r.top ? ' · ' + esc(r.top.b.name) + ' in ' + S.pct(r.top.v) : '') + (byDemand ? ' · ~' + Math.round(missedOf(d, r.p)).toLocaleString() + ' searches a month at stake' : '') + '</small></div>' +
       (st && st.brief || SHARE ? '' : '<button class="btn2 small' + (r.mine != null && r.mine < 1 ? ' solid' : '') + '" data-brief="' + idx + '" type="button"' + (st && st.busy ? ' disabled' : '') + '>' +
         (st && st.busy ? 'Writing… (up to a minute)' : (r.mine != null && r.mine < 1 ? 'Why you lose this' : 'How to hold this')) + '</button>') + '</div>';
-    return '<div class="card2" style="border:3px solid #242c3d;padding:16px;margin:0 0 16px;background:#12151d">' + head +
+    return '<div class="card2" style="border:1px solid #e5e7eb;padding:16px;margin:0 0 16px;background:#fff">' + head +
       (st && st.error ? '<p class="err" style="margin-top:10px">' + esc(st.error) + '</p>' : '') + (st && st.brief ? briefBody(st, idx) : '') + '</div>';
   };
   return '<h2 class="h2b">Why you lose these prompts</h2><p class="hint" style="margin:0 0 14px">' + (byDemand ? 'Most searches at stake first.' : 'Worst first.') + ' A brief reads this run’s answers, the pages they cite and the searches ChatGPT ran, and says who wins, why, and what to change. Each costs a few cents to write and is saved with the report.</p>' +
@@ -441,7 +441,7 @@ function briefBody(st, idx) {
   const list = (title, items, fmt) => items && items.length ? '<h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 6px">' + title + '</h3>' + items.map(fmt).join('') : '';
   const link = u => /^https?:\/\//.test(u) ? '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(shortUrl(u)) + '</a>' : esc(u);
   const cb = b.content_brief;
-  return '<div style="margin-top:12px;border-top:2px solid #242c3d;padding-top:12px">' +
+  return '<div style="margin-top:12px;border-top:1px solid #e5e7eb;padding-top:12px">' +
     '<p class="says" style="font-size:17px">' + esc(b.verdict) + '</p>' +
     list('Who wins, and why', b.who_wins, x => '<p style="margin:0 0 6px"><b>' + esc(x.brand) + '</b> — ' + esc(x.why) + '</p>') +
     list('What they have that you don’t', b.gaps, x => '<p style="margin:0 0 6px">• ' + esc(x) + '</p>') +

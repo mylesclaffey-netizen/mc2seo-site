@@ -10,7 +10,7 @@
  */
 (function () {
   var S = window.SOTU;
-  var ACCENT_DEFAULT = '6E7BFF', ORANGE = ACCENT_DEFAULT, INK = '0A0A0A', MUTED = '5A5A5A', LIGHT = 'F3F3EF', WHITE = 'FFFFFF';
+  var ACCENT_DEFAULT = '4F5BD5', ORANGE = ACCENT_DEFAULT, INK = '0A0A0A', MUTED = '5A5A5A', LIGHT = 'F3F3EF', WHITE = 'FFFFFF';
   var SITE = 'mc2seo.com';
   // The access code's agency branding (Worker: branding.js), set at the start of each export: name, logo, accent, white label.
   var BRAND = {};
@@ -46,7 +46,7 @@
   function heat(v) {
     if (v == null) return LIGHT;
     var a = 0.08 + 0.72 * v, ch = function (c) { return ('0' + Math.round(255 - (255 - c) * a).toString(16)).slice(-2); };
-    return (ch(110) + ch(123) + ch(255)).toUpperCase();
+    return (ch(79) + ch(91) + ch(213)).toUpperCase();
   }
   function day(iso) { return iso ? new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : ''; }
   function slug(s) { return String(s || 'report').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }

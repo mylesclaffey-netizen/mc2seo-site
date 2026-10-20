@@ -5,28 +5,28 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>State Of The LLM Union — report</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ffd65c'/%3E%3C/svg%3E" />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%234f5bd5'/%3E%3C/svg%3E" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/theme-print.css">
 <link rel="stylesheet" href="/assets/sotu-print.css">
 <style>
   /* One flat, A4-shaped page of everything in a report (or a tracker's latest run), for "Download PDF" (the Worker
      prints this page in Cloudflare's hosted browser) and for the browser's own Print → Save as PDF. */
   @page { size: A4; margin: 14mm 12mm 16mm; }
-  body { background: #fff; color: #0a0a0a; font-family: 'Space Grotesk', system-ui, sans-serif; margin: 0; padding: 24px 16px 60px; font-size: 14px; line-height: 1.45; }
+  body { background: #fff; color: #0a0a0a; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; margin: 0; padding: 24px 16px 60px; font-size: 14px; line-height: 1.45; }
   .pw { max-width: 900px; margin: 0 auto; }
   .toolbar { display: flex; gap: 10px; align-items: center; margin: 0 0 22px; flex-wrap: wrap; }
   .meta { font-size: 13px; color: #3d3d3d; margin: 4px 0 0; }
   .meta b { color: #0a0a0a; }
   .model { border-top: 4px solid #0a0a0a; margin-top: 34px; padding-top: 16px; }
-  .model h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 900; font-size: 28px; text-transform: uppercase; letter-spacing: -.02em; margin: 0 0 6px; }
+  .model h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 28px; text-transform: uppercase; letter-spacing: -.02em; margin: 0 0 6px; }
   .ans { border: 2px solid #0a0a0a; padding: 12px 14px; margin: 0 0 14px; background: #fff; }
   .ans .ah { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin: 0 0 8px; }
   .ans .ah b { font-size: 14.5px; }
   .ans .answer2 { font-size: 12.5px; max-height: none; border: 0; padding: 0; background: none; white-space: pre-wrap; }
   .ans .srcs { font-size: 11.5px; }
-  .tags span { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 6px; font-size: 11.5px; border: 2px solid #35c48d; }
-  .tags span.neg { border-color: #e8695f; }
+  .tags span { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 6px; font-size: 11.5px; border: 2px solid #15803d; }
+  .tags span.neg { border-color: #b42318; }
   .foot { margin-top: 36px; border-top: 3px solid #0a0a0a; padding-top: 10px; font-size: 12px; color: #3d3d3d; }
   .brief { border: 3px solid #0a0a0a; padding: 12px 14px; margin: 0 0 14px; }
   .tbl th, .tbl td { font-size: 12.5px; }
@@ -164,7 +164,7 @@ function modelSections(d, colours) {
       else if (!r.text) body = '<p class="hint">' + esc(r.note || 'No answer text came back.') + '</p>';
       else {
         const tags = (r.traits || []).map(t => '<span class="' + (t.tone === '-' ? 'neg' : '') + '">' + (t.tone === '-' ? '− ' : '+ ') + esc(t.phrase) + '</span>').join('');
-        const facts = (r.fact_issues || []).map(i => '<p class="quote" style="--bg:#6e7bff;font-size:12px">Contradicts “' + esc(i.correct) + '”: “' + esc(i.quote.replace(/\*\*|__/g, '')) + '”</p>').join('');
+        const facts = (r.fact_issues || []).map(i => '<p class="quote" style="--bg:#4f5bd5;font-size:12px">Contradicts “' + esc(i.correct) + '”: “' + esc(i.quote.replace(/\*\*|__/g, '')) + '”</p>').join('');
         const srcs = (r.sources || []).filter(s => s.url).slice(0, 5);
         body = (r.says ? '<div class="says"><small>AI summary</small>' + esc(r.says) + '</div>' : '') + (tags ? '<div class="tags">' + tags + '</div>' : '') + facts +
           '<div class="answer2">' + S.highlight(r.text, ms, colours) + '</div>' +
@@ -188,7 +188,7 @@ function modelTable(d, colours) {
       const list = answered.filter(c => c.provider === p.id), pos = main ? S.avgPosition(list, main.name) : null;
       return '<tr><td><b>' + esc(p.label) + '</b></td>' + d.brands.map(b => {
         const v = S.rate(list, b.name);
-        return '<td class="num" style="background:' + (v == null ? '#f3f3ef' : 'rgba(110,123,255,' + (0.06 + 0.6 * v).toFixed(2) + ')') + '">' + S.pct(v) + '</td>';
+        return '<td class="num" style="background:' + (v == null ? '#f3f3ef' : 'rgba(79,91,213,' + (0.06 + 0.6 * v).toFixed(2) + ')') + '">' + S.pct(v) + '</td>';
       }).join('') + (main ? '<td class="num">' + (pos == null ? '—' : '#' + pos.toFixed(1)) + '</td>' : '') + '<td class="num">' + list.length + '</td></tr>';
     }).join('') + '</table></div>';
 }
@@ -197,7 +197,7 @@ function modelTable(d, colours) {
 function describeCompact(ds, brand) {
   if (!ds || !ds.dims.length) return '';
   return '<h2 class="h2b">How models describe ' + esc(brand) + '</h2><div class="tblwrap"><table class="tbl"><tr><th>Dimension</th><th>+ / −</th><th>What they say</th><th>Models</th></tr>' +
-    ds.dims.slice(0, 7).map(x => '<tr><td><b>' + esc(x.label) + '</b></td><td class="num"><span style="color:#35c48d">' + x.pos + '+</span> / <span style="color:#e8695f">' + x.neg + '−</span></td>' +
+    ds.dims.slice(0, 7).map(x => '<tr><td><b>' + esc(x.label) + '</b></td><td class="num"><span style="color:#15803d">' + x.pos + '+</span> / <span style="color:#b42318">' + x.neg + '−</span></td>' +
       '<td>' + (x.phrases || []).slice(0, 2).map(p => (p.tone === '-' ? '− ' : '+ ') + esc(p.phrase)).join(' · ') + '</td>' +
       '<td>' + (x.models || []).map(m => esc(S.providerLabel(m.model)) + ' ' + (m.pos ? '+' + m.pos : '') + (m.neg ? '−' + m.neg : '')).join(', ') + '</td></tr>').join('') +
     '</table></div>' + ((ds.best_for || []).length ? '<p class="hint"><b>Best for:</b> ' + ds.best_for.slice(0, 3).map(b => '“' + esc(b.phrase) + '”').join(' · ') + '</p>' : '');

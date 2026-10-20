@@ -20,7 +20,7 @@
   // One colour per tracked brand; the first (your brand) is the accent. Drawn from Hilma af Klint's
   // Altarpiece No. 1 — your brand is the painting's path indigo, competitors take the rest of its palette.
   var PALETTE = [
-    { bg: '#6e7bff', fg: '#ffffff' }, { bg: '#C99A3E', fg: '#0a0a0a' }, { bg: '#5b8c3e', fg: '#ffffff' },
+    { bg: '#4f5bd5', fg: '#ffffff' }, { bg: '#C99A3E', fg: '#0a0a0a' }, { bg: '#5b8c3e', fg: '#ffffff' },
     { bg: '#A79FD1', fg: '#0a0a0a' }, { bg: '#D97A66', fg: '#0a0a0a' }, { bg: '#6FA0C4', fg: '#ffffff' }
   ];
   function colourMap(brands) {
@@ -144,7 +144,7 @@
     var h = '<h2 class="h2b">Who AI recommends</h2><p style="margin:0 0 10px">' + esc(main) + ' is the <b>top pick in ' + pct(m.top_rate) + '</b> of answers' + (m.top_low != null ? ' (likely ' + Math.round(m.top_low * 100) + '–' + Math.round(m.top_high * 100) + '%)' : '') +
       ' and recommended in ' + pct(m.rec_rate) + '.' + (lead ? ' Most common top pick: <b>' + esc(lead.name) + '</b> (' + lead.answers + ' answer' + (lead.answers === 1 ? '' : 's') + ').' : '') + '</p>';
     h += '<div class="tblwrap"><table class="tbl"><tr><th>Brand</th><th>Named</th><th>Recommended</th><th>Top pick</th><th>Cautioned</th></tr>' + d.brands.map(function (b, i) {
-      var x = rec.by_brand[b.name] || {}, heatC = function (v) { return v == null ? '#171b26' : 'rgba(110,123,255,' + (0.08 + 0.72 * v).toFixed(2) + ')'; };
+      var x = rec.by_brand[b.name] || {}, heatC = function (v) { return v == null ? '#f1f5f9' : 'rgba(79,91,213,' + (0.08 + 0.72 * v).toFixed(2) + ')'; };
       return '<tr><td><span class="dot" style="--bg:' + ((colours[b.name] || PALETTE[0]).bg) + '"></span><b>' + esc(b.name) + '</b>' + (i === 0 ? ' <small>(you)</small>' : '') + '</td><td class="num">' + pct(opts.named ? opts.named[b.name] : rate(list, b.name)) + '</td>' +
         '<td class="heat" style="background:' + heatC(x.rec_rate) + '">' + pct(x.rec_rate) + '</td><td class="heat" style="background:' + heatC(x.top_rate) + '"><b>' + pct(x.top_rate) + '</b></td><td class="num">' + (x.caution ? pct(x.caution_rate) : '—') + '</td></tr>';
     }).join('') + '</table></div>';
@@ -172,13 +172,13 @@
     var chips = function (p) {
       return d.brands.map(function (b) {
         var on = p.named.indexOf(b.name) !== -1, col = colours[b.name] || PALETTE[0];
-        return '<span class="chip2" style="--bg:' + (on ? col.bg : '#171b26') + ';--fg:' + (on ? col.fg : '#8a8a8a') + ';' + (on ? '' : 'text-decoration:line-through;') + 'font-size:11.5px;padding:2px 7px">' + esc(b.name) + '</span>';
+        return '<span class="chip2" style="--bg:' + (on ? col.bg : '#f1f5f9') + ';--fg:' + (on ? col.fg : '#8a8a8a') + ';' + (on ? '' : 'text-decoration:line-through;') + 'font-size:11.5px;padding:2px 7px">' + esc(b.name) + '</span>';
       }).join(' ');
     };
     var h = '<h2 class="h2b">Pages AI cites — who they mention</h2><p style="margin:0 0 10px">Of the ' + read.length + ' third-party pages we could read, <b>' + gap.length + ' name a competitor but not ' + esc(main) + '</b>' +
       (none.length ? ' and ' + none.length + ' name none of the tracked brands' : '') + '. Those are the pages to get onto: AI answers already trust them.</p>';
     h += '<div class="tblwrap"><table class="tbl"><tr><th>Page AI cites</th><th>Cited in</th><th>Brands the page names</th></tr>' + order.slice(0, opts.max || 25).map(function (p) {
-      return '<tr' + (p.missing_you && p.named.length ? ' style="box-shadow:inset 5px 0 0 #6e7bff"' : '') + '><td><a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.url.replace(/^https?:\/\/(www\.)?/, '').slice(0, 70)) + '</a>' +
+      return '<tr' + (p.missing_you && p.named.length ? ' style="box-shadow:inset 5px 0 0 #4f5bd5"' : '') + '><td><a href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(p.url.replace(/^https?:\/\/(www\.)?/, '').slice(0, 70)) + '</a>' +
         (p.title ? '<br><small>' + esc(p.title.slice(0, 90)) + '</small>' : '') + '</td><td class="num">' + p.answers + '</td><td>' + chips(p) + '</td></tr>';
     }).join('') + '</table></div>';
     var skipped = c.pages.filter(function (p) { return !p.checked; });
@@ -216,7 +216,7 @@
     if (!f) return '';
     opts = opts || {};
     var main = f.main, share = f.share;
-    var fill = function (t) { return t === 'own' ? (main && colours[main.name] ? colours[main.name].bg : '#6e7bff') : t === 'competitors' ? '#C99A3E' : '#6FA0C4'; };
+    var fill = function (t) { return t === 'own' ? (main && colours[main.name] ? colours[main.name].bg : '#4f5bd5') : t === 'competitors' ? '#C99A3E' : '#6FA0C4'; };
     var biggest = Math.max.apply(null, cit.by_type.map(function (t) { return t.share; })) || 1;
     // Bars are scaled to the biggest kind (the percentage beside each is the real share), so small kinds stay visible.
     var rows = (opts.compact ? cit.by_type.slice(0, 6) : cit.by_type).map(function (t) {
@@ -297,7 +297,7 @@
         var hit = row.ranks[b.name], col = colours[b.name] || PALETTE[0];
         return hit
           ? '<span class="chip2" title="' + esc(hit.url || '') + '" style="--bg:' + col.bg + ';--fg:' + col.fg + ';font-size:11.5px;padding:2px 7px">' + esc(b.name) + ' #' + hit.rank + '</span>'
-          : '<span class="chip2" style="--bg:#171b26;--fg:#8a8a8a;text-decoration:line-through;font-size:11.5px;padding:2px 7px">' + esc(b.name) + '</span>';
+          : '<span class="chip2" style="--bg:#f1f5f9;--fg:#8a8a8a;text-decoration:line-through;font-size:11.5px;padding:2px 7px">' + esc(b.name) + '</span>';
       }).join(' ');
       var m = market(row.location);
       return '<tr><td>' + esc(row.prompt) + (row.top ? '<br><small>Google #1: ' + esc(row.top) + '</small>' : '') + '</td>' +
@@ -373,11 +373,11 @@
       var clamp = function (v) { return Math.max(0, Math.min(1, v || 0)); };
       var shape = function (vals) { return dims.map(function (x, i) { return pt(i, clamp(vals[i])).map(function (c) { return c.toFixed(1); }).join(','); }).join(' '); };
       var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="How AI describes ' + esc(main.name) + ' compared with its competitors, by dimension" style="max-width:' + (opts.compact ? 460 : 600) + 'px;width:100%;display:block;margin:0 auto 6px">';
-      [0.25, 0.5, 0.75, 1].forEach(function (f) { svg += '<polygon points="' + dims.map(function (x, i) { return pt(i, f).map(function (c) { return c.toFixed(1); }).join(','); }).join(' ') + '" fill="none" stroke="#242c3d" stroke-width="1"/>'; });
+      [0.25, 0.5, 0.75, 1].forEach(function (f) { svg += '<polygon points="' + dims.map(function (x, i) { return pt(i, f).map(function (c) { return c.toFixed(1); }).join(','); }).join(' ') + '" fill="none" stroke="#d7dbe2" stroke-width="1"/>'; });
       dims.forEach(function (x, i) {
         var e = pt(i, 1), l = pt(i, 1.17), anchor = Math.abs(l[0] - cx) < 8 ? 'middle' : (l[0] > cx ? 'start' : 'end');
-        svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) + '" stroke="#242c3d" stroke-width="1"/>' +
-          '<text x="' + l[0].toFixed(1) + '" y="' + (l[1] + 4).toFixed(1) + '" text-anchor="' + anchor + '" style="font-size:14px;fill:#8b93a7">' + esc(x.label) + '</text>';
+        svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) + '" stroke="#d7dbe2" stroke-width="1"/>' +
+          '<text x="' + l[0].toFixed(1) + '" y="' + (l[1] + 4).toFixed(1) + '" text-anchor="' + anchor + '" style="font-size:14px;fill:#64748b">' + esc(x.label) + '</text>';
       });
       var mc = colours[main.name] || PALETTE[0];
       svg += '<polygon points="' + shape(m.rivalVals) + '" fill="#C99A3E" fill-opacity=".18" stroke="#C99A3E" stroke-width="2.5"/>' +
@@ -389,7 +389,7 @@
     if (opts.compact) return head;
 
     // Grid: every brand, every dimension.
-    var heat = function (v) { return v > 0.2 ? 'rgba(53,196,141,' + (0.12 + 0.4 * Math.min(1, v)).toFixed(2) + ')' : v < -0.2 ? 'rgba(232,105,95,' + (0.12 + 0.4 * Math.min(1, -v)).toFixed(2) + ')' : '#171b26'; };
+    var heat = function (v) { return v > 0.2 ? 'rgba(21,128,61,' + (0.12 + 0.4 * Math.min(1, v)).toFixed(2) + ')' : v < -0.2 ? 'rgba(180,35,24,' + (0.12 + 0.4 * Math.min(1, -v)).toFixed(2) + ')' : '#f1f5f9'; };
     var heads = d.brands.map(function (b) {
       var v = p.by_brand[b.name], thin = !v || v.answers < MIN_READ, c = colours[b.name] || PALETTE[0];
       return '<th><span class="dot" style="--bg:' + c.bg + '"></span>' + esc(b.name) + '<br><small style="font-weight:400">' + (v ? v.answers : 0) + ' answers' + (thin ? ' — too few' : '') + '</small></th>';
@@ -494,7 +494,7 @@
         '<div class="brgrid"><div><label for="brName">Agency name</label><input id="brName" type="text" maxlength="80" placeholder="e.g. Northwind Digital" value="' + esc(br.name || '') + '"></div>' +
         '<div><label for="brLogo">Logo</label><input id="brLogo" type="file" accept="image/png,image/jpeg,image/svg+xml,image/webp,image/gif"><div id="brPrev" class="brprev">' +
         (br.logo ? '<img src="' + esc(br.logo) + '" alt="Current logo"> <a href="#" id="brRemove">Remove</a>' : '<span class="hint">No logo yet</span>') + '</div></div></div>' +
-        '<div class="brgrid"><div><label for="brAcc">Accent colour</label><div style="display:flex;gap:10px;align-items:center"><input id="brAcc" type="color" value="' + esc(br.accent || '#6e7bff') + '" style="width:56px;height:38px;padding:2px">' +
+        '<div class="brgrid"><div><label for="brAcc">Accent colour</label><div style="display:flex;gap:10px;align-items:center"><input id="brAcc" type="color" value="' + esc(br.accent || '#4f5bd5') + '" style="width:56px;height:38px;padding:2px">' +
         '<label style="font-weight:500;display:flex;gap:6px;align-items:center"><input id="brAccOn" type="checkbox"' + (br.accent ? ' checked' : '') + '> Use it instead of ours</label></div></div>' +
         '<div><label class="brwl"><input id="brWhite" type="checkbox"' + (br.white_label ? ' checked' : '') + '><span><b>White label</b><br>Leave “State Of The LLM Union · ' + esc(location.hostname.replace(/^www\./, '')) + '” off the exports.</span></label></div></div>' +
         '<p style="margin:14px 0 0"><button class="btn2 small solid" id="brSave" type="button">Save branding</button> ' + (br.name || br.logo || br.accent ? '<button class="btn2 small" id="brClear" type="button">Remove all</button> ' : '') + '<span class="hint" id="brMsg"></span></p>';
@@ -621,7 +621,7 @@
     var head = '<tr><th>Brand</th>' + bp.map(function (v) { return '<th>' + esc(personaName(v.persona)) + '<br><small style="font-weight:400">' + v.answers + ' answers</small></th>'; }).join('') + '</tr>';
     var rows = d.brands.map(function (b, bi) {
       return '<tr><td><span class="dot" style="--bg:' + (colours[b.name] || PALETTE[0]).bg + '"></span><b>' + esc(b.name) + '</b>' + (bi === 0 ? ' <small>(you)</small>' : '') + '</td>' + bp.map(function (v) {
-        var x = v.by_brand[b.name] || {}, r = x.rate, bg = r == null ? '#171b26' : 'rgba(110,123,255,' + (0.08 + 0.72 * r).toFixed(2) + ')';
+        var x = v.by_brand[b.name] || {}, r = x.rate, bg = r == null ? '#f1f5f9' : 'rgba(79,91,213,' + (0.08 + 0.72 * r).toFixed(2) + ')';
         var b0 = base && v !== base ? (base.by_brand[b.name] || {}).rate : null;
         var delta = b0 != null && r != null && Math.abs(r - b0) >= 0.05 ? ' <small>' + (r > b0 ? '▲' : '▼') + Math.round(Math.abs(r - b0) * 100) + '</small>' : '';
         return '<td class="heat" style="background:' + bg + '">' + pct(r) + delta + '<br><small>' + (x.low != null ? Math.round(x.low * 100) + '–' + Math.round(x.high * 100) + '%' : '') + (x.first ? ' · first ' + pct(x.first_rate) : '') + '</small></td>';
@@ -645,11 +645,11 @@
     return head + '<p class="hint" style="margin:0 0 14px">' + facts.with_issues + ' of ' + facts.checked + ' answers naming ' + esc(brand) +
       ' say something your fact sheet contradicts. Every quote is the model’s own words; the check is done by a small AI model, so confirm before acting.</p>' +
       facts.groups.map(function (g) {
-        return '<div style="border:3px solid #242c3d;padding:14px 16px;margin:0 0 14px;background:#12151d">' +
+        return '<div style="border:1px solid #e5e7eb;padding:14px 16px;margin:0 0 14px;background:#fff">' +
           '<div style="font-size:13px;text-transform:uppercase;letter-spacing:.05em;font-weight:800">Fact: ' + esc(g.correct) + '</div>' +
           '<div class="hint" style="margin:2px 0 10px">Contradicted in ' + g.answers + ' answer' + (g.answers === 1 ? '' : 's') + ' · ' + g.providers.map(providerLabel).map(esc).join(', ') + '</div>' +
           g.examples.map(function (x) {
-            return '<div class="quote" style="--bg:#6e7bff">“' + esc(x.quote.replace(/\*\*|__/g, '').trim()) + '”<br><small>' + esc(x.claim) + ' — ' + esc(providerLabel(x.provider)) + ', ' + esc(x.location) + '</small></div>';
+            return '<div class="quote" style="--bg:#4f5bd5">“' + esc(x.quote.replace(/\*\*|__/g, '').trim()) + '”<br><small>' + esc(x.claim) + ' — ' + esc(providerLabel(x.provider)) + ', ' + esc(x.location) + '</small></div>';
           }).join('') + '</div>';
       }).join('');
   }
@@ -700,7 +700,7 @@
     opts = opts || {};
     var head = '<h2 class="h2b">What AI says about ' + esc(brand) + ' — fact-checked</h2>';
     if (!c.groups.length) return head + '<div class="empty2">None of the ' + c.answers_read + ' answers that name ' + esc(brand) + ' made a claim your fact sheet can check.</div>';
-    var look = { 'true': ['✓ TRUE', '#35c48d', '#fff', '#35c48d'], 'false': ['✗ FALSE', '#e8695f', '#fff', '#e8695f'], unverified: ['– UNVERIFIED', '#e4e4de', '#8b93a7', '#8a8a8a'] };
+    var look = { 'true': ['✓ TRUE', '#15803d', '#fff', '#15803d'], 'false': ['✗ FALSE', '#b42318', '#fff', '#b42318'], unverified: ['– UNVERIFIED', '#e4e4de', '#64748b', '#8a8a8a'] };
     var chip = function (v) { var m = look[v]; return '<span class="chip2" style="--bg:' + m[1] + ';--fg:' + m[2] + ';font-size:11.5px;padding:2px 8px;white-space:nowrap">' + m[0] + '</span>'; };
     // The summary PDF: the false and unverified claims (a few of each), and the true ones only in the count.
     var shown = !opts.compact ? c.groups : c.groups.filter(function (g) { return g.verdict === 'false'; }).slice(0, 3).concat(c.groups.filter(function (g) { return g.verdict === 'unverified'; }).slice(0, 3));
@@ -715,7 +715,7 @@
       return '<tr><td>' + chip(g.verdict) + '</td><td>' + text + sub + quotes + '</td><td class="num">' + g.answers + '</td>' +
         '<td style="font-size:13px">' + g.providers.map(providerLabel).map(esc).join(', ') + '</td></tr>';
     }).join('');
-    return head + '<p style="font-size:17px;margin:0 0 14px"><b style="color:#35c48d">' + c.totals['true'] + ' true</b> · <b style="color:#e8695f">' + c.totals['false'] + ' false</b> · <b>' + c.totals.unverified + ' unverified</b>' +
+    return head + '<p style="font-size:17px;margin:0 0 14px"><b style="color:#15803d">' + c.totals['true'] + ' true</b> · <b style="color:#b42318">' + c.totals['false'] + ' false</b> · <b>' + c.totals.unverified + ' unverified</b>' +
       ' <small style="font-size:14px">claims across the ' + c.answers_read + ' answers that name ' + esc(brand) + '</small></p>' +
       '<div class="tblwrap"><table class="tbl"><tr><th>Verdict</th><th>What the answers say</th><th>Answers</th><th>Models</th></tr>' + rows + '</table></div>' +
       '<p class="hint" style="margin:-18px 0 30px">Each claim is judged by a small AI model against your fact sheet, using the answer’s own words, so confirm before acting. “Unverified” only means your sheet doesn’t cover it — a claim you haven’t checked, not a wrong one.</p>';
@@ -723,7 +723,7 @@
 
   // "How models describe <brand>": per-dimension favourable/unfavourable counts and the answers' own phrases
   // (Worker: factCheck.js readAbout traits, aggregated in sotuStats.js describeStats).
-  var GOOD = '#35c48d', BAD = '#e8695f';
+  var GOOD = '#15803d', BAD = '#b42318';
   function describeHtml(ds, brand) {
     if (!ds || !ds.dims.length) return '';
     var rows = ds.dims.map(function (d) {
@@ -732,7 +732,7 @@
         return '<span style="display:inline-block;margin:2px 4px 2px 0;padding:1px 7px;border:2px solid ' + (p.tone === '-' ? BAD : GOOD) + ';font-size:13px">' + esc(p.phrase) + (p.n > 1 ? ' <small>×' + p.n + '</small>' : '') + '</span>';
       }).join('');
       return '<tr><td><b>' + esc(d.label) + '</b></td>' +
-        '<td style="min-width:140px"><div style="display:flex;height:14px;border:2px solid #242c3d;background:#171b26"><i style="width:' + w(d.pos) + '%;background:' + GOOD + '"></i><i style="width:' + w(d.neg) + '%;background:' + BAD + '"></i></div></td>' +
+        '<td style="min-width:140px"><div style="display:flex;height:14px;border:1px solid #e5e7eb;background:#f1f5f9"><i style="width:' + w(d.pos) + '%;background:' + GOOD + '"></i><i style="width:' + w(d.neg) + '%;background:' + BAD + '"></i></div></td>' +
         '<td class="num"><span style="color:' + GOOD + '">' + d.pos + ' +</span> / <span style="color:' + BAD + '">' + d.neg + ' −</span></td><td>' + phrases + '</td>' +
         '<td style="font-size:13px">' + (d.models || []).map(function (m) {
           return '<span style="white-space:nowrap">' + esc(providerLabel(m.model)) + (m.pos ? ' <b style="color:' + GOOD + '">+' + m.pos + '</b>' : '') + (m.neg ? ' <b style="color:' + BAD + '">−' + m.neg + '</b>' : '') + '</span>';
@@ -756,7 +756,7 @@
         var d = r.describe.dims.filter(function (y) { return y.dim === x.dim; })[0];
         if (!d) return '<td class="num" style="color:#8a8a8a">—</td>';
         var t = (d.pos - d.neg) / d.mentions;
-        var bg = t > 0.2 ? 'rgba(53,196,141,' + (0.12 + 0.4 * t).toFixed(2) + ')' : t < -0.2 ? 'rgba(232,105,95,' + (0.12 - 0.4 * t).toFixed(2) + ')' : '#171b26';
+        var bg = t > 0.2 ? 'rgba(21,128,61,' + (0.12 + 0.4 * t).toFixed(2) + ')' : t < -0.2 ? 'rgba(180,35,24,' + (0.12 - 0.4 * t).toFixed(2) + ')' : '#f1f5f9';
         return '<td class="num" style="background:' + bg + '">' + d.pos + ' / ' + d.neg + '</td>';
       }).join('') + '</tr>';
     }).join('');

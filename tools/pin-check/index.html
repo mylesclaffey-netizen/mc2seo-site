@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Map pin check</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2335c48d'/%3E%3C/svg%3E" />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%234f5bd5'/%3E%3C/svg%3E" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
-  :root{--paper:#0a0c11;--card:#12151d;--card2:#171b26;--ink:#eceef4;--muted:#8b93a7;--line:#242c3d;
-        --you:#6e7bff;--ok:#35c48d;--warn:#e0a93a;--bad:#e8695f;--gold:#ffd65c}
+  :root{--paper:#ffffff;--card:#f8fafc;--card2:#f1f5f9;--ink:#0f172a;--muted:#64748b;--line:#e5e7eb;
+        --you:#4f5bd5;--ok:#15803d;--warn:#a15c07;--bad:#b42318;--gold:#0f172a}
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
-  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Mono',monospace;line-height:1.5}
+  body{background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.5}
 
   /* ---- two-pane app shell: persistent sidebar + full map, same shape as grid-check ---- */
   .app{display:flex;height:100vh;overflow:hidden}
@@ -25,28 +25,28 @@
 
   .brand{display:flex;align-items:center;gap:11px;margin-bottom:22px}
   .brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--ok),#5fe0ac);
-       display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;
+       display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',Inter,sans-serif;
        font-weight:700;font-size:11px;color:#06120c;flex-shrink:0}
-  .brand h1{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--gold)}
+  .brand h1{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--gold)}
   .brand p{font-size:11px;color:var(--muted);margin-top:1px}
 
   .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  h2{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;
+  h2{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;
      text-transform:uppercase;color:var(--muted);margin:22px 0 12px}
   h2:first-of-type{margin-top:0}
-  h3.pointheading{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--gold);
+  h3.pointheading{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-size:13px;font-weight:700;color:var(--gold);
      margin:20px 0 10px}
   h3.pointheading:first-child{margin-top:0}
   .lede{font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:16px}
 
   label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}
-  input,select{width:100%;font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--ink);
+  input,select{width:100%;font-family:Inter,system-ui,sans-serif;font-size:13.5px;color:var(--ink);
         background:var(--card2);border:1px solid var(--line);border-radius:7px;padding:10px 11px}
   input:focus,select:focus{outline:2px solid var(--you);outline-offset:1px;border-color:transparent}
   .field{margin-bottom:12px}
 
   .chips{display:flex;gap:8px;margin-bottom:14px}
-  .chip{font:12px 'IBM Plex Mono',monospace;color:var(--ink);background:var(--card2);
+  .chip{font:12px Inter,system-ui,sans-serif;color:var(--ink);background:var(--card2);
         border:1px solid var(--line);border-radius:20px;padding:7px 13px;cursor:pointer}
   .chip[aria-pressed=true]{background:var(--you);border-color:var(--you);color:#fff}
 
@@ -56,11 +56,11 @@
         width:38px;height:38px;flex:none;cursor:pointer;font-size:16px}
   .findbtn{background:var(--you);border:1px solid var(--you);color:#fff;border-radius:7px;
         width:44px;height:44px;flex:none;cursor:pointer;font-size:12.5px;font-weight:700;
-        font-family:'IBM Plex Mono',monospace}
-  .findbtn:hover{background:#5c68f2}
+        font-family:Inter,system-ui,sans-serif}
+  .findbtn:hover{background:#3a45b8}
   .findbtn[disabled]{opacity:.5;cursor:not-allowed}
   .addbtn{font-size:12px;color:var(--you);background:none;border:1px dashed var(--line);
-        border-radius:7px;padding:9px 14px;cursor:pointer;font-family:'IBM Plex Mono',monospace;margin-bottom:14px}
+        border-radius:7px;padding:9px 14px;cursor:pointer;font-family:Inter,system-ui,sans-serif;margin-bottom:14px}
 
   .coord{font-size:11.5px;color:var(--ok);margin-bottom:12px;display:none}
   .hint{font-size:11.5px;color:var(--muted);margin-bottom:12px}
@@ -68,14 +68,14 @@
   .pointslist{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
   .pointrow{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--line);
         border-radius:7px;padding:8px 10px}
-  .pointlabel{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;color:var(--ok);
+  .pointlabel{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:12px;color:var(--ok);
         flex:none;width:16px}
   .pointcoord{font-size:11.5px;color:var(--muted);flex:1}
   .pointrow .rmbtn{width:26px;height:26px;font-size:13px}
 
-  .submit{width:100%;font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700;
+  .submit{width:100%;font-family:'Plus Jakarta Sans',Inter,sans-serif;font-size:14.5px;font-weight:700;
           background:var(--you);color:#fff;border:0;border-radius:8px;padding:13px;cursor:pointer}
-  .submit:hover{background:#5c68f2}
+  .submit:hover{background:#3a45b8}
   .submit[disabled]{opacity:.5;cursor:not-allowed}
   .after{font-size:10.5px;color:var(--muted);text-align:center;margin-top:9px}
   .err{color:var(--bad);font-size:13px;padding:14px;border:1px solid var(--line);border-radius:8px}
@@ -85,17 +85,17 @@
         border-radius:8px;padding:12px 14px;margin-bottom:18px;font-size:12px}
   .sharebar input{flex:1;background:var(--paper);font-size:11px;padding:8px 10px}
   .sharebar button{flex:none;font-size:11px;background:var(--you);color:#fff;border:0;
-        border-radius:6px;padding:8px 12px;cursor:pointer;font-family:'IBM Plex Mono',monospace}
+        border-radius:6px;padding:8px 12px;cursor:pointer;font-family:Inter,system-ui,sans-serif}
 
   .kwresult{margin-bottom:18px}
-  .kwtitle{font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:8px}
+  .kwtitle{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:8px}
   .subtle-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:12px 0 8px}
   .subtle-label:first-child{margin-top:0}
   .placelist{display:flex;flex-direction:column;gap:8px}
   .placecard{background:var(--card2);border:1px solid var(--line);border-radius:10px;
         padding:11px 13px;display:flex;gap:10px;align-items:flex-start}
   .placecard.sponsored{border-color:var(--warn)}
-  .placecard .rank{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;
+  .placecard .rank{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:700;font-size:13px;
         color:var(--muted);flex:none;width:24px;text-align:right;padding-top:2px}
   .placecard .title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
   .placecard .meta2{font-size:11.5px;color:var(--muted);line-height:1.5}
@@ -106,14 +106,14 @@
         border:1px solid var(--line);border-radius:5px;padding:2px 6px;margin-right:4px}
 
   .mapspin{width:20px;height:20px;border-radius:50%;background:var(--ok);display:flex;
-        align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;
+        align-items:center;justify-content:center;font-family:'Plus Jakarta Sans',Inter,sans-serif;
         font-weight:700;font-size:10px;color:#06120c;
         border:2px solid rgba(255,255,255,.85);box-shadow:0 1px 4px rgba(0,0,0,.5);cursor:grab}
   .mapstiles{filter:brightness(1.35) contrast(.92) saturate(1.1)}
   .leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--card);color:var(--ink);border:1px solid var(--line)}
 
   .maphint{position:absolute;top:18px;left:50%;transform:translateX(-50%);
-       background:rgba(18,21,29,.96);border:1px solid var(--line);border-radius:10px;
+       background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:10px;
        padding:9px 16px;z-index:30;font-size:12.5px;color:var(--muted);pointer-events:none}
 
   .sidenav{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
@@ -121,7 +121,7 @@
   .sidenav-link{font-size:12px;color:var(--muted);transition:color .15s ease}
   .sidenav-link:hover{color:var(--ink)}
   .sidenav-link.accent{color:var(--you);font-weight:500}
-  .sidenav-link.accent:hover{color:#8b95ff}
+  .sidenav-link.accent:hover{color:#3a45b8}
 
   .gate .field{max-width:280px}
 
@@ -133,6 +133,7 @@
   }
   body.embed .sidenav{display:none}
 </style>
+<link rel="stylesheet" href="/assets/mc2-tool.css">
 </head>
 <body>
 <div class="app">
@@ -261,10 +262,10 @@ function initMap(){
   // matching how Esri's own dark-canvas basemap is normally composed.
   // Note the tile URL order is {z}/{y}/{x} here, not the {z}/{x}/{y}
   // every other slippy-map provider (CARTO, OSM) uses.
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
     attribution: '&copy; Esri', maxZoom: 19, className: 'mapstiles'
   }).addTo(map);
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 19, className: 'mapstiles'
   }).addTo(map);
   map.on('click', e => placePoint(e.latlng.lat, e.latlng.lng));
