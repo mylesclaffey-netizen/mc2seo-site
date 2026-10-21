@@ -133,10 +133,12 @@ def page(rel):
         s = light(s)
         # mc2seo's own structural stylesheet replaces brandchecker's theme.css, loaded last so it wins ties.
         s = s.replace('<link rel="stylesheet" href="/assets/theme.css">\n', '')
+        # ...and the "Want us to fix this?" audit box under each result (mc2seo only; it skips non-result pages itself).
+        MC2 = '<link rel="stylesheet" href="/assets/mc2-tool.css">\n<script src="/assets/mc2-fixit.js" defer></script>'
         if '/assets/sotu.css">' in s:
-            s = s.replace('<link rel="stylesheet" href="/assets/sotu.css">', '<link rel="stylesheet" href="/assets/sotu.css">\n<link rel="stylesheet" href="/assets/mc2-tool.css">', 1)
+            s = s.replace('<link rel="stylesheet" href="/assets/sotu.css">', '<link rel="stylesheet" href="/assets/sotu.css">\n' + MC2, 1)
         else:
-            s = s.replace('</style>', '</style>\n<link rel="stylesheet" href="/assets/mc2-tool.css">', 1)
+            s = s.replace('</style>', '</style>\n' + MC2, 1)
         # Colours passed as plain arguments rather than CSS: the report's "how reliably you're named" bar.
         s = s.replace("seg(con.always, '#0a0a0a', '#fff'", "seg(con.always, '%s', '#fff'" % HEADFILL).replace("seg(con.never, '%s', '#0a0a0a'" % CARD2, "seg(con.never, '%s', '%s'" % (CARD2, INK))
         # Public pages are indexed on mc2seo.com; reports, trackers and print views stay out of search.

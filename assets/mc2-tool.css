@@ -76,3 +76,17 @@ h2,h3,h4,h3.h{text-transform:none}
 h3.h{font-weight:600;letter-spacing:-.015em}
 .field label,label.fl,.fl{text-transform:none;letter-spacing:0;font-family:var(--mc-body);font-weight:500}
 th,.tbl th{font-family:var(--mc-mono);font-weight:400;font-size:11px;letter-spacing:.08em}
+
+/* "Want us to fix this?" box under every tool result (assets/mc2-fixit.js) */
+.mc2-fixit{margin:28px 0 8px;padding:24px 26px;border-radius:14px;color:#fff;display:flex;gap:20px;align-items:center;
+   justify-content:space-between;flex-wrap:wrap;text-align:left;
+   background:radial-gradient(50% 90% at 92% 10%,#ff9a5c 0%,transparent 60%),linear-gradient(120deg,#2d33a0 0%,#5a4fe0 55%,#ff7a45 125%)}
+.mc2-fixit-text{flex:1 1 320px;min-width:0}
+.mc2-fixit .mc2-fixit-k{margin:0 0 6px;font-family:var(--mc-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.mc2-fixit .mc2-fixit-h{margin:0;font-family:var(--mc-display);font-weight:700;font-size:21px;letter-spacing:-.02em;line-height:1.25;color:#fff}
+.mc2-fixit .mc2-fixit-p{margin:8px 0 0;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.92)}
+.mc2-fixit-btn{flex:none;display:inline-block;background:#fff;color:#0f172a !important;text-decoration:none !important;border-radius:6px;
+   padding:13px 18px;font-family:var(--mc-mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.mc2-fixit-btn:hover{background:#eef0ff}
+@media (max-width:560px){.mc2-fixit{padding:20px 18px}.mc2-fixit-btn{width:100%;text-align:center}}
+@media print{.mc2-fixit{display:none}}

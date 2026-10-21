@@ -1176,6 +1176,26 @@
   const API_BASE = 'https://mc2seo-tools-api.mylesclaffey.workers.dev/api';
   const form = document.getElementById('leadForm');
   const status = document.getElementById('formStatus');
+
+  // Where this enquiry came from: the first utm_source this browser arrived with (also saved by the
+  // tool pages), plus the tool whose "Want us to fix this?" box sent them here (?from=), with the
+  // checked site pre-filled (?site=).
+  const qs = new URLSearchParams(location.search);
+  try {
+    if (qs.get('utm_source') && !localStorage.getItem('mc2seo_src')) {
+      localStorage.setItem('mc2seo_src', JSON.stringify({ source: qs.get('utm_source'), campaign: qs.get('utm_campaign') || '', page: location.pathname, date: new Date().toISOString().slice(0, 10) }));
+    }
+  } catch (e) {}
+  if (qs.get('site') && !form.website.value) form.website.value = qs.get('site');
+  function sourceNote(){
+    const bits = [];
+    try {
+      const src = JSON.parse(localStorage.getItem('mc2seo_src') || 'null');
+      if (src && src.source) bits.push('first came from ' + src.source + (src.campaign ? ' (' + src.campaign + ')' : '') + ' on ' + src.date);
+    } catch (e) {}
+    if (qs.get('from')) bits.push('sent by the ' + qs.get('from') + ' tool');
+    return bits.length ? '\n\n— Source: ' + bits.join('; ') : '';
+  }
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
@@ -1193,7 +1213,7 @@
           email: form.email.value.trim(),
           company: form.company.value.trim(),
           website: form.website.value.trim(),
-          message: form.message.value.trim()
+          message: form.message.value.trim() + sourceNote()
         })
       });
       const d = await res.json();
