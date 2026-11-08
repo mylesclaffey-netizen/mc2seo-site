@@ -9,7 +9,7 @@ What it copies:
     tools/state-of-the-llm-union/  form, report, tracker, print
     tools/model-compare/
     tools/pricing-check/, tools/vs-gap/, tools/review-presence/, tools/integration-check/, tools/b2b-diagnostic/, tools/conquest-check/, tools/review-echo/, tools/brand-share/   (open on brandchecker.eu; on mc2seo they run on the access code like the rest)
-    tools/price-visibility/, tools/price-localisation/, tools/trust-check/, tools/key-pages/, tools/docs-ai/, tools/schema-pack/   (free tools on both sites)
+    tools/price-visibility/, tools/price-localisation/, tools/trust-check/, tools/key-pages/, tools/docs-ai/, tools/schema-pack/, tools/schema-audit/   (free tools on both sites)
     assets/sotu.js, sotu-deck.js, vendor/pptxgen.bundle.js   (logic, as is apart from the site name and colours)
     assets/sotu-print.js            → the print page's light copy of sotu.js
     assets/sotu.css                 → re-skinned to mc2seo's light look for the tool pages
@@ -51,6 +51,7 @@ PAGES = [
     'tools/key-pages/index.html',
     'tools/docs-ai/index.html',
     'tools/schema-pack/index.html',   # free: no access code on either site
+    'tools/schema-audit/index.html',  # the schema validator, free on both; its engine comes from seo-tools-api (scripts/publish-schema-engine.mjs)
 ]
 PRINT = 'tools/state-of-the-llm-union/print/index.html'
 
@@ -116,7 +117,7 @@ def brand(s):
     s = re.sub(r'\s*<script src="/assets/presets\.js"></script>', '', s)
     s = re.sub(r'\s*<script src="/assets/visitor\.js"></script>', '', s)
     # mc2seo's favicon: the indigo rounded square.
-    s = re.sub(r"rx='0' fill='%23[0-9A-Fa-f]{6}'", "rx='22' fill='%234f5bd5'", s)
+    s = re.sub(r"rx='(?:0|22)' fill='%23[0-9A-Fa-f]{6}'", "rx='22' fill='%234f5bd5'", s)
     return s
 
 

@@ -15,7 +15,7 @@ Services cover technical SEO, content strategy, generative engine optimization, 
 - [llms.txt generator](https://mc2seo.com/tools/llms-txt/): Build an llms.txt file for your site from a form
 - [AI crawler access checker](https://mc2seo.com/tools/crawler-check/): Check whether robots.txt blocks GPTBot, ClaudeBot, PerplexityBot, Google-Extended and others, and whether the site has an llms.txt
 - [Brand schema builder](https://mc2seo.com/tools/schema-builder/): Generate Organization, Product, FAQ and breadcrumb JSON-LD
-- [Schema analysis](https://mc2seo.com/tools/schema-audit/): See what structured data a page carries, what is missing, and where markup claims something the page doesn't say
+- [Schema validator](https://mc2seo.com/tools/schema-audit/): Check a page or pasted code (JSON-LD, Microdata, RDFa) against schema.org and Google's rules for each rich result, and see where markup claims something the page doesn't say
 - [Redirect map validator](https://mc2seo.com/tools/redirect-check/): Check up to 500 old URLs redirect to the right new page during a site migration
 - [Redirect tracer](https://mc2seo.com/tools/redirect-tracer/): Follow a URL's redirects hop by hop, or check that all four http/https and www/non-www homepage variants converge
 - [Site migration checklist](https://mc2seo.com/tools/migration-checklist/): 41 items across 7 phases for a domain move, replatform or redesign
