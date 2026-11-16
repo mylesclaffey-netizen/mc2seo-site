@@ -40,6 +40,7 @@ Services cover technical SEO, content strategy, generative engine optimization, 
 - [International rank check](https://mc2seo.com/tools/rank-check/): One keyword's ranking across up to five countries, using each market's own search term
 - [Rank snapshot](https://mc2seo.com/tools/rank-snapshot/): Rankings for up to 10 keywords in one market, with what sits above each result
 - [Rank scheduler](https://mc2seo.com/tools/rank-scheduler/): Weekly emailed rank reports for up to 20 keywords, with changes highlighted
+- [Business Profile manager](https://mc2seo.com/tools/gbp-manager/): A workspace of client Google Business Profiles: each analysed against the businesses Google Maps shows for its main search (categories, reviews, photos), its website and markup checked against the profile, recent reviews read, and a change list confirmed when Google shows each edit
 - [Local rank grid check](https://mc2seo.com/tools/grid-check/): Local map rankings across a grid of locations
 - [Map pin check](https://mc2seo.com/tools/pin-check/): Drop a pin anywhere on a map and check up to 5 keywords' local map pack at that exact point
 

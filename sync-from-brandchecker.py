@@ -9,7 +9,7 @@ What it copies:
     tools/state-of-the-llm-union/  form, report, tracker, print
     tools/model-compare/
     tools/pricing-check/, tools/vs-gap/, tools/review-presence/, tools/integration-check/, tools/b2b-diagnostic/, tools/conquest-check/, tools/review-echo/, tools/brand-share/   (open on brandchecker.eu; on mc2seo they run on the access code like the rest)
-    tools/price-visibility/, tools/price-localisation/, tools/trust-check/, tools/key-pages/, tools/docs-ai/, tools/schema-pack/, tools/schema-audit/, tools/local-schema/, tools/practitioner-schema/   (free tools on both sites)
+    tools/price-visibility/, tools/price-localisation/, tools/trust-check/, tools/key-pages/, tools/docs-ai/, tools/schema-pack/, tools/schema-audit/, tools/local-schema/, tools/practitioner-schema/, tools/gbp-manager/   (tools on both sites)
     assets/sotu.js, sotu-deck.js, vendor/pptxgen.bundle.js   (logic, as is apart from the site name and colours)
     assets/sotu-print.js            → the print page's light copy of sotu.js
     assets/sotu.css                 → re-skinned to mc2seo's light look for the tool pages
@@ -54,6 +54,7 @@ PAGES = [
     'tools/schema-audit/index.html',  # the schema validator, free on both; its engine comes from seo-tools-api (scripts/publish-schema-engine.mjs)
     'tools/local-schema/index.html',  # the local business schema generator, free on both; same engine
     'tools/practitioner-schema/index.html',  # the practitioner (Person / ProfilePage) schema generator, free on both
+    'tools/gbp-manager/index.html',  # the Business Profile manager (agency workspace), on both
 ]
 PRINT = 'tools/state-of-the-llm-union/print/index.html'
 
@@ -126,7 +127,7 @@ def brand(s):
 def page(rel):
     s = open(os.path.join(SRC, rel), encoding='utf-8').read()
     s = brand(s)
-    if rel in ('tools/pricing-check/index.html', 'tools/vs-gap/index.html', 'tools/review-presence/index.html', 'tools/integration-check/index.html', 'tools/b2b-diagnostic/index.html', 'tools/conquest-check/index.html', 'tools/review-echo/index.html', 'tools/brand-share/index.html'):
+    if rel in ('tools/pricing-check/index.html', 'tools/vs-gap/index.html', 'tools/review-presence/index.html', 'tools/integration-check/index.html', 'tools/b2b-diagnostic/index.html', 'tools/conquest-check/index.html', 'tools/review-echo/index.html', 'tools/brand-share/index.html', 'tools/gbp-manager/index.html'):
         # No open-access visitor id here: the code comes from the link (?k=) or the one saved by the other tools.
         s = s.replace("window.MC_VISITOR || ''", "(function () { try { return localStorage.getItem('mc2seo_code') || ''; } catch (e) { return ''; } })()")
     if rel == PRINT:
