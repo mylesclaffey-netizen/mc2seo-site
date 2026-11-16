@@ -33,10 +33,14 @@
     'Non-smoking rooms', 'Garden or terrace'];
   const ROOM_AMENITIES = ['Air conditioning', 'Kitchenette', 'Balcony', 'Bathtub', 'Work desk', 'Safe'];
   const CZ = cfg.country === 'CZ'; // Prague Directory; mc2seo leaves the country empty and gets generic examples
+  // Form choices with no schema.org type of their own. A pension (a small, often family-run guesthouse, common across
+  // Central Europe) has none, so it is the general LodgingBusiness; it keeps its own choice so the form shows
+  // "Pension" again when a saved draft is reopened, instead of the aparthotel option that shares the type.
+  const TYPE_OUT = { Pension: 'LodgingBusiness' };
   const SECTIONS = [
     { title: 'The essentials', open: true, hint: 'About two minutes. The rest is optional: open a section only if you want it.', fields: [
       ['name', 'Hotel name', 'text', { required: true }],
-      ['type', 'Type', 'select', { options: [['Hotel', 'Hotel'], ['LodgingBusiness', 'Aparthotel or serviced apartments'], ['Hostel', 'Hostel'], ['BedAndBreakfast', 'Bed and breakfast'], ['Resort', 'Resort'], ['Motel', 'Motel']] }],
+      ['type', 'Type', 'select', { options: [['Hotel', 'Hotel'], ['LodgingBusiness', 'Aparthotel or serviced apartments'], ['Pension', 'Pension or guesthouse'], ['Hostel', 'Hostel'], ['BedAndBreakfast', 'Bed and breakfast'], ['Resort', 'Resort'], ['Motel', 'Motel']] }],
       ['url', 'Website', 'url', { required: true, placeholder: 'https://' }],
       ['telephone', 'Phone', 'tel', { placeholder: CZ ? '+420 …' : 'With the country code, e.g. +44 …' }],
       ['email', 'Email for guests', 'email'],
@@ -174,7 +178,7 @@
     const receptionHours = !st.reception24h && s(st.receptionHours) ? s(st.receptionHours) : null;
     const ld = {
       '@context': 'https://schema.org',
-      '@type': st.type || 'Hotel',
+      '@type': (TYPE_OUT[st.type] || st.type) || 'Hotel',
       name: s(st.name) || undefined,
       alternateName: s(st.alternateName) || undefined,
       legalName: s(st.legalName) || undefined,
