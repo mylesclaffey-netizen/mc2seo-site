@@ -16,6 +16,7 @@ Services cover technical SEO, content strategy, generative engine optimization, 
 - [AI crawler access checker](https://mc2seo.com/tools/crawler-check/): Check whether robots.txt blocks GPTBot, ClaudeBot, PerplexityBot, Google-Extended and others, and whether the site has an llms.txt
 - [Brand schema builder](https://mc2seo.com/tools/schema-builder/): Generate Organization, Product, FAQ and breadcrumb JSON-LD
 - [Local business schema generator](https://mc2seo.com/tools/local-schema/): Generate LocalBusiness JSON-LD for any local business type, with opening and holiday hours, service area, services, and one block per location from a spreadsheet
+- [Practitioner schema generator](https://mc2seo.com/tools/practitioner-schema/): Generate Person and ProfilePage JSON-LD for doctors, dentists, therapists and other professionals at a clinic, with qualifications, register numbers, a medically-reviewed-by snippet, and one block per profile page from a spreadsheet
 - [Hotel schema builder](https://mc2seo.com/tools/hotel-schema/): Generate Hotel JSON-LD for a hotel's own website, including check-in times, languages, amenities and room types
 - [Schema validator](https://mc2seo.com/tools/schema-audit/): Check a page or pasted code (JSON-LD, Microdata, RDFa) against schema.org and Google's rules for each rich result, and see where markup claims something the page doesn't say
 - [Redirect map validator](https://mc2seo.com/tools/redirect-check/): Check up to 500 old URLs redirect to the right new page during a site migration
