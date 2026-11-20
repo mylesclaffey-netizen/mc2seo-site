@@ -27,6 +27,7 @@ Services cover technical SEO, content strategy, generative engine optimization, 
 - [Sitemap analysis](https://mc2seo.com/tools/sitemap-audit/): Check a sitemap's structure and spot-check its URLs for dead links
 - [Sitemap generator](https://mc2seo.com/tools/sitemap-generator/): Crawl a site and build a sitemap.xml
 - [Image optimization audit](https://mc2seo.com/tools/image-audit/): Find missing alt text, layout-shift risks, lazy-loading gaps, and broken or oversized images
+- [Page audit](https://mc2seo.com/tools/page-audit/): One URL, one report: title, description and canonical snapshot, indexing, on-page basics, AI readiness, images, international tags and speed
 - [E-E-A-T signals](https://mc2seo.com/tools/eeat-audit/): Check a page for author, freshness, substance, citation, HTTPS and About/Contact signals
 - [Hreflang audit](https://mc2seo.com/tools/hreflang-audit/): Find hreflang mistakes such as missing self-references, invalid codes and missing return links
 - [User-agent comparison](https://mc2seo.com/tools/ua-compare/): Fetch a page with two user agents and diff the results, for cloaking and mobile/desktop parity checks
