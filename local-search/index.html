@@ -84,6 +84,9 @@
   .tier ul{ list-style:none; display:grid; gap:9px; margin:6px 0 10px; } .tier li{ font-size:15px; color:var(--ink-2); padding-left:22px; position:relative; }
   .tier li::before{ content:'✓'; position:absolute; left:0; color:var(--good); font-weight:700; }
   .tier .btn{ margin-top:auto; }
+  .price{ margin:4px 0 2px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .price b{ font-family:var(--display); font-size:34px; letter-spacing:-.03em; font-weight:700; } .price s{ color:var(--muted); font-size:17px; } .price span{ color:var(--ink-2); font-size:14px; }
+  .price-note{ color:var(--good); font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
   .promise{ margin-top:22px; border:1px solid var(--line); border-radius:var(--radius); padding:18px 22px; background:var(--bg-soft); color:var(--ink-2); font-size:15px; }
   .coupon{ display:flex; gap:8px; } .coupon input{ text-transform:uppercase; letter-spacing:.06em; } .coupon .btn{ padding:12px 18px; flex:none; }
   .coupon-note{ font-size:13px; margin-top:6px; color:var(--good); min-height:1px; }
@@ -165,13 +168,13 @@
   <section class="section" id="packages"><div class="wrap">
     <div class="section-head"><span class="kicker">Packages</span><h2>Three ways to work with us. No retainers.</h2><p class="lede">We jump in, we sort it, and you pay for the work, not for a monthly subscription. Every package is a fixed price, agreed before we start, with 30% off until 31 December 2026.</p></div>
     <div class="tiers">
-      <div class="tier"><span class="tag">Basic</span><h3>Get it right</h3><p class="sub">The essentials, fixed once. For a business that has a profile but has never looked after it.</p>
+      <div class="tier"><span class="tag">Basic</span><h3>Get it right</h3><div class="price"><b>2 100 CZK</b><s>3 000 CZK</s></div><div class="price-note">30% off until 31 Dec 2026</div><p class="sub">The essentials, fixed once. For a business that has a profile but has never looked after it.</p>
         <ul><li>Google Business Profile set up or cleaned up</li><li>Name, address and phone checked on the main directories</li><li>Local schema on your website</li><li>A short report of what we changed</li></ul>
         <a href="#contact" class="btn btn-ghost" data-tier="Basic">Ask about Basic</a></div>
-      <div class="tier feat"><span class="tag">Fundamental</span><h3>Get found</h3><p class="sub">Everything in Basic, plus the work that moves you up the map and into AI answers.</p>
+      <div class="tier feat"><span class="tag">Fundamental</span><h3>Get found</h3><div class="price"><b>4 200 CZK</b><s>6 000 CZK</s></div><div class="price-note">30% off until 31 Dec 2026</div><p class="sub">Everything in Basic, plus the work that moves you up the map and into AI answers.</p>
         <ul><li>Everything in Basic</li><li>Map ranking measured street by street, with the fixes</li><li>Review link, review replies and a plan for more reviews</li><li>Directory listings fixed and new ones added</li><li>Local AI visibility check, with corrections</li><li>A follow-up check to show what moved</li></ul>
         <a href="#contact" class="btn btn-dark" data-tier="Fundamental">Ask about Fundamental</a></div>
-      <div class="tier"><span class="tag">Ongoing</span><h3>Whenever you need us</h3><p class="sub">No contract and no monthly fee. Come back when something changes, and pay only for that job.</p>
+      <div class="tier"><span class="tag">Ongoing</span><h3>Whenever you need us</h3><div class="price"><b>Quoted per job</b></div><div class="price-note">Fixed price, agreed first, 30% off</div><p class="sub">No contract and no monthly fee. Come back when something changes, and pay only for that job.</p>
         <ul><li>Re-check of map ranking, reviews and AI answers when you want one</li><li>Fix new directory or profile problems as they appear</li><li>Review replies and AI corrections as one-off jobs</li><li>A fixed price for each job, agreed before we start</li></ul>
         <a href="#contact" class="btn btn-ghost" data-tier="Ongoing">Ask about Ongoing</a></div>
     </div>
@@ -207,10 +210,10 @@
       <p>Send the form and we will reply within one business day with your free check and a quote with 30% already taken off.</p>
       <ul><li>30% off all packages, until 31 December 2026</li><li>We review your footprint first, and we never upsell</li><li>Fixed prices and no monthly retainers</li><li>Free check of your map ranking, reviews and AI answers first</li><li>English-language service for Prague businesses</li></ul>
       <div class="guide" id="guide"><h3>Which package?</h3>
-        <button type="button" data-pick="Basic"><b>Basic: get it right</b><span>Fix the essentials once: your Google profile, your name, address and phone, and local schema.</span><small>Best if you have a profile but have never looked after it.</small></button>
-        <button type="button" data-pick="Fundamental"><b>Fundamental: get found</b><span>Everything in Basic, plus map ranking, reviews, directory listings and AI answers, with a follow-up check.</span><small>Best if you want more customers from Maps and from AI assistants.</small></button>
-        <button type="button" data-pick="Ongoing"><b>Ongoing: whenever you need us</b><span>No contract, no monthly fee. Re-checks and fixes as one-off jobs, each at a fixed price.</span><small>Best if you have already been through Basic or Fundamental, or want help only now and then.</small></button>
-        <small>Not sure? Leave it as it is and we will recommend one after your free check.</small>
+        <button type="button" data-pick="Basic"><b>Basic: get it right · 2 100 CZK</b><span>Fix the essentials once: your Google profile, your name, address and phone, and local schema.</span><small>Best if you have a profile but have never looked after it.</small></button>
+        <button type="button" data-pick="Fundamental"><b>Fundamental: get found · 4 200 CZK</b><span>Everything in Basic, plus map ranking, reviews, directory listings and AI answers, with a follow-up check.</span><small>Best if you want more customers from Maps and from AI assistants.</small></button>
+        <button type="button" data-pick="Ongoing"><b>Ongoing: whenever you need us · quoted per job</b><span>No contract, no monthly fee. Re-checks and fixes as one-off jobs, each at a fixed price.</span><small>Best if you have already been through Basic or Fundamental, or want help only now and then.</small></button>
+        <small>Prices shown are with the 30% offer (3 000 and 6 000 CZK before it). Not sure? Leave it as it is and we will recommend one after your free check.</small>
       </div>
 
     </div>
@@ -223,7 +226,7 @@
         <div class="field"><label for="company">Business name</label><input type="text" id="company" name="company" autocomplete="organization" /></div>
         <div class="field"><label for="website">Website or Google Maps link</label><input type="text" id="website" name="website" placeholder="yourbusiness.cz" /></div>
       </div>
-      <div class="field"><label for="tier">Package</label><select id="tier" name="tier"><option value="">Not sure yet</option><option>Basic</option><option>Fundamental</option><option>Ongoing</option></select></div>
+      <div class="field"><label for="tier">Package</label><select id="tier" name="tier"><option value="">Not sure yet</option><option value="Basic">Basic: 2 100 CZK with 30% off</option><option value="Fundamental">Fundamental: 4 200 CZK with 30% off</option><option value="Ongoing">Ongoing: quoted per job</option></select></div>
       <div class="legend">Which services interest you?</div>
       <div class="checks">
         <label><input type="checkbox" name="svc" value="Google Business Profile" /> Google Business Profile</label>
