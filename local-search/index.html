@@ -85,6 +85,8 @@
   .tier li::before{ content:'✓'; position:absolute; left:0; color:var(--good); font-weight:700; }
   .tier .btn{ margin-top:auto; }
   .promise{ margin-top:22px; border:1px solid var(--line); border-radius:var(--radius); padding:18px 22px; background:var(--bg-soft); color:var(--ink-2); font-size:15px; }
+  .coupon{ display:flex; gap:8px; } .coupon input{ text-transform:uppercase; letter-spacing:.06em; } .coupon .btn{ padding:12px 18px; flex:none; }
+  .coupon-note{ font-size:13px; margin-top:6px; color:var(--good); min-height:1px; }
   .contact{ display:grid; grid-template-columns:1fr 1.2fr; gap:48px; align-items:start; }
   .contact p{ color:var(--ink-2); margin-top:12px; } .contact ul{ margin:18px 0 0 18px; color:var(--ink-2); font-size:15px; display:grid; gap:6px; }
   form{ border:1px solid var(--line); border-radius:var(--radius); padding:26px; background:#fff; box-shadow:0 20px 40px rgba(15,23,42,.06); }
@@ -220,6 +222,9 @@
         <label><input type="checkbox" name="svc" value="NAP and directory listings" /> NAP &amp; directory listings</label>
         <label><input type="checkbox" name="svc" value="Not sure yet" /> Not sure yet</label>
       </div>
+      <div class="field"><label for="coupon">Coupon code (optional)</label>
+        <div class="coupon"><input type="text" id="coupon" name="coupon" maxlength="40" placeholder="Enter the code from your coupon" autocomplete="off" /><button type="button" class="btn btn-ghost" id="applyCoupon">Apply</button></div>
+        <div class="coupon-note" id="couponNote" role="status"></div></div>
       <div class="field"><label for="message">Anything we should know?</label><textarea id="message" name="message" placeholder="Your area, who your customers are, what is not working…"></textarea></div>
       <input class="hp" type="text" name="nickname" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <button type="submit" class="btn btn-dark btn-block">Send and claim 30% off</button>
@@ -243,16 +248,22 @@
     const svc = [...form.querySelectorAll('input[name=svc]:checked')].map(i => i.value);
     const btn = form.querySelector('button[type=submit]'), label = btn.textContent;
     btn.disabled = true; btn.textContent = 'Sending…'; status.className = 'status';
-    const message = '[Local Search offer: 30% off until 31 Dec 2026]\nPackage: ' + (form.tier.value || 'not sure yet') + '\nServices: ' + (svc.join(', ') || 'none selected') + '\n\n' + form.message.value.trim() + '\n\n— Source: mc2seo.com/local-search/';
+    const message = '[Local Search offer: 30% off until 31 Dec 2026]\nCoupon: ' + (form.coupon.value.trim() || 'none') + '\nPackage: ' + (form.tier.value || 'not sure yet') + '\nServices: ' + (svc.join(', ') || 'none selected') + '\n\n' + form.message.value.trim() + '\n\n— Source: mc2seo.com/local-search/';
     let ok = false;
     try {
       const r = await fetch(API_BASE + '/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, company: form.company.value.trim(), website: form.website.value.trim(), message }) });
       const d = await r.json(); ok = r.ok && d.ok;
     } catch (err) { ok = false; }
-    if (ok) { show('Thank you. We will reply within one business day with your free check and a quote with 30% off.', true); btn.textContent = 'Sent ✓'; form.reset(); }
+    if (ok) { show('Thank you. We will reply within one business day with your free check and a quote with 30% off.', true); btn.textContent = 'Sent ✓'; form.reset(); couponNote.textContent = ''; }
     else { show('Something went wrong. Please email rank@mc2seo.com and we will reply straight away.', false); btn.disabled = false; btn.textContent = label; }
   });
+  // Coupons arrive by email or letter; a link can carry the code (?coupon=CODE) so it is already filled in. We check the code when we reply.
+  const couponBox = document.getElementById('coupon'), couponNote = document.getElementById('couponNote');
+  const applyCoupon = () => { const v = couponBox.value.trim().toUpperCase(); couponBox.value = v; couponNote.textContent = v ? 'Coupon ' + v + ' added. We will check it and show the 30% off in your quote.' : ''; };
+  document.getElementById('applyCoupon').addEventListener('click', applyCoupon);
+  couponBox.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); applyCoupon(); } });
+  try { const c = new URLSearchParams(location.search).get('coupon'); if (c) { couponBox.value = c.slice(0, 40); applyCoupon(); } } catch (e) {}
   document.querySelectorAll('[data-tier]').forEach(a => a.addEventListener('click', () => { form.tier.value = a.dataset.tier; }));
 </script>
 </body>
