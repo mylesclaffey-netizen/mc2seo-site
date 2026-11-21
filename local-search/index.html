@@ -87,6 +87,11 @@
   .promise{ margin-top:22px; border:1px solid var(--line); border-radius:var(--radius); padding:18px 22px; background:var(--bg-soft); color:var(--ink-2); font-size:15px; }
   .coupon{ display:flex; gap:8px; } .coupon input{ text-transform:uppercase; letter-spacing:.06em; } .coupon .btn{ padding:12px 18px; flex:none; }
   .coupon-note{ font-size:13px; margin-top:6px; color:var(--good); min-height:1px; }
+  .guide{ margin-top:26px; display:grid; gap:10px; }
+  .guide h3{ font-size:16px; font-family:var(--mono); font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  .guide button{ text-align:left; font:inherit; background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px; cursor:pointer; display:grid; gap:2px; transition:border-color .2s; }
+  .guide button:hover,.guide button.on{ border-color:var(--accent); } .guide button.on{ background:var(--accent-soft); }
+  .guide b{ font-family:var(--display); font-size:16px; } .guide span{ color:var(--ink-2); font-size:14px; } .guide small{ color:var(--muted); font-size:13px; }
   .contact{ display:grid; grid-template-columns:1fr 1.2fr; gap:48px; align-items:start; }
   .contact p{ color:var(--ink-2); margin-top:12px; } .contact ul{ margin:18px 0 0 18px; color:var(--ink-2); font-size:15px; display:grid; gap:6px; }
   form{ border:1px solid var(--line); border-radius:var(--radius); padding:26px; background:#fff; box-shadow:0 20px 40px rgba(15,23,42,.06); }
@@ -201,6 +206,13 @@
       <h2>Tell us about your business</h2>
       <p>Send the form and we will reply within one business day with your free check and a quote with 30% already taken off.</p>
       <ul><li>30% off all packages, until 31 December 2026</li><li>Fixed prices and no monthly retainers</li><li>Free check of your map ranking, reviews and AI answers first</li><li>English-language service for Prague businesses</li></ul>
+      <div class="guide" id="guide"><h3>Which package?</h3>
+        <button type="button" data-pick="Basic"><b>Basic: get it right</b><span>Fix the essentials once: your Google profile, your name, address and phone, and local schema.</span><small>Best if you have a profile but have never looked after it.</small></button>
+        <button type="button" data-pick="Fundamental"><b>Fundamental: get found</b><span>Everything in Basic, plus map ranking, reviews, directory listings and AI answers, with a follow-up check.</span><small>Best if you want more customers from Maps and from AI assistants.</small></button>
+        <button type="button" data-pick="Ongoing"><b>Ongoing: whenever you need us</b><span>No contract, no monthly fee. Re-checks and fixes as one-off jobs, each at a fixed price.</span><small>Best if you have already been through Basic or Fundamental, or want help only now and then.</small></button>
+        <small>Not sure? Leave it as it is and we will recommend one after your free check.</small>
+      </div>
+
     </div>
     <form id="leadForm" novalidate>
       <div class="row">
@@ -264,7 +276,10 @@
   document.getElementById('applyCoupon').addEventListener('click', applyCoupon);
   couponBox.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); applyCoupon(); } });
   try { const c = new URLSearchParams(location.search).get('coupon'); if (c) { couponBox.value = c.slice(0, 40); applyCoupon(); } } catch (e) {}
-  document.querySelectorAll('[data-tier]').forEach(a => a.addEventListener('click', () => { form.tier.value = a.dataset.tier; }));
+  const picks = document.querySelectorAll('#guide [data-pick]'), syncGuide = () => picks.forEach(b => b.classList.toggle('on', b.dataset.pick === form.tier.value));
+  picks.forEach(b => b.addEventListener('click', () => { form.tier.value = b.dataset.pick; syncGuide(); }));
+  form.tier.addEventListener('change', syncGuide);
+  document.querySelectorAll('[data-tier]').forEach(a => a.addEventListener('click', () => { form.tier.value = a.dataset.tier; syncGuide(); }));
 </script>
 </body>
 </html>
